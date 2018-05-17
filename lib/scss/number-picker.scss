@@ -7,7 +7,7 @@
     @include height-calc($half-width, $input-border-width);
 
     line-height: $half-width;
-    line-height: calc(#{$half-width} - #{$input-border-width});
+    line-height: "calc(#{$half-width} - #{$input-border-width})";
     display: block;
     border: none;
   }

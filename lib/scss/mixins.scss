@@ -18,7 +18,7 @@
 @mixin opacity($opacity) {
   opacity: $opacity;
   $opacity-ie: ($opacity * 100);
-  filter: alpha(opacity=#{$opacity-ie});
+  filter: "alpha(opacity=#{$opacity-ie})";
 }
 
 @mixin unstyled-list() {
@@ -109,11 +109,11 @@
 }
 
 @mixin height-calc($total, $minus) {
-  height: calc(#{$total} - #{$minus});
+  height: "calc(#{$total} - #{$minus})";
 
   /** ie8 fallback **/
-  margin-top: -#{$minus}\9;
-  height: #{$total}\9;
+  margin-top: "-#{$minus}\9";
+  height: "#{$total}\9";
   /** --- **/
 }
 

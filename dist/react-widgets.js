@@ -8,7 +8,7 @@
 		exports["ReactWidgets"] = factory(require("react"), require("react-dom"));
 	else
 		root["ReactWidgets"] = factory(root["React"], root["ReactDOM"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_6__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,11 +71,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -104,15 +110,9 @@ if (false) {
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(60)();
+  module.exports = __webpack_require__(59)();
 }
 
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 /* 2 */
@@ -179,13 +179,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 exports.__esModule = true;
 exports.message = exports.accessor = exports.disabled = exports.dateFormat = exports.numberFormat = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _elementType = _interopRequireDefault(__webpack_require__(78));
+var _elementType = _interopRequireDefault(__webpack_require__(77));
 
 exports.elementType = _elementType.default;
 
-var _createChainableTypeChecker = _interopRequireDefault(__webpack_require__(52));
+var _createChainableTypeChecker = _interopRequireDefault(__webpack_require__(51));
 
 var _localizers = __webpack_require__(5);
 
@@ -282,11 +282,11 @@ exports.setNumber = setNumber;
 exports.setDate = setDate;
 exports.date = exports.number = void 0;
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(24));
 
 var _ = __webpack_require__(7);
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -460,7 +460,7 @@ exports.chunk = chunk;
 exports.groupBySortedKeys = groupBySortedKeys;
 exports.has = exports.makeArray = void 0;
 
-var _warning = _interopRequireDefault(__webpack_require__(40));
+var _warning = _interopRequireDefault(__webpack_require__(39));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -532,170 +532,38 @@ function groupBySortedKeys(groupBy, data, keys) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "polyfill", function() { return polyfill; });
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-function componentWillMount() {
-  // Call this.constructor.gDSFP to support sub-classes.
-  var state = this.constructor.getDerivedStateFromProps(this.props, this.state);
-  if (state !== null && state !== undefined) {
-    this.setState(state);
-  }
-}
-
-function componentWillReceiveProps(nextProps) {
-  // Call this.constructor.gDSFP to support sub-classes.
-  // Use the setState() updater to ensure state isn't stale in certain edge cases.
-  function updater(prevState) {
-    var state = this.constructor.getDerivedStateFromProps(nextProps, prevState);
-    return state !== null && state !== undefined ? state : null;
-  }
-  // Binding "this" is important for shallow renderer support.
-  this.setState(updater.bind(this));
-}
-
-function componentWillUpdate(nextProps, nextState) {
-  try {
-    var prevProps = this.props;
-    var prevState = this.state;
-    this.props = nextProps;
-    this.state = nextState;
-    this.__reactInternalSnapshotFlag = true;
-    this.__reactInternalSnapshot = this.getSnapshotBeforeUpdate(
-      prevProps,
-      prevState
-    );
-  } finally {
-    this.props = prevProps;
-    this.state = prevState;
-  }
-}
-
-// React may warn about cWM/cWRP/cWU methods being deprecated.
-// Add a flag to suppress these warnings for this special case.
-componentWillMount.__suppressDeprecationWarning = true;
-componentWillReceiveProps.__suppressDeprecationWarning = true;
-componentWillUpdate.__suppressDeprecationWarning = true;
-
-function polyfill(Component) {
-  var prototype = Component.prototype;
-
-  if (!prototype || !prototype.isReactComponent) {
-    throw new Error('Can only polyfill class components');
-  }
-
-  if (
-    typeof Component.getDerivedStateFromProps !== 'function' &&
-    typeof prototype.getSnapshotBeforeUpdate !== 'function'
-  ) {
-    return Component;
-  }
-
-  // If new component APIs are defined, "unsafe" lifecycles won't be called.
-  // Error if any of these lifecycles are present,
-  // Because they would work differently between older and newer (16.3+) versions of React.
-  var foundWillMountName = null;
-  var foundWillReceivePropsName = null;
-  var foundWillUpdateName = null;
-  if (typeof prototype.componentWillMount === 'function') {
-    foundWillMountName = 'componentWillMount';
-  } else if (typeof prototype.UNSAFE_componentWillMount === 'function') {
-    foundWillMountName = 'UNSAFE_componentWillMount';
-  }
-  if (typeof prototype.componentWillReceiveProps === 'function') {
-    foundWillReceivePropsName = 'componentWillReceiveProps';
-  } else if (typeof prototype.UNSAFE_componentWillReceiveProps === 'function') {
-    foundWillReceivePropsName = 'UNSAFE_componentWillReceiveProps';
-  }
-  if (typeof prototype.componentWillUpdate === 'function') {
-    foundWillUpdateName = 'componentWillUpdate';
-  } else if (typeof prototype.UNSAFE_componentWillUpdate === 'function') {
-    foundWillUpdateName = 'UNSAFE_componentWillUpdate';
-  }
-  if (
-    foundWillMountName !== null ||
-    foundWillReceivePropsName !== null ||
-    foundWillUpdateName !== null
-  ) {
-    var componentName = Component.displayName || Component.name;
-    var newApiName =
-      typeof Component.getDerivedStateFromProps === 'function'
-        ? 'getDerivedStateFromProps()'
-        : 'getSnapshotBeforeUpdate()';
-
-    throw Error(
-      'Unsafe legacy lifecycles will not be called for components using new component APIs.\n\n' +
-        componentName +
-        ' uses ' +
-        newApiName +
-        ' but also contains the following legacy lifecycles:' +
-        (foundWillMountName !== null ? '\n  ' + foundWillMountName : '') +
-        (foundWillReceivePropsName !== null
-          ? '\n  ' + foundWillReceivePropsName
-          : '') +
-        (foundWillUpdateName !== null ? '\n  ' + foundWillUpdateName : '') +
-        '\n\nThe above lifecycles should be removed. Learn more about this warning here:\n' +
-        'https://fb.me/react-async-component-lifecycle-hooks'
-    );
-  }
-
-  // React <= 16.2 does not support static getDerivedStateFromProps.
-  // As a workaround, use cWM and cWRP to invoke the new static lifecycle.
-  // Newer versions of React will ignore these lifecycles if gDSFP exists.
-  if (typeof Component.getDerivedStateFromProps === 'function') {
-    prototype.componentWillMount = componentWillMount;
-    prototype.componentWillReceiveProps = componentWillReceiveProps;
-  }
-
-  // React <= 16.2 does not support getSnapshotBeforeUpdate.
-  // As a workaround, use cWU to invoke the new lifecycle.
-  // Newer versions of React will ignore that lifecycle if gSBU exists.
-  if (typeof prototype.getSnapshotBeforeUpdate === 'function') {
-    if (typeof prototype.componentDidUpdate !== 'function') {
-      throw new Error(
-        'Cannot polyfill getSnapshotBeforeUpdate() for components that do not define componentDidUpdate() on the prototype'
-      );
-    }
-
-    prototype.componentWillUpdate = componentWillUpdate;
-
-    var componentDidUpdate = prototype.componentDidUpdate;
-
-    prototype.componentDidUpdate = function componentDidUpdatePolyfill(
-      prevProps,
-      prevState,
-      maybeSnapshot
-    ) {
-      // 16.3+ will not execute our will-update method;
-      // It will pass a snapshot value to did-update though.
-      // Older versions will require our polyfilled will-update value.
-      // We need to handle both cases, but can't just check for the presence of "maybeSnapshot",
-      // Because for <= 15.x versions this might be a "prevContext" object.
-      // We also can't just check "__reactInternalSnapshot",
-      // Because get-snapshot might return a falsy value.
-      // So check for the explicit __reactInternalSnapshotFlag flag to determine behavior.
-      var snapshot = this.__reactInternalSnapshotFlag
-        ? this.__reactInternalSnapshot
-        : maybeSnapshot;
-
-      componentDidUpdate.call(this, prevProps, prevState, snapshot);
-    };
-  }
-
-  return Component;
-}
 
 
+exports.__esModule = true;
 
+var _spyOnComponent = _interopRequireDefault(__webpack_require__(26));
+
+exports.spyOnComponent = _spyOnComponent.default;
+
+var _autoFocus = _interopRequireDefault(__webpack_require__(64));
+
+exports.autoFocus = _autoFocus.default;
+
+var _focusManager = _interopRequireDefault(__webpack_require__(65));
+
+exports.focusManager = _focusManager.default;
+
+var _mountManager = _interopRequireDefault(__webpack_require__(33));
+
+exports.mountManager = _mountManager.default;
+
+var _timeoutManager = _interopRequireDefault(__webpack_require__(41));
+
+exports.timeoutManager = _timeoutManager.default;
+
+var _mixin = _interopRequireDefault(__webpack_require__(66));
+
+exports.mixin = _mixin.default;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
 /* 9 */
@@ -738,61 +606,11 @@ function isFirstFocusedRender(component) {
 "use strict";
 
 
-exports.__esModule = true;
-exports.widgetEditable = exports.widgetEnabled = exports.isInDisabledFieldset = void 0;
-
-var _reactDom = __webpack_require__(6);
-
-var _matches = _interopRequireDefault(__webpack_require__(55));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var isInDisabledFieldset = function isInDisabledFieldset(inst) {
-  var node;
-
-  try {
-    node = (0, _reactDom.findDOMNode)(inst);
-  } catch (err) {
-    /* ignore */
-  }
-
-  return !!node && (0, _matches.default)(node, 'fieldset[disabled] *');
-};
-
-exports.isInDisabledFieldset = isInDisabledFieldset;
-var widgetEnabled = interactionDecorator(true);
-exports.widgetEnabled = widgetEnabled;
-var widgetEditable = interactionDecorator(false);
-exports.widgetEditable = widgetEditable;
-
-function interactionDecorator(disabledOnly) {
-  function wrap(method) {
-    return function decoratedMethod() {
-      var _props = this.props,
-          disabled = _props.disabled,
-          readOnly = _props.readOnly;
-      disabled = isInDisabledFieldset(this) || disabled == true || !disabledOnly && readOnly === true;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      if (!disabled) return method.apply(this, args);
-    };
-  }
-
-  return function decorate(target, key, desc) {
-    if (desc.initializer) {
-      var init = desc.initializer;
-
-      desc.initializer = function () {
-        return wrap(init.call(this)).bind(this);
-      };
-    } else desc.value = wrap(desc.value);
-
-    return desc;
-  };
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+module.exports = exports['default'];
 
 /***/ }),
 /* 11 */
@@ -801,25 +619,12 @@ function interactionDecorator(disabledOnly) {
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-module.exports = exports['default'];
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 exports.__esModule = true;
 exports.getMessages = getMessages;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/messages.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/messages.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -873,6 +678,101 @@ function getMessages(defaults) {
 }
 
 /***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.disabledManager = exports.widgetEditable = exports.widgetEnabled = exports.isInDisabledFieldset = void 0;
+
+var _reactDom = __webpack_require__(6);
+
+var _matches = _interopRequireDefault(__webpack_require__(54));
+
+var _reactComponentManagers = __webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isInDisabledFieldset = function isInDisabledFieldset(inst) {
+  var node;
+
+  try {
+    node = (0, _reactDom.findDOMNode)(inst);
+  } catch (err) {
+    /* ignore */
+  }
+
+  return !!node && (0, _matches.default)(node, 'fieldset[disabled] *');
+};
+
+exports.isInDisabledFieldset = isInDisabledFieldset;
+var widgetEnabled = interactionDecorator(true);
+exports.widgetEnabled = widgetEnabled;
+var widgetEditable = interactionDecorator(false);
+exports.widgetEditable = widgetEditable;
+
+function interactionDecorator(disabledOnly) {
+  function wrap(method) {
+    return function decoratedMethod() {
+      var _props = this.props,
+          disabled = _props.disabled,
+          readOnly = _props.readOnly;
+      disabled = isInDisabledFieldset(this) || disabled == true || !disabledOnly && readOnly === true;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      if (!disabled) return method.apply(this, args);
+    };
+  }
+
+  return function decorate(target, key, desc) {
+    if (desc.initializer) {
+      var init = desc.initializer;
+
+      desc.initializer = function () {
+        return wrap(init.call(this)).bind(this);
+      };
+    } else desc.value = wrap(desc.value);
+
+    return desc;
+  };
+}
+
+var disabledManager = function disabledManager(component) {
+  var mounted = false;
+  var isInFieldSet = false;
+  var useCached = false;
+  (0, _reactComponentManagers.spyOnComponent)(component, {
+    componentDidMount: function componentDidMount() {
+      mounted = true; // becasue we can't access a dom node in the first render we need to
+      // render again if the component was disabled via a fieldset
+
+      if (isInDisabledFieldset(this)) this.forceUpdate();
+    },
+    componentWillUpdate: function componentWillUpdate() {
+      isInFieldSet = mounted && isInDisabledFieldset(component);
+      useCached = mounted;
+    },
+    componentDidUpdate: function componentDidUpdate() {
+      useCached = false;
+    },
+    componentWillUnmount: function componentWillUnmount() {
+      component = null;
+    }
+  });
+  return function () {
+    return component.props.disabled === true || (useCached ? isInFieldSet : mounted && isInDisabledFieldset(component)) || component.props.disabled // return the prop if nothing is true in case it's an array
+    ;
+  };
+};
+
+exports.disabledManager = disabledManager;
+
+/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -882,7 +782,7 @@ function getMessages(defaults) {
 exports.__esModule = true;
 exports.default = void 0;
 
-var _dateArithmetic = _interopRequireDefault(__webpack_require__(90));
+var _dateArithmetic = _interopRequireDefault(__webpack_require__(89));
 
 var _localizers = __webpack_require__(5);
 
@@ -949,11 +849,11 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = uncontrollable;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(24));
 
-var Utils = _interopRequireWildcard(__webpack_require__(68));
+var Utils = _interopRequireWildcard(__webpack_require__(67));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -1117,13 +1017,13 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Widget.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Widget.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1153,17 +1053,16 @@ function (_React$Component) {
         dropUp = _props.dropUp,
         disabled = _props.disabled,
         readOnly = _props.readOnly,
-        _props$isRtl = _props.isRtl,
-        isRtl = _props$isRtl === void 0 ? this.context.isRtl : _props$isRtl,
-        props = _objectWithoutProperties(_props, ["className", "tabIndex", "focused", "open", "dropUp", "disabled", "readOnly", "isRtl"]);
+        props = _objectWithoutProperties(_props, ["className", "tabIndex", "focused", "open", "dropUp", "disabled", "readOnly"]);
 
+    var isRtl = !!this.context.isRtl;
     tabIndex = tabIndex != null ? tabIndex : '-1';
     return _react.default.createElement("div", _extends({}, props, {
       tabIndex: tabIndex,
       className: (0, _classnames.default)(className, 'rw-widget', isRtl && 'rw-rtl', disabled && 'rw-state-disabled', readOnly && 'rw-state-readonly', focused && 'rw-state-focus', open && "rw-open" + (dropUp ? '-up' : '')),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 36
+        lineNumber: 35
       },
       __self: this
     }));
@@ -1181,8 +1080,7 @@ Widget.propTypes = {
   disabled: _propTypes.default.bool,
   readOnly: _propTypes.default.bool,
   open: _propTypes.default.bool,
-  dropUp: _propTypes.default.bool,
-  isRtl: _propTypes.default.bool
+  dropUp: _propTypes.default.bool
 };
 var _default = Widget;
 exports.default = _default;
@@ -1198,22 +1096,22 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = createFocusManager;
 
-var _reactComponentManagers = __webpack_require__(19);
+var _reactComponentManagers = __webpack_require__(8);
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function createFocusManager(inst, options) {
+function createFocusManager(component, options) {
   var _didHandle = options.didHandle;
-  return (0, _reactComponentManagers.focusManager)(inst, _extends({}, options, {
+  return (0, _reactComponentManagers.focusManager)(component, _extends({}, options, {
     onChange: function onChange(focused) {
-      inst.setState({
+      component.setState({
         focused: focused
       });
     },
     isDisabled: function isDisabled() {
-      return inst.props.disabled === true || (0, _interaction.isInDisabledFieldset)(inst);
+      return (0, _interaction.isInDisabledFieldset)(component) || component.props.disabled === true;
     },
     didHandle: function didHandle(focused, event) {
       var handler = this.props[focused ? 'onFocus' : 'onBlur'];
@@ -1235,13 +1133,13 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Button.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Button.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1327,23 +1225,41 @@ module.exports = exports["default"];
 
 
 exports.__esModule = true;
+exports.normalizeComponent = normalizeComponent;
 exports.defaultGetDataState = defaultGetDataState;
-exports.getCommonListProps = getCommonListProps;
-exports.default = reduceToListState;
+exports.default = listDataManager;
 
-var _Filter = __webpack_require__(31);
+var _react = _interopRequireDefault(__webpack_require__(0));
+
+var _reactComponentManagers = __webpack_require__(8);
+
+var _Filter = __webpack_require__(30);
 
 var _ = __webpack_require__(7);
 
-var _dataHelpers = __webpack_require__(23);
+var _accessorManager = _interopRequireDefault(__webpack_require__(22));
+
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/util/listDataManager.js";
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var EMPTY_VALUE = {};
 
-var returnFalse = function returnFalse() {
-  return false;
-};
+function normalizeComponent(Component) {
+  return function (itemProps) {
+    return Component ? _react.default.createElement(Component, _extends({}, itemProps, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 12
+      },
+      __self: this
+    })) : itemProps.text || itemProps.item;
+  };
+}
 
 function defaultGetDataState(data, _ref, lastState) {
   var groupBy = _ref.groupBy;
@@ -1370,94 +1286,174 @@ function defaultGetDataState(data, _ref, lastState) {
   return lastState;
 }
 
-var getStateGetterFromList = function getStateGetterFromList(_ref2) {
-  var l = _ref2.listComponent;
-  return l && l.getDataState;
-};
-
-var getIsDisabled = function getIsDisabled(disabledProp, valueField) {
-  return !Array.isArray(disabledProp) ? returnFalse : function (item) {
-    return disabledProp.some(function (i) {
-      return (0, _dataHelpers.dataValue)(item, valueField) === (0, _dataHelpers.dataValue)(i, valueField);
-    });
-  };
-};
-
-function getCommonListProps(list, accessors, _ref3) {
-  var groupBy = _ref3.groupBy,
-      optionComponent = _ref3.optionComponent,
-      itemComponent = _ref3.itemComponent,
-      groupComponent = _ref3.groupComponent,
-      searchTerm = _ref3.searchTerm,
-      listProps = _ref3.listProps;
-  return _extends({
-    searchTerm: searchTerm,
-    groupBy: groupBy,
-    groupComponent: groupComponent,
-    itemComponent: itemComponent,
-    optionComponent: optionComponent
-  }, listProps, {
-    data: list.data,
-    dataState: list.state,
-    textAccessor: accessors.text,
-    valueAccessor: accessors.value
-  });
+function defaultGetStateGetterFromList(_ref2) {
+  var listComponent = _ref2.listComponent;
+  return listComponent && listComponent.getDataState;
 }
 
-function reduceToListState(nextListData, prevList, _temp) {
-  var _ref4 = _temp === void 0 ? {} : _temp,
-      nextProps = _ref4.nextProps,
-      getDataState = _ref4.getDataState;
+function listDataManager(component, _temp) {
+  var _ref3 = _temp === void 0 ? {} : _temp,
+      getDataState = _ref3.getDataState,
+      getStateGetterFromProps = _ref3.getStateGetterFromProps,
+      _ref3$accessors = _ref3.accessors,
+      accessors = _ref3$accessors === void 0 ? (0, _accessorManager.default)(component) : _ref3$accessors;
 
-  var disabled = nextProps.disabled,
-      valueField = nextProps.valueField,
-      textField = nextProps.textField;
-  getDataState = getDataState || getStateGetterFromList(nextProps) || defaultGetDataState;
-  var dataState = getDataState(nextListData, nextProps, prevList && prevList.dataState);
-  var data = dataState && dataState.sequentialData || nextListData;
-  var isDisabled = getIsDisabled(disabled, valueField);
+  var listData;
+  var listState;
+  var needsUpdate = true;
+  var currentProps = component.props;
+  if (getDataState) getStateGetterFromProps = null;else {
+    if (!getStateGetterFromProps) getStateGetterFromProps = defaultGetStateGetterFromList;
+    getDataState = getStateGetterFromProps(currentProps) || defaultGetDataState;
+  }
+  (0, _reactComponentManagers.spyOnComponent)(component, {
+    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+      if (!needsUpdate) needsUpdate = nextProps !== currentProps;
+      currentProps = nextProps;
 
-  var moveNext = function moveNext(item, word) {
-    return isDisabled(item) || word && !_Filter.presets.startsWith((0, _dataHelpers.dataText)(item, textField).toLowerCase(), word.toLowerCase());
+      if (needsUpdate && getStateGetterFromProps) {
+        getDataState = getStateGetterFromProps(currentProps) || defaultGetDataState;
+      }
+    },
+    componentWillUnmount: function componentWillUnmount() {
+      listData = null;
+      listState = null;
+      currentProps = null;
+      getDataState = null;
+      getStateGetterFromProps = null;
+    }
+  });
+
+  function isDisabled(item) {
+    var disabled = currentProps.disabled;
+    if (!Array.isArray(disabled)) return false;
+    return disabled.some(function (disabled) {
+      return accessors.value(item) === accessors.value(disabled);
+    });
+  }
+
+  function getMatcher(word) {
+    if (!word) return function () {
+      return true;
+    };
+    word = word.toLowerCase();
+    return function (item) {
+      return _Filter.presets.startsWith(accessors.text(item).toLowerCase(), word);
+    };
+  }
+
+  function getSequentialData() {
+    var state = manager.getState();
+    return state && state.sequentialData || listData;
+  } // eslint-disable-next-line react/prop-types
+
+
+  var renderItem = function renderItem(_ref4) {
+    var item = _ref4.item,
+        rest = _objectWithoutProperties(_ref4, ["item"]);
+
+    var Component = currentProps.itemComponent;
+    return Component ? _react.default.createElement(Component, _extends({
+      item: item,
+      value: accessors.value(item),
+      text: accessors.text(item),
+      disabled: isDisabled(item)
+    }, rest, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 108
+      },
+      __self: this
+    })) : accessors.text(item);
+  }; // eslint-disable-next-line react/prop-types
+
+
+  var renderGroup = function renderGroup(_ref5) {
+    var group = _ref5.group;
+    var Component = currentProps.groupComponent;
+    return Component ? _react.default.createElement(Component, {
+      item: group,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 123
+      },
+      __self: this
+    }) : group;
   };
 
-  var list = {
-    dataState: dataState,
+  var manager = {
     isDisabled: isDisabled,
     first: function first() {
-      return list.next(EMPTY_VALUE);
+      return manager.next(EMPTY_VALUE);
     },
     last: function last() {
-      return list.prevEnabled(data[data.length - 1]);
+      var data = getSequentialData();
+      return manager.prevEnabled(data[data.length - 1]);
+    },
+    prevEnabled: function prevEnabled(item) {
+      return isDisabled(item) ? manager.prev(item) : item;
     },
     prev: function prev(item, word) {
-      var nextIdx = Math.max(0, data.indexOf(item)) - 1;
+      var data = getSequentialData();
+      var matches = getMatcher(word);
+      var nextIdx = data.indexOf(item);
+      if (nextIdx < 0 || nextIdx == null) nextIdx = 0;
+      nextIdx--;
 
-      while (nextIdx > -1 && moveNext(data[nextIdx], word)) {
+      while (nextIdx > -1 && (isDisabled(data[nextIdx]) || !matches(data[nextIdx]))) {
         nextIdx--;
       }
 
       if (nextIdx >= 0) return data[nextIdx];
-      return isDisabled(item) ? null : item;
+      if (!manager.isDisabled(item)) return item;
     },
     next: function next(item, word) {
+      var data = getSequentialData();
+      var matches = getMatcher(word);
       var nextIdx = data.indexOf(item) + 1;
+      var len = data.length;
 
-      while (nextIdx < data.length && moveNext(data[nextIdx], word)) {
+      while (nextIdx < len && (isDisabled(data[nextIdx]) || !matches(data[nextIdx]))) {
         nextIdx++;
       }
 
-      if (nextIdx < data.length) return data[nextIdx];
-      return isDisabled(item) ? null : item;
-    },
-    prevEnabled: function prevEnabled(item) {
-      return isDisabled(item) ? list.prev(item) : item;
+      if (nextIdx < len) return data[nextIdx];
+      if (!manager.isDisabled(item)) return item;
     },
     nextEnabled: function nextEnabled(item) {
-      return isDisabled(item) ? list.next(item) : item;
+      return isDisabled(item) ? manager.next(item) : item;
+    },
+    setData: function setData(data) {
+      if (!needsUpdate) needsUpdate = data !== listData;
+      listData = data;
+    },
+    getState: function getState() {
+      if (needsUpdate) {
+        needsUpdate = false;
+        listState = getDataState(listData, currentProps, listState);
+      }
+
+      return listState;
+    },
+    defaultProps: function defaultProps() {
+      var _currentProps = currentProps,
+          groupBy = _currentProps.groupBy,
+          optionComponent = _currentProps.optionComponent,
+          searchTerm = _currentProps.searchTerm;
+      return _extends({
+        groupBy: groupBy,
+        renderItem: renderItem,
+        renderGroup: renderGroup,
+        searchTerm: searchTerm,
+        optionComponent: optionComponent,
+        isDisabled: isDisabled
+      }, currentProps.listProps, {
+        data: listData,
+        dataState: manager.getState()
+      });
     }
   };
-  return list;
+  return manager;
 }
 
 /***/ }),
@@ -1468,50 +1464,15 @@ function reduceToListState(nextListData, prevList, _temp) {
 
 
 exports.__esModule = true;
-
-var _spyOnComponent = _interopRequireDefault(__webpack_require__(27));
-
-exports.spyOnComponent = _spyOnComponent.default;
-
-var _autoFocus = _interopRequireDefault(__webpack_require__(65));
-
-exports.autoFocus = _autoFocus.default;
-
-var _focusManager = _interopRequireDefault(__webpack_require__(66));
-
-exports.focusManager = _focusManager.default;
-
-var _mountManager = _interopRequireDefault(__webpack_require__(34));
-
-exports.mountManager = _mountManager.default;
-
-var _timeoutManager = _interopRequireDefault(__webpack_require__(42));
-
-exports.timeoutManager = _timeoutManager.default;
-
-var _mixin = _interopRequireDefault(__webpack_require__(67));
-
-exports.mixin = _mixin.default;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/WidgetPicker.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/WidgetPicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1570,7 +1531,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1579,15 +1540,15 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Select.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Select.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1647,7 +1608,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1656,9 +1617,9 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
@@ -1668,27 +1629,23 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var _widgetHelpers = __webpack_require__(9);
 
-var _reduceToListState = __webpack_require__(18);
+var _listDataManager = __webpack_require__(18);
 
-var _Listbox = _interopRequireDefault(__webpack_require__(53));
+var _Listbox = _interopRequireDefault(__webpack_require__(52));
 
-var _ListOption = _interopRequireDefault(__webpack_require__(37));
+var _ListOption = _interopRequireDefault(__webpack_require__(36));
 
-var _ListOptionGroup = _interopRequireDefault(__webpack_require__(79));
+var _ListOptionGroup = _interopRequireDefault(__webpack_require__(78));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/List.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/List.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -1701,20 +1658,17 @@ var propTypes = {
     data: _propTypes.default.array,
     sequentialData: _propTypes.default.array
   }),
-  valueAccessor: CustomPropTypes.accessor,
-  textAccessor: CustomPropTypes.accessor,
   onSelect: _propTypes.default.func,
   onMove: _propTypes.default.func,
   activeId: _propTypes.default.string,
-  itemComponent: CustomPropTypes.elementType,
-  groupComponent: CustomPropTypes.elementType,
   optionComponent: CustomPropTypes.elementType,
-  renderItem: _propTypes.default.func,
+  renderItem: _propTypes.default.func.isRequired,
   renderGroup: _propTypes.default.func,
   focusedItem: _propTypes.default.any,
   selectedItem: _propTypes.default.any,
   searchTerm: _propTypes.default.string,
   isDisabled: _propTypes.default.func.isRequired,
+  groupBy: CustomPropTypes.accessor,
   messages: _propTypes.default.shape({
     emptyList: _propTypes.default.func.isRequired
   })
@@ -1732,65 +1686,7 @@ function (_React$Component) {
   _inheritsLoose(List, _React$Component);
 
   function List() {
-    var _temp, _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.renderItem = function (_ref) {
-      var item = _ref.item,
-          rest = _objectWithoutProperties(_ref, ["item"]);
-
-      var _this$props = _this.props,
-          isDisabled = _this$props.isDisabled,
-          renderItem = _this$props.renderItem,
-          textAccessor = _this$props.textAccessor,
-          valueAccessor = _this$props.valueAccessor;
-      var Component = _this.props.itemComponent;
-
-      if (renderItem) {
-        return renderItem(_extends({
-          item: item
-        }, rest));
-      } else if (Component) {
-        return _react.default.createElement(Component, _extends({
-          item: item,
-          value: valueAccessor(item),
-          text: textAccessor(item),
-          disabled: isDisabled(item)
-        }, rest, {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 100
-          },
-          __self: this
-        }));
-      }
-
-      return textAccessor(item);
-    }, _this.renderGroup = function (group) {
-      var _this$props2 = _this.props,
-          renderGroup = _this$props2.renderGroup,
-          Component = _this$props2.groupComponent;
-
-      if (renderGroup) {
-        return renderGroup({
-          group: group
-        });
-      } else if (Component) {
-        return _react.default.createElement(Component, {
-          item: group,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 117
-          },
-          __self: this
-        });
-      }
-
-      return group;
-    }, _temp) || _assertThisInitialized(_this);
+    return _React$Component.apply(this, arguments) || this;
   }
 
   var _proto = List.prototype;
@@ -1833,13 +1729,29 @@ function (_React$Component) {
     if (selectedItem) (0, _widgetHelpers.notify)(onMove, [selectedItem, list, focusedItem]);
   };
 
-  _proto.renderOption = function renderOption(item, index) {
+  _proto.renderGroupHeader = function renderGroupHeader(group) {
+    var renderGroup = this.props.renderGroup;
+    return _react.default.createElement(_ListOptionGroup.default, {
+      key: 'group_' + group,
+      group: group,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 92
+      },
+      __self: this
+    }, renderGroup({
+      group: group
+    }));
+  };
+
+  _proto.renderItem = function renderItem(item, index) {
     var _props3 = this.props,
         activeId = _props3.activeId,
         focusedItem = _props3.focusedItem,
         selectedItem = _props3.selectedItem,
         onSelect = _props3.onSelect,
         isDisabled = _props3.isDisabled,
+        renderItem = _props3.renderItem,
         searchTerm = _props3.searchTerm,
         Option = _props3.optionComponent;
     var isFocused = focusedItem === item;
@@ -1854,10 +1766,10 @@ function (_React$Component) {
       selected: selectedItem === item,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 136
+        lineNumber: 113
       },
       __self: this
-    }, this.renderItem({
+    }, renderItem({
       item: item,
       index: index,
       searchTerm: searchTerm
@@ -1865,7 +1777,7 @@ function (_React$Component) {
   };
 
   _proto.render = function render() {
-    var _this2 = this;
+    var _this = this;
 
     var _props4 = this.props,
         className = _props4.className,
@@ -1880,26 +1792,18 @@ function (_React$Component) {
       emptyListMessage: emptyList(this.props),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 158
+        lineNumber: 135
       },
       __self: this
     }), this.mapItems(function (item, idx, isHeader) {
-      return isHeader ? _react.default.createElement(_ListOptionGroup.default, {
-        key: 'group_' + item,
-        group: item,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 165
-        },
-        __self: this
-      }, _this2.renderGroup(item)) : _this2.renderOption(item, idx);
+      return isHeader ? _this.renderGroupHeader(item) : _this.renderItem(item, idx);
     }));
   };
 
   return List;
 }(_react.default.Component);
 
-List.getDataState = _reduceToListState.defaultGetDataState;
+List.getDataState = _listDataManager.defaultGetDataState;
 
 function renderedIndexOf(item, list, data, dataState) {
   var groups = dataState.groups,
@@ -1928,66 +1832,61 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 exports.__esModule = true;
-exports.dataIndexOf = dataIndexOf;
-exports.valueMatcher = valueMatcher;
-exports.dataItem = dataItem;
-exports.dataText = exports.dataValue = void 0;
+exports.default = createAccessorManager;
 
-var _ = __webpack_require__(7);
+var _reactComponentManagers = __webpack_require__(8);
 
-var dataValue = function dataValue(data, field) {
-  var value = data;
-  if (typeof field === 'function') value = field(data);else if (data == null) value = data;else if (typeof field === 'string' && typeof data === 'object' && field in data) value = data[field];
-  return value;
-};
+var helpers = _interopRequireWildcard(__webpack_require__(31));
 
-exports.dataValue = dataValue;
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-var dataText = function dataText(item, textField) {
-  var value = dataValue(item, textField);
-  return value == null ? '' : value + '';
-};
+function createAccessorManager(component) {
+  var _component$props = component.props,
+      textField = _component$props.textField,
+      valueField = _component$props.valueField;
+  (0, _reactComponentManagers.spyOnComponent)(component, {
+    componentWillReceiveProps: function componentWillReceiveProps(props) {
+      textField = props.textField;
+      valueField = props.valueField;
+    }
+  });
+  return {
+    text: function text(item) {
+      return helpers.dataText(item, textField);
+    },
+    value: function value(item) {
+      return helpers.dataValue(item, valueField);
+    },
+    indexOf: function indexOf(data, item) {
+      return helpers.dataIndexOf(data, item, valueField);
+    },
+    matches: function matches(a, b) {
+      return helpers.valueMatcher(a, b, valueField);
+    },
+    findOrSelf: function findOrSelf(data, item) {
+      return helpers.dataItem(data, item, valueField);
+    },
+    find: function find(data, item) {
+      var idx = helpers.dataIndexOf(data, item, valueField);
 
-exports.dataText = dataText;
-
-function dataIndexOf(data, item, valueField) {
-  var idx = -1;
-
-  var isValueEqual = function isValueEqual(datum) {
-    return valueMatcher(item, datum, valueField);
+      if (~idx) {
+        return data[idx];
+      }
+    }
   };
-
-  while (++idx < data.length) {
-    var datum = data[idx];
-    if (datum === item || isValueEqual(datum)) return idx;
-  }
-
-  return -1;
-}
-/**
- * I don't know that the shallow equal makes sense here but am too afraid to
- * remove it.
- */
-
-
-function valueMatcher(a, b, valueField) {
-  return (0, _.isShallowEqual)(dataValue(a, valueField), dataValue(b, valueField));
 }
 
-function dataItem(data, item, valueField) {
-  var idx = dataIndexOf(data, item, valueField);
-  return idx !== -1 ? data[idx] : item;
-}
+module.exports = exports["default"];
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1996,24 +1895,33 @@ function dataItem(data, item, valueField) {
 exports.__esModule = true;
 exports.default = createScrollManager;
 
-var _scrollTo = _interopRequireDefault(__webpack_require__(81));
+var _scrollTo = _interopRequireDefault(__webpack_require__(80));
 
-var _reactComponentManagers = __webpack_require__(19);
+var _reactComponentManagers = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createScrollManager(inst, getScrollParent) {
+function createScrollManager(component, getScrollParent) {
   if (getScrollParent === void 0) {
     getScrollParent = function getScrollParent(list) {
       return list.parentNode;
     };
   }
 
-  var isMounted = (0, _reactComponentManagers.mountManager)(inst);
   var currentFocused, currentVisible, cancelScroll;
-
-  function handleScroll(selected, list, nextFocused) {
-    if (!isMounted()) return;
+  var onMove = component.props.onMove;
+  var mounted = true;
+  (0, _reactComponentManagers.spyOnComponent)(component, {
+    componentWillReceiveProps: function componentWillReceiveProps(_ref) {
+      var nextOnMove = _ref.onMove;
+      onMove = nextOnMove;
+    },
+    componentWillUnmount: function componentWillUnmount() {
+      mounted = false;
+    }
+  });
+  return function (selected, list, nextFocused) {
+    if (!mounted) return;
     var lastVisible = currentVisible;
     var lastItem = currentFocused;
     var shown, changed;
@@ -2023,20 +1931,18 @@ function createScrollManager(inst, getScrollParent) {
     shown = currentVisible && !lastVisible;
 
     if (shown || currentVisible && changed) {
-      if (this.props.onMove) this.props.onMove(selected, list, nextFocused);else {
+      if (onMove) onMove(selected, list, nextFocused);else {
         cancelScroll && cancelScroll();
         cancelScroll = (0, _scrollTo.default)(selected, false && getScrollParent(list));
       }
     }
-  }
-
-  return handleScroll.bind(inst);
+  };
 }
 
 module.exports = exports["default"];
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2092,7 +1998,7 @@ module.exports = invariant;
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2103,7 +2009,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = activeElement;
 
-var _ownerDocument = __webpack_require__(41);
+var _ownerDocument = __webpack_require__(40);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -2119,73 +2025,59 @@ function activeElement() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
+
 
 var LIFECYCLE_HOOKS = {
   componentWillMount: true,
   componentDidMount: true,
   componentWillReceiveProps: true,
-  getSnapshotBeforeUpdate: true,
   shouldComponentUpdate: true,
   componentWillUpdate: true,
   componentDidUpdate: true,
   componentWillUnmount: true,
 }
 
-var STATIC_HOOKS = {
-  getDerivedStateFromProps: true,
-}
-
-function wrap(base, method, isStatic) {
-  var before = true
+function wrap(base, method) {
+  var before = true;
 
   if (Array.isArray(method)) {
     before = method[0] !== 'after'
     method = method[1]
   }
 
-  if (!base) return method
+  if (!base)
+    return method;
 
   return function wrappedLifecyclehook() {
-    const ctx = isStatic ? null : this
-    before && method.apply(ctx, arguments)
-    base.apply(ctx, arguments)
-    !before && method.apply(ctx, arguments)
+    before && method.apply(this, arguments)
+    base.apply(this, arguments)
+    !before && method.apply(this, arguments)
   }
 }
 
 module.exports = function spyOnComponent(component, hooks) {
-  var originals = Object.create(null)
+  var originals = Object.create(null);
 
-  for (var key in hooks)
-    if (STATIC_HOOKS[key])
-      component.constructor[key] = wrap(
-        (originals[key] = component.constructor[key]),
-        hooks[key],
-        true
-      )
 
-  for (var key in hooks)
-    if (LIFECYCLE_HOOKS[key])
-      component[key] = wrap((originals[key] = component[key]), hooks[key])
+  for (var key in hooks) if (LIFECYCLE_HOOKS[key])
+    component[key] = wrap(
+      originals[key] = component[key],
+      hooks[key]
+    )
 
   return function reset(key) {
-    const subject = STATIC_HOOKS[key] ? component.constructor : component
-
-    if (key && key in originals) subject[key] = originals[key]
-    else for (var key in originals) subject[key] = originals[key]
+    if (key && {}.hasOwnProperty.call(originals, key))
+      component[key] = originals[key]
+    else for (var key in originals)
+      component[key] = originals[key]
   }
-}
-
-module.exports.mixin = function mixinIntoComponent(componentClass, hooks) {
-  spyOnComponent(componentClass.prototype, hooks)
-  return componentClass
 }
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2196,15 +2088,15 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireWildcard(__webpack_require__(1));
+var _react = _interopRequireWildcard(__webpack_require__(0));
 
-var _SlideDownTransition = _interopRequireDefault(__webpack_require__(43));
+var _SlideDownTransition = _interopRequireDefault(__webpack_require__(42));
 
 var _PropTypes = __webpack_require__(3);
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Popup.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Popup.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -2308,7 +2200,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2319,11 +2211,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = height;
 
-var _offset = __webpack_require__(50);
+var _offset = __webpack_require__(49);
 
 var _offset2 = _interopRequireDefault(_offset);
 
-var _isWindow = __webpack_require__(30);
+var _isWindow = __webpack_require__(29);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
@@ -2336,7 +2228,7 @@ function height(node, client) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2352,7 +2244,7 @@ function getWindow(node) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2364,11 +2256,11 @@ exports.filter = filter;
 exports.suggest = suggest;
 exports.propTypes = exports.presets = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _dataHelpers = __webpack_require__(23);
+var _dataHelpers = __webpack_require__(31);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -2509,49 +2401,66 @@ function suggest(data, _ref4) {
 }
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 exports.__esModule = true;
-exports.default = createAccessors;
+exports.dataIndexOf = dataIndexOf;
+exports.valueMatcher = valueMatcher;
+exports.dataItem = dataItem;
+exports.dataText = exports.dataValue = void 0;
 
-var helpers = _interopRequireWildcard(__webpack_require__(23));
+var _ = __webpack_require__(7);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+var dataValue = function dataValue(data, field) {
+  var value = data;
+  if (typeof field === 'function') value = field(data);else if (data == null) value = data;else if (typeof field === 'string' && typeof data === 'object' && field in data) value = data[field];
+  return value;
+};
 
-function createAccessors(_ref) {
-  var textField = _ref.textField,
-      valueField = _ref.valueField;
-  return {
-    text: function text(item) {
-      return helpers.dataText(item, textField);
-    },
-    value: function value(item) {
-      return helpers.dataValue(item, valueField);
-    },
-    indexOf: function indexOf(data, item) {
-      return helpers.dataIndexOf(data, item, valueField);
-    },
-    matches: function matches(a, b) {
-      return helpers.valueMatcher(a, b, valueField);
-    },
-    findOrSelf: function findOrSelf(data, item) {
-      return helpers.dataItem(data, item, valueField);
-    },
-    find: function find(data, item) {
-      var idx = helpers.dataIndexOf(data, item, valueField);
-      if (~idx) return data[idx];
-    }
+exports.dataValue = dataValue;
+
+var dataText = function dataText(item, textField) {
+  var value = dataValue(item, textField);
+  return value == null ? '' : value + '';
+};
+
+exports.dataText = dataText;
+
+function dataIndexOf(data, item, valueField) {
+  var idx = -1;
+
+  var isValueEqual = function isValueEqual(datum) {
+    return valueMatcher(item, datum, valueField);
   };
+
+  while (++idx < data.length) {
+    var datum = data[idx];
+    if (datum === item || isValueEqual(datum)) return idx;
+  }
+
+  return -1;
+}
+/**
+ * I don't know that the shallow equal makes sense here but am too afraid to
+ * remove it.
+ */
+
+
+function valueMatcher(a, b, valueField) {
+  return (0, _.isShallowEqual)(dataValue(a, valueField), dataValue(b, valueField));
 }
 
-module.exports = exports["default"];
+function dataItem(data, item, valueField) {
+  var idx = dataIndexOf(data, item, valueField);
+  return idx !== -1 ? data[idx] : item;
+}
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2560,15 +2469,15 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/CalendarView.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/CalendarView.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2754,7 +2663,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2763,7 +2672,7 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = spyOnMount;
 
-var _spyOnComponent = _interopRequireDefault(__webpack_require__(27));
+var _spyOnComponent = _interopRequireDefault(__webpack_require__(26));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2782,7 +2691,7 @@ function spyOnMount(componentInstance) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2793,25 +2702,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = style;
 
-var _camelizeStyle = __webpack_require__(49);
+var _camelizeStyle = __webpack_require__(48);
 
 var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
 
-var _hyphenateStyle = __webpack_require__(72);
+var _hyphenateStyle = __webpack_require__(71);
 
 var _hyphenateStyle2 = _interopRequireDefault(_hyphenateStyle);
 
-var _getComputedStyle2 = __webpack_require__(74);
+var _getComputedStyle2 = __webpack_require__(73);
 
 var _getComputedStyle3 = _interopRequireDefault(_getComputedStyle2);
 
-var _removeStyle = __webpack_require__(75);
+var _removeStyle = __webpack_require__(74);
 
 var _removeStyle2 = _interopRequireDefault(_removeStyle);
 
-var _properties = __webpack_require__(36);
+var _properties = __webpack_require__(35);
 
-var _isTransform = __webpack_require__(76);
+var _isTransform = __webpack_require__(75);
 
 var _isTransform2 = _interopRequireDefault(_isTransform);
 
@@ -2850,7 +2759,7 @@ function style(node, property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2861,7 +2770,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -2966,7 +2875,7 @@ function getTransitionProperties() {
 }
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2975,15 +2884,15 @@ function getTransitionProperties() {
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/ListOption.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/ListOption.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -3068,7 +2977,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3077,13 +2986,13 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Input.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Input.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3138,7 +3047,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3147,41 +3056,39 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(24));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
-
-var _activeElement = _interopRequireDefault(__webpack_require__(26));
+var _activeElement = _interopRequireDefault(__webpack_require__(25));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _deprecated = _interopRequireDefault(__webpack_require__(97));
+var _deprecated = _interopRequireDefault(__webpack_require__(96));
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _WidgetPicker = _interopRequireDefault(__webpack_require__(20));
+var _WidgetPicker = _interopRequireDefault(__webpack_require__(19));
 
-var _Popup = _interopRequireDefault(__webpack_require__(28));
+var _Popup = _interopRequireDefault(__webpack_require__(27));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
-var _Calendar = _interopRequireDefault(__webpack_require__(56));
+var _Calendar = _interopRequireDefault(__webpack_require__(55));
 
-var _DateTimePickerInput = _interopRequireDefault(__webpack_require__(98));
+var _DateTimePickerInput = _interopRequireDefault(__webpack_require__(97));
 
-var _Select = _interopRequireDefault(__webpack_require__(21));
+var _Select = _interopRequireDefault(__webpack_require__(20));
 
-var _TimeList = _interopRequireDefault(__webpack_require__(99));
+var _TimeList = _interopRequireDefault(__webpack_require__(98));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
@@ -3189,9 +3096,9 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
-var _scrollManager = _interopRequireDefault(__webpack_require__(24));
+var _scrollManager = _interopRequireDefault(__webpack_require__(23));
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
@@ -3200,7 +3107,6 @@ var _localizers = __webpack_require__(5);
 var _widgetHelpers = __webpack_require__(9);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
@@ -3208,9 +3114,9 @@ var _class,
     _descriptor5,
     _descriptor6,
     _descriptor7,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/DateTimePicker.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/DateTimePicker.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -3384,7 +3290,7 @@ var propTypes = _extends({}, _Calendar.default.ControlledComponent.propTypes, {
 
 });
 
-var DateTimePicker = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var DateTimePicker = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(DateTimePicker, _React$Component);
@@ -3450,6 +3356,7 @@ function (_React$Component) {
       return null;
     };
 
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.inputId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_input');
     _this.dateId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_date');
     _this.listId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox');
@@ -3462,20 +3369,17 @@ function (_React$Component) {
       }
     });
     _this.state = {
-      focused: false,
-      messages: (0, _messages.getMessages)(_this.props.messages)
+      focused: false
     };
     return _this;
   }
 
-  DateTimePicker.getDerivedStateFromProps = function getDerivedStateFromProps(_ref) {
-    var messages = _ref.messages;
-    return {
-      messages: (0, _messages.getMessages)(messages)
-    };
-  };
-
   var _proto = DateTimePicker.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
+    var messages = _ref.messages;
+    this.messages = (0, _messages.getMessages)(messages);
+  };
 
   _proto.renderInput = function renderInput(owns) {
     var _props = this.props,
@@ -3526,7 +3430,7 @@ function (_React$Component) {
       "aria-owns": owns,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 354
+        lineNumber: 353
       },
       __self: this
     }));
@@ -3543,12 +3447,12 @@ function (_React$Component) {
       return null;
     }
 
-    var messages = this.state.messages;
+    var messages = this.messages;
     return _react.default.createElement(_Select.default, {
       bordered: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 391
+        lineNumber: 390
       },
       __self: this
     }, date && _react.default.createElement(_Button.default, {
@@ -3558,7 +3462,7 @@ function (_React$Component) {
       onClick: this.handleCalendarClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 393
+        lineNumber: 392
       },
       __self: this
     }), time && _react.default.createElement(_Button.default, {
@@ -3568,7 +3472,7 @@ function (_React$Component) {
       onClick: this.handleTimeClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 401
+        lineNumber: 400
       },
       __self: this
     }));
@@ -3597,7 +3501,7 @@ function (_React$Component) {
       transition: popupTransition,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 428
+        lineNumber: 427
       },
       __self: this
     }, _react.default.createElement(_Calendar.default, _extends({}, calendarProps, {
@@ -3620,7 +3524,7 @@ function (_React$Component) {
       ref: this.attachCalRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 434
+        lineNumber: 433
       },
       __self: this
     })));
@@ -3644,7 +3548,6 @@ function (_React$Component) {
         culture = _props4.culture,
         timeFormat = _props4.timeFormat,
         timeComponent = _props4.timeComponent,
-        timeListProps = _props4.timeListProps,
         popupTransition = _props4.popupTransition;
     return _react.default.createElement(_Popup.default, {
       dropUp: dropUp,
@@ -3655,13 +3558,13 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 475
+        lineNumber: 473
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 481
+        lineNumber: 479
       },
       __self: this
     }, _react.default.createElement(_TimeList.default, {
@@ -3669,7 +3572,6 @@ function (_React$Component) {
       min: min,
       max: max,
       step: step,
-      listProps: timeListProps,
       currentDate: currentDate,
       activeId: activeOptionId,
       format: timeFormat,
@@ -3682,11 +3584,11 @@ function (_React$Component) {
       "aria-labelledby": inputId,
       "aria-live": open && 'polite',
       "aria-hidden": !open,
-      messages: this.state.messages,
+      messages: this.messages,
       ref: this.attachTimeRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 482
+        lineNumber: 480
       },
       __self: this
     })));
@@ -3720,13 +3622,13 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-datetime-picker'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 525
+        lineNumber: 522
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 538
+        lineNumber: 535
       },
       __self: this
     }, this.renderInput(owns.trim()), this.renderButtons()), !!(shouldRenderList && time) && this.renderTimeList(), !!(shouldRenderList && date) && this.renderCalendar());
@@ -3767,14 +3669,14 @@ function (_React$Component) {
   };
 
   return DateTimePicker;
-}(_react.default.Component), _class3.displayName = 'DateTimePicker', _class3.propTypes = propTypes, _class3.defaultProps = _extends({}, _Calendar.default.ControlledComponent.defaultProps, {
+}(_react.default.Component), _class2.displayName = 'DateTimePicker', _class2.propTypes = propTypes, _class2.defaultProps = _extends({}, _Calendar.default.ControlledComponent.defaultProps, {
   value: null,
   min: new Date(1900, 0, 1),
   max: new Date(2099, 11, 31),
   date: true,
   time: true,
   open: false
-}), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleChange", [_interaction.widgetEditable], {
+}), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleChange", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -3795,7 +3697,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
@@ -3822,7 +3724,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyPress", [_interaction.widgetEditable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "handleKeyPress", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this6 = this;
@@ -3832,7 +3734,7 @@ function (_React$Component) {
       if (e.defaultPrevented) return;
     };
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "handleDateSelect", [_interaction.widgetEditable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "handleDateSelect", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this7 = this;
@@ -3851,7 +3753,7 @@ function (_React$Component) {
       _this7.focus();
     };
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "handleTimeSelect", [_interaction.widgetEditable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "handleTimeSelect", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this8 = this;
@@ -3870,7 +3772,7 @@ function (_React$Component) {
       _this8.focus();
     };
   }
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "handleCalendarClick", [_interaction.widgetEditable], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "handleCalendarClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this9 = this;
@@ -3881,7 +3783,7 @@ function (_React$Component) {
       _this9.toggle('date');
     };
   }
-}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "handleTimeClick", [_interaction.widgetEditable], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "handleTimeClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this10 = this;
@@ -3892,7 +3794,7 @@ function (_React$Component) {
       _this10.toggle('time');
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(DateTimePicker, {
   open: 'onToggle',
@@ -3922,7 +3824,7 @@ function dateOrNull(dt) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3989,7 +3891,7 @@ module.exports = warning;
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4005,7 +3907,7 @@ function ownerDocument(node) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4014,9 +3916,9 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = createTimeoutManager;
 
-var _spyOnComponent = _interopRequireDefault(__webpack_require__(27));
+var _spyOnComponent = _interopRequireDefault(__webpack_require__(26));
 
-var _mountManager = _interopRequireDefault(__webpack_require__(34));
+var _mountManager = _interopRequireDefault(__webpack_require__(33));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4048,7 +3950,7 @@ function createTimeoutManager(componentInstance) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4059,22 +3961,22 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _events = _interopRequireDefault(__webpack_require__(44));
+var _events = _interopRequireDefault(__webpack_require__(43));
 
-var _style = _interopRequireDefault(__webpack_require__(35));
+var _style = _interopRequireDefault(__webpack_require__(34));
 
-var _height = _interopRequireDefault(__webpack_require__(29));
+var _height = _interopRequireDefault(__webpack_require__(28));
 
-var _properties = __webpack_require__(36);
+var _properties = __webpack_require__(35);
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _Transition = _interopRequireWildcard(__webpack_require__(51));
+var _Transition = _interopRequireWildcard(__webpack_require__(50));
 
 var _transitionClasses,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/SlideDownTransition.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/SlideDownTransition.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -4204,7 +4106,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4215,19 +4117,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.listen = exports.filter = exports.off = exports.on = undefined;
 
-var _on = __webpack_require__(45);
+var _on = __webpack_require__(44);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _off = __webpack_require__(46);
+var _off = __webpack_require__(45);
 
 var _off2 = _interopRequireDefault(_off);
 
-var _filter = __webpack_require__(69);
+var _filter = __webpack_require__(68);
 
 var _filter2 = _interopRequireDefault(_filter);
 
-var _listen = __webpack_require__(70);
+var _listen = __webpack_require__(69);
 
 var _listen2 = _interopRequireDefault(_listen);
 
@@ -4240,7 +4142,7 @@ exports.listen = _listen2.default;
 exports.default = { on: _on2.default, off: _off2.default, filter: _filter2.default, listen: _listen2.default };
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4250,7 +4152,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -4277,7 +4179,7 @@ exports.default = on;
 module.exports = exports['default'];
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4287,7 +4189,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -4308,7 +4210,7 @@ exports.default = off;
 module.exports = exports['default'];
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4318,7 +4220,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -4348,7 +4250,7 @@ function fallback(context, node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4387,7 +4289,7 @@ function qsa(element, selector) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4398,7 +4300,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = camelizeStyleName;
 
-var _camelize = __webpack_require__(71);
+var _camelize = __webpack_require__(70);
 
 var _camelize2 = _interopRequireDefault(_camelize);
 
@@ -4415,7 +4317,7 @@ function camelizeStyleName(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4426,15 +4328,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = offset;
 
-var _contains = __webpack_require__(47);
+var _contains = __webpack_require__(46);
 
 var _contains2 = _interopRequireDefault(_contains);
 
-var _isWindow = __webpack_require__(30);
+var _isWindow = __webpack_require__(29);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
-var _ownerDocument = __webpack_require__(41);
+var _ownerDocument = __webpack_require__(40);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -4466,7 +4368,7 @@ function offset(node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4475,11 +4377,11 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = undefined;
 
-var _propTypes = __webpack_require__(0);
+var _propTypes = __webpack_require__(1);
 
 var PropTypes = _interopRequireWildcard(_propTypes);
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -4487,7 +4389,7 @@ var _reactDom = __webpack_require__(6);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _PropTypes = __webpack_require__(77);
+var _PropTypes = __webpack_require__(76);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4540,7 +4442,7 @@ var EXITING = exports.EXITING = 'exiting';
  *         ...defaultStyle,
  *         ...transitionStyles[state]
  *       }}>
- *         I'm a fade Transition!
+ *         I'm A fade Transition!
  *       </div>
  *     )}
  *   </Transition>
@@ -4552,10 +4454,10 @@ var EXITING = exports.EXITING = 'exiting';
  * component (such as by adding styles or classes) when it changes states.
  *
  * There are 4 main states a Transition can be in:
- *  - `entering`
- *  - `entered`
- *  - `exiting`
- *  - `exited`
+ *  - `ENTERING`
+ *  - `ENTERED`
+ *  - `EXITING`
+ *  - `EXITED`
  *
  * Transition state is toggled via the `in` prop. When `true` the component begins the
  * "Enter" stage. During this stage, the component will shift from its current transition state,
@@ -4580,24 +4482,9 @@ var EXITING = exports.EXITING = 'exiting';
  * ```
  *
  * When the button is clicked the component will shift to the `'entering'` state and
- * stay there for 500ms (the value of `timeout`) before it finally switches to `'entered'`.
+ * stay there for 500ms (the value of `timeout`) when finally switches to `'entered'`.
  *
  * When `in` is `false` the same thing happens except the state moves from `'exiting'` to `'exited'`.
- *
- * > **Note**: For simpler transitions the `Transition` component might be enough, but
- * > take into account that it's platform-agnostic, while the `CSSTransition` component
- * > [forces reflows](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
- * > in order to make more complex transitions more predictable. For example, even though
- * > classes `example-enter` and `example-enter-active` are applied immediately one after
- * > another, you can still transition from one to the other because of the forced reflow
- * > (read [this issue](https://github.com/reactjs/react-transition-group/issues/159#issuecomment-322761171)
- * > for more info). Take this into account when choosing between `Transition` and
- * > `CSSTransition`.
- *
- * ## Example
- *
- * <iframe src="https://codesandbox.io/embed/741op4mmj0?fontsize=14" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
- *
  */
 
 var Transition = function (_React$Component) {
@@ -4878,7 +4765,7 @@ Transition.propTypes =  false ? {
   /**
    * A `function` child can be used instead of a React element.
    * This function is called with the current transition status
-   * ('entering', 'entered', 'exiting', 'exited', 'unmounted'), which can be used
+   * ('entering', 'entered', 'exiting', 'exited', 'unmounted'), which can used
    * to apply context specific props to a component.
    *
    * ```jsx
@@ -4931,7 +4818,7 @@ Transition.propTypes =  false ? {
 
   /**
    * The duration of the transition, in milliseconds.
-   * Required unless `addEndListener` is provided
+   * Required unless `addEventListener` is provided
    *
    * You may specify a single timeout for all transitions like: `timeout={500}`,
    * or individually like:
@@ -5044,7 +4931,7 @@ Transition.EXITING = 4;
 exports.default = Transition;
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5093,7 +4980,7 @@ function createChainableTypeChecker(validate) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5102,15 +4989,15 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
 var _widgetHelpers = __webpack_require__(9);
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Listbox.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Listbox.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5179,7 +5066,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5188,15 +5075,15 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var PropTypes = _interopRequireWildcard(__webpack_require__(0));
+var PropTypes = _interopRequireWildcard(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _Listbox = _interopRequireDefault(__webpack_require__(53));
+var _Listbox = _interopRequireDefault(__webpack_require__(52));
 
-var _ListOption = _interopRequireDefault(__webpack_require__(37));
+var _ListOption = _interopRequireDefault(__webpack_require__(36));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/AddToListOption.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/AddToListOption.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5247,7 +5134,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5258,11 +5145,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = matches;
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
-var _querySelectorAll = __webpack_require__(48);
+var _querySelectorAll = __webpack_require__(47);
 
 var _querySelectorAll2 = _interopRequireDefault(_querySelectorAll);
 
@@ -5296,7 +5183,7 @@ function ie8MatchesSelector(node, selector) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5305,37 +5192,35 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
-
-var _reactComponentManagers = __webpack_require__(19);
+var _reactComponentManagers = __webpack_require__(8);
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _Header = _interopRequireDefault(__webpack_require__(87));
+var _Header = _interopRequireDefault(__webpack_require__(86));
 
-var _Footer = _interopRequireDefault(__webpack_require__(88));
+var _Footer = _interopRequireDefault(__webpack_require__(87));
 
-var _Month = _interopRequireDefault(__webpack_require__(89));
+var _Month = _interopRequireDefault(__webpack_require__(88));
 
-var _Year = _interopRequireDefault(__webpack_require__(91));
+var _Year = _interopRequireDefault(__webpack_require__(90));
 
-var _Decade = _interopRequireDefault(__webpack_require__(92));
+var _Decade = _interopRequireDefault(__webpack_require__(91));
 
-var _Century = _interopRequireDefault(__webpack_require__(93));
+var _Century = _interopRequireDefault(__webpack_require__(92));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
-var _SlideTransitionGroup = _interopRequireDefault(__webpack_require__(57));
+var _SlideTransitionGroup = _interopRequireDefault(__webpack_require__(56));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
@@ -5349,19 +5234,18 @@ var _dates = _interopRequireDefault(__webpack_require__(13));
 
 var _widgetHelpers = __webpack_require__(9);
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
     _descriptor4,
     _descriptor5,
     _descriptor6,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Calendar.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Calendar.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -5411,13 +5295,6 @@ var MULTIPLIER = {
   decade: 10,
   century: 100
 };
-
-function inRangeValue(_value, min, max) {
-  var value = dateOrNull(_value);
-  if (value === null) return value;
-  return _dates.default.max(_dates.default.min(value, max), min);
-}
-
 var propTypes = {
   /** @ignore */
   activeId: _propTypes.default.string,
@@ -5581,8 +5458,7 @@ var propTypes = {
    */
 
 };
-
-var Calendar = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var Calendar = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(Calendar, _React$Component);
@@ -5624,6 +5500,7 @@ function (_React$Component) {
 
     _initializerDefineProperty(_this, "handleKeyDown", _descriptor6, _assertThisInitialized(_this));
 
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.viewId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_calendar');
     _this.labelId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_calendar_label');
     _this.activeId = _this.props.activeId || (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_calendar_active_cell');
@@ -5641,62 +5518,49 @@ function (_React$Component) {
     return _this;
   }
 
-  Calendar.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+  var _proto = Calendar.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
     var messages = _ref.messages,
         view = _ref.view,
         views = _ref.views,
         value = _ref.value,
         currentDate = _ref.currentDate;
+    var val = this.inRangeValue(value);
+    this.messages = (0, _messages.getMessages)(messages);
     view = view || views[0];
-    var slideDirection = prevState.slideDirection,
-        lastView = prevState.view,
-        lastDate = prevState.currentDate;
-
-    if (lastView !== view) {
-      slideDirection = views.indexOf(lastView) > views.indexOf(view) ? 'top' : 'bottom';
-    } else if (lastDate !== currentDate) {
-      slideDirection = _dates.default.gt(currentDate, lastDate) ? 'left' : 'right';
-    }
-
-    return {
+    this.setState({
       view: view,
-      slideDirection: slideDirection,
-      messages: (0, _messages.getMessages)(messages),
-      currentDate: currentDate || value || new Date()
-    };
-  };
+      slideDirection: this.getSlideDirection({
+        view: view,
+        views: views,
+        currentDate: currentDate
+      })
+    }); //if the value changes reset views to the new one
 
-  var _proto = Calendar.prototype;
-
-  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-    var _props = this.props,
-        value = _props.value,
-        min = _props.min,
-        max = _props.max;
-    var view = this.state.view;
-    value = inRangeValue(value, min, max);
-    if (!_dates.default.eq(value, dateOrNull(prevProps.value), VIEW_UNIT[view])) this.maybeSetCurrentDate(value);
+    if (!_dates.default.eq(val, dateOrNull(this.props.value), VIEW_UNIT[view])) {
+      this.setCurrentDate(val, currentDate);
+    }
   };
 
   _proto.render = function render() {
-    var _props2 = this.props,
-        className = _props2.className,
-        value = _props2.value,
-        footerFormat = _props2.footerFormat,
-        disabled = _props2.disabled,
-        readOnly = _props2.readOnly,
-        footer = _props2.footer,
-        views = _props2.views,
-        min = _props2.min,
-        max = _props2.max,
-        culture = _props2.culture,
-        tabIndex = _props2.tabIndex;
+    var _props = this.props,
+        className = _props.className,
+        value = _props.value,
+        footerFormat = _props.footerFormat,
+        disabled = _props.disabled,
+        readOnly = _props.readOnly,
+        footer = _props.footer,
+        views = _props.views,
+        min = _props.min,
+        max = _props.max,
+        culture = _props.culture,
+        tabIndex = _props.tabIndex;
     var _state = this.state,
-        currentDate = _state.currentDate,
         view = _state.view,
         slideDirection = _state.slideDirection,
-        focused = _state.focused,
-        messages = _state.messages;
+        focused = _state.focused;
+    var currentDate = this.getCurrentDate();
     var View = VIEW[view],
         todaysDate = new Date(),
         todayNotInRange = !_dates.default.inRange(todaysDate, min, max, view);
@@ -5719,14 +5583,14 @@ function (_React$Component) {
       "aria-activedescendant": this.activeId,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 446
+        lineNumber: 428
       },
       __self: this
     }), _react.default.createElement(_Header.default, {
       isRtl: this.isRtl(),
       label: this.getHeaderLabel(),
       labelId: this.labelId,
-      messages: messages,
+      messages: this.messages,
       upDisabled: isDisabled || view === last(views),
       prevDisabled: isDisabled || !_dates.default.inRange(this.nextDate('LEFT'), min, max, view),
       nextDisabled: isDisabled || !_dates.default.inRange(this.nextDate('RIGHT'), min, max, view),
@@ -5735,14 +5599,14 @@ function (_React$Component) {
       onMoveRight: this.handleMoveForward,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 459
+        lineNumber: 441
       },
       __self: this
     }), _react.default.createElement(Calendar.Transition, {
       direction: slideDirection,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 475
+        lineNumber: 457
       },
       __self: this
     }, _react.default.createElement(View, _extends({}, viewProps, {
@@ -5758,7 +5622,7 @@ function (_React$Component) {
       "aria-labelledby": this.labelId,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 476
+        lineNumber: 458
       },
       __self: this
     }))), footer && _react.default.createElement(_Footer.default, {
@@ -5770,31 +5634,29 @@ function (_React$Component) {
       onClick: this.handleFooterClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 491
+        lineNumber: 473
       },
       __self: this
     }));
   };
 
   _proto.navigate = function navigate(direction, date) {
-    var _props3 = this.props,
-        views = _props3.views,
-        min = _props3.min,
-        max = _props3.max,
-        onNavigate = _props3.onNavigate,
-        onViewChange = _props3.onViewChange;
-    var _state2 = this.state,
-        view = _state2.view,
-        currentDate = _state2.currentDate;
+    var _props2 = this.props,
+        views = _props2.views,
+        min = _props2.min,
+        max = _props2.max,
+        onNavigate = _props2.onNavigate,
+        onViewChange = _props2.onViewChange;
+    var view = this.state.view;
     var slideDir = direction === 'LEFT' || direction === 'UP' ? 'right' : 'left';
     if (direction === 'UP') view = views[views.indexOf(view) + 1] || view;
     if (direction === 'DOWN') view = views[views.indexOf(view) - 1] || view;
-    if (!date) date = ['LEFT', 'RIGHT'].indexOf(direction) !== -1 ? this.nextDate(direction) : currentDate;
+    if (!date) date = ['LEFT', 'RIGHT'].indexOf(direction) !== -1 ? this.nextDate(direction) : this.getCurrentDate();
 
     if (_dates.default.inRange(date, min, max, view)) {
       (0, _widgetHelpers.notify)(onNavigate, [date, slideDir, view]);
       this.focus(true);
-      this.maybeSetCurrentDate(date);
+      this.setCurrentDate(date);
       (0, _widgetHelpers.notify)(onViewChange, [view]);
     }
   };
@@ -5803,38 +5665,37 @@ function (_React$Component) {
     if (+this.props.tabIndex > -1) (0, _reactDom.findDOMNode)(this).focus();
   };
 
-  _proto.maybeSetCurrentDate = function maybeSetCurrentDate(date) {
-    var _props4 = this.props,
-        min = _props4.min,
-        max = _props4.max;
-    var _state3 = this.state,
-        view = _state3.view,
-        currentDate = _state3.currentDate;
-    var inRangeDate = inRangeValue(date ? new Date(date) : currentDate, min, max);
-    if (date === currentDate || _dates.default.eq(inRangeDate, dateOrNull(currentDate), VIEW_UNIT[view])) return;
+  _proto.getCurrentDate = function getCurrentDate() {
+    return this.props.currentDate || this.props.value || new Date();
+  };
+
+  _proto.setCurrentDate = function setCurrentDate(date, currentDate) {
+    if (currentDate === void 0) {
+      currentDate = this.getCurrentDate();
+    }
+
+    var inRangeDate = this.inRangeValue(date ? new Date(date) : currentDate);
+    if (_dates.default.eq(inRangeDate, dateOrNull(currentDate), VIEW_UNIT[this.state.view])) return;
     (0, _widgetHelpers.notify)(this.props.onCurrentDateChange, inRangeDate);
   };
 
   _proto.nextDate = function nextDate(direction) {
-    var method = direction === 'LEFT' ? 'subtract' : 'add';
-    var _state4 = this.state,
-        currentDate = _state4.currentDate,
-        view = _state4.view;
-    var unit = view === 'month' ? view : 'year';
-    var multi = MULTIPLIER[view] || 1;
-    return _dates.default[method](currentDate, 1 * multi, unit);
+    var method = direction === 'LEFT' ? 'subtract' : 'add',
+        view = this.state.view,
+        unit = view === 'month' ? view : 'year',
+        multi = MULTIPLIER[view] || 1;
+    return _dates.default[method](this.getCurrentDate(), 1 * multi, unit);
   };
 
   _proto.getHeaderLabel = function getHeaderLabel() {
-    var _props5 = this.props,
-        culture = _props5.culture,
-        decadeFormat = _props5.decadeFormat,
-        yearFormat = _props5.yearFormat,
-        headerFormat = _props5.headerFormat,
-        centuryFormat = _props5.centuryFormat;
-    var _state5 = this.state,
-        currentDate = _state5.currentDate,
-        view = _state5.view;
+    var _props3 = this.props,
+        culture = _props3.culture,
+        decadeFormat = _props3.decadeFormat,
+        yearFormat = _props3.yearFormat,
+        headerFormat = _props3.headerFormat,
+        centuryFormat = _props3.centuryFormat,
+        view = this.state.view,
+        currentDate = this.getCurrentDate();
 
     switch (view) {
       case 'month':
@@ -5855,6 +5716,12 @@ function (_React$Component) {
     }
   };
 
+  _proto.inRangeValue = function inRangeValue(_value) {
+    var value = dateOrNull(_value);
+    if (value === null) return value;
+    return _dates.default.max(_dates.default.min(value, this.props.max), this.props.min);
+  };
+
   _proto.isRtl = function isRtl() {
     return !!(this.props.isRtl || this.context && this.context.isRtl);
   };
@@ -5867,17 +5734,37 @@ function (_React$Component) {
     return views.indexOf(next) !== -1;
   };
 
+  _proto.getSlideDirection = function getSlideDirection(_ref2) {
+    var view = _ref2.view,
+        currentDate = _ref2.currentDate,
+        views = _ref2.views;
+    var lastDate = this.props.currentDate;
+    var _state2 = this.state,
+        slideDirection = _state2.slideDirection,
+        lastView = _state2.view;
+
+    if (lastView !== view) {
+      return views.indexOf(lastView) > views.indexOf(view) ? 'top' : 'bottom';
+    }
+
+    if (lastDate !== currentDate) {
+      return _dates.default.gt(currentDate, lastDate) ? 'left' : 'right';
+    }
+
+    return slideDirection;
+  };
+
   return Calendar;
-}(_react.default.Component), _class3.displayName = 'Calendar', _class3.propTypes = propTypes, _class3.defaultProps = {
+}(_react.default.Component), _class2.displayName = 'Calendar', _class2.propTypes = propTypes, _class2.defaultProps = {
   value: null,
   min: new Date(1900, 0, 1),
   max: new Date(2099, 11, 31),
   views: VIEW_OPTIONS,
   tabIndex: '0',
   footer: true
-}, _class3.contextTypes = {
+}, _class2.contextTypes = {
   isRtl: _propTypes.default.bool
-}, _class3.Transition = _SlideTransitionGroup.default, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleViewChange", [_interaction.widgetEditable], {
+}, _class2.Transition = _SlideTransitionGroup.default, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleViewChange", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this2 = this;
@@ -5886,7 +5773,7 @@ function (_React$Component) {
       _this2.navigate('UP');
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleMoveBack", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleMoveBack", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this3 = this;
@@ -5895,7 +5782,7 @@ function (_React$Component) {
       _this3.navigate('LEFT');
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "handleMoveForward", [_interaction.widgetEditable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "handleMoveForward", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -5904,7 +5791,7 @@ function (_React$Component) {
       _this4.navigate('RIGHT');
     };
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "handleChange", [_interaction.widgetEditable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "handleChange", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
@@ -5916,7 +5803,7 @@ function (_React$Component) {
       var view = _this5.state.view;
 
       if (views[0] === view) {
-        _this5.maybeSetCurrentDate(date);
+        _this5.setCurrentDate(date);
 
         (0, _widgetHelpers.notify)(onChange, date);
 
@@ -5928,7 +5815,7 @@ function (_React$Component) {
       _this5.navigate('DOWN', date);
     };
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "handleFooterClick", [_interaction.widgetEditable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "handleFooterClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this6 = this;
@@ -5945,25 +5832,24 @@ function (_React$Component) {
       if (_dates.default.inRange(date, min, max, firstView)) {
         _this6.focus();
 
-        _this6.maybeSetCurrentDate(date);
+        _this6.setCurrentDate(date);
 
         (0, _widgetHelpers.notify)(onViewChange, [firstView]);
       }
     };
   }
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this7 = this;
 
     return function (e) {
-      var _this7$state = _this7.state,
-          currentDate = _this7$state.currentDate,
-          view = _this7$state.view;
-      var ctrl = e.ctrlKey || e.metaKey;
-      var key = e.key;
-      var direction = ARROWS_TO_DIRECTION[key];
-      var unit = VIEW_UNIT[view];
+      var ctrl = e.ctrlKey || e.metaKey,
+          key = e.key,
+          direction = ARROWS_TO_DIRECTION[key],
+          currentDate = _this7.getCurrentDate(),
+          view = _this7.state.view,
+          unit = VIEW_UNIT[view];
 
       if (key === 'Enter') {
         e.preventDefault();
@@ -5981,7 +5867,7 @@ function (_React$Component) {
 
           if (!_dates.default.eq(currentDate, nextDate, unit)) {
             e.preventDefault();
-            if (_dates.default.gt(nextDate, currentDate, view)) _this7.navigate('RIGHT', nextDate);else if (_dates.default.lt(nextDate, currentDate, view)) _this7.navigate('LEFT', nextDate);else _this7.maybeSetCurrentDate(nextDate);
+            if (_dates.default.gt(nextDate, currentDate, view)) _this7.navigate('RIGHT', nextDate);else if (_dates.default.lt(nextDate, currentDate, view)) _this7.navigate('LEFT', nextDate);else _this7.setCurrentDate(nextDate);
           }
         }
       }
@@ -5989,7 +5875,7 @@ function (_React$Component) {
       (0, _widgetHelpers.notify)(_this7.props.onKeyDown, [e]);
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 function dateOrNull(dt) {
   if (dt && !isNaN(dt.getTime())) return dt;
@@ -6006,7 +5892,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6017,21 +5903,21 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _events = _interopRequireDefault(__webpack_require__(44));
+var _events = _interopRequireDefault(__webpack_require__(43));
 
-var _style = _interopRequireDefault(__webpack_require__(35));
+var _style = _interopRequireDefault(__webpack_require__(34));
 
-var _height = _interopRequireDefault(__webpack_require__(29));
+var _height = _interopRequireDefault(__webpack_require__(28));
 
-var _properties = __webpack_require__(36);
+var _properties = __webpack_require__(35);
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _TransitionGroup = _interopRequireDefault(__webpack_require__(94));
+var _TransitionGroup = _interopRequireDefault(__webpack_require__(93));
 
-var _Transition = _interopRequireWildcard(__webpack_require__(51));
+var _Transition = _interopRequireWildcard(__webpack_require__(50));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
@@ -6039,7 +5925,7 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var _transitionStyle,
     _transitionClasses,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/SlideTransitionGroup.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/SlideTransitionGroup.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -6208,7 +6094,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6217,47 +6103,47 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.setNumberLocalizer = exports.setDateLocalizer = exports.setLocalizers = exports.utils = void 0;
 
-var _configure = _interopRequireDefault(__webpack_require__(59));
+var _configure = _interopRequireDefault(__webpack_require__(58));
 
-var _DropdownList = _interopRequireDefault(__webpack_require__(64));
+var _DropdownList = _interopRequireDefault(__webpack_require__(63));
 
 exports.DropdownList = _DropdownList.default;
 
-var _Combobox = _interopRequireDefault(__webpack_require__(85));
+var _Combobox = _interopRequireDefault(__webpack_require__(84));
 
 exports.Combobox = _Combobox.default;
 
-var _Calendar = _interopRequireDefault(__webpack_require__(56));
+var _Calendar = _interopRequireDefault(__webpack_require__(55));
 
 exports.Calendar = _Calendar.default;
 
-var _DatePicker = _interopRequireDefault(__webpack_require__(96));
+var _DatePicker = _interopRequireDefault(__webpack_require__(95));
 
 exports.DatePicker = _DatePicker.default;
 
-var _TimePicker = _interopRequireDefault(__webpack_require__(100));
+var _TimePicker = _interopRequireDefault(__webpack_require__(99));
 
 exports.TimePicker = _TimePicker.default;
 
-var _DateTimePicker = _interopRequireDefault(__webpack_require__(39));
+var _DateTimePicker = _interopRequireDefault(__webpack_require__(38));
 
 exports.DateTimePicker = _DateTimePicker.default;
 
-var _NumberPicker = _interopRequireDefault(__webpack_require__(101));
+var _NumberPicker = _interopRequireDefault(__webpack_require__(100));
 
 exports.NumberPicker = _NumberPicker.default;
 
-var _Multiselect = _interopRequireDefault(__webpack_require__(103));
+var _Multiselect = _interopRequireDefault(__webpack_require__(102));
 
 exports.Multiselect = _Multiselect.default;
 
-var _SelectList = _interopRequireDefault(__webpack_require__(108));
+var _SelectList = _interopRequireDefault(__webpack_require__(107));
 
 exports.SelectList = _SelectList.default;
 
-var _SlideTransitionGroup = _interopRequireDefault(__webpack_require__(57));
+var _SlideTransitionGroup = _interopRequireDefault(__webpack_require__(56));
 
-var _SlideDownTransition = _interopRequireDefault(__webpack_require__(43));
+var _SlideDownTransition = _interopRequireDefault(__webpack_require__(42));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6275,7 +6161,7 @@ var utils = {
 exports.utils = utils;
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6302,7 +6188,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6315,9 +6201,9 @@ module.exports = exports["default"];
 
 
 
-var emptyFunction = __webpack_require__(61);
-var invariant = __webpack_require__(62);
-var ReactPropTypesSecret = __webpack_require__(63);
+var emptyFunction = __webpack_require__(60);
+var invariant = __webpack_require__(61);
+var ReactPropTypesSecret = __webpack_require__(62);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -6367,7 +6253,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6409,7 +6295,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6468,7 +6354,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6487,7 +6373,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6496,66 +6382,63 @@ module.exports = ReactPropTypesSecret;
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _activeElement = _interopRequireDefault(__webpack_require__(26));
+var _activeElement = _interopRequireDefault(__webpack_require__(25));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _reactComponentManagers = __webpack_require__(19);
-
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
+var _reactComponentManagers = __webpack_require__(8);
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _WidgetPicker = _interopRequireDefault(__webpack_require__(20));
+var _WidgetPicker = _interopRequireDefault(__webpack_require__(19));
 
-var _Select = _interopRequireDefault(__webpack_require__(21));
+var _Select = _interopRequireDefault(__webpack_require__(20));
 
-var _Popup = _interopRequireDefault(__webpack_require__(28));
+var _Popup = _interopRequireDefault(__webpack_require__(27));
 
-var _List = _interopRequireDefault(__webpack_require__(22));
+var _List = _interopRequireDefault(__webpack_require__(21));
 
-var _AddToListOption = _interopRequireDefault(__webpack_require__(54));
+var _AddToListOption = _interopRequireDefault(__webpack_require__(53));
 
-var _DropdownListInput = _interopRequireDefault(__webpack_require__(80));
+var _DropdownListInput = _interopRequireDefault(__webpack_require__(79));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var Filter = _interopRequireWildcard(__webpack_require__(31));
+var Filter = _interopRequireWildcard(__webpack_require__(30));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
+var _listDataManager = _interopRequireDefault(__webpack_require__(18));
+
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _reduceToListState = _interopRequireDefault(__webpack_require__(18));
+var _accessorManager = _interopRequireDefault(__webpack_require__(22));
 
-var _getAccessors = _interopRequireDefault(__webpack_require__(32));
+var _scrollManager = _interopRequireDefault(__webpack_require__(23));
 
-var _scrollManager = _interopRequireDefault(__webpack_require__(24));
-
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _widgetHelpers = __webpack_require__(9);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
     _descriptor4,
     _descriptor5,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/DropdownList.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/DropdownList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -6589,10 +6472,11 @@ var CREATE_OPTION = {};
  * ---
  *
  * A `<select>` replacement for single value lists.
+
  * @public
  */
 
-var DropdownList = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var DropdownList = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(DropdownList, _React$Component);
@@ -6646,51 +6530,55 @@ function (_React$Component) {
     };
 
     (0, _reactComponentManagers.autoFocus)(_assertThisInitialized(_this));
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.inputId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_input');
     _this.listId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox');
     _this.activeId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox_active_option');
+    _this.list = (0, _listDataManager.default)(_assertThisInitialized(_this));
     _this.mounted = (0, _reactComponentManagers.mountManager)(_assertThisInitialized(_this));
     _this.timeouts = (0, _reactComponentManagers.timeoutManager)(_assertThisInitialized(_this));
+    _this.accessors = (0, _accessorManager.default)(_assertThisInitialized(_this));
     _this.handleScroll = (0, _scrollManager.default)(_assertThisInitialized(_this));
     _this.focusManager = (0, _focusManager.default)(_assertThisInitialized(_this), {
       didHandle: _this.handleFocusChanged
     });
-    _this.state = {};
+    _this.state = _this.getStateFromProps(_this.props);
     return _this;
   }
 
-  DropdownList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var open = nextProps.open,
-        value = nextProps.value,
-        data = nextProps.data,
-        messages = nextProps.messages,
-        searchTerm = nextProps.searchTerm,
-        filter = nextProps.filter,
-        minLength = nextProps.minLength,
-        caseSensitive = nextProps.caseSensitive;
-    var accessors = (0, _getAccessors.default)(nextProps);
+  var _proto = DropdownList.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    this.messages = (0, _messages.getMessages)(nextProps.messages);
+    this.setState(this.getStateFromProps(nextProps));
+  };
+
+  _proto.getStateFromProps = function getStateFromProps(props) {
+    var open = props.open,
+        value = props.value,
+        data = props.data,
+        searchTerm = props.searchTerm,
+        filter = props.filter,
+        minLength = props.minLength,
+        caseSensitive = props.caseSensitive;
+    var accessors = this.accessors,
+        list = this.list;
     var initialIdx = accessors.indexOf(data, value);
     if (open) data = Filter.filter(data, {
       filter: filter,
       searchTerm: searchTerm,
       minLength: minLength,
       caseSensitive: caseSensitive,
-      textField: accessors.text
+      textField: this.accessors.text
     });
-    var list = (0, _reduceToListState.default)(data, prevState.list, {
-      nextProps: nextProps
-    });
+    list.setData(data);
+    var selectedItem = data[initialIdx];
     return {
       data: data,
-      list: list,
-      accessors: accessors,
-      messages: (0, _messages.getMessages)(messages),
-      selectedItem: list.nextEnabled(data[initialIdx]),
-      focusedItem: list.nextEnabled(data[initialIdx] || data[0])
+      selectedItem: list.nextEnabled(selectedItem),
+      focusedItem: list.nextEnabled(selectedItem || data[0])
     };
   };
-
-  var _proto = DropdownList.prototype;
 
   _proto.change = function change(nextValue, originalEvent) {
     var _props = this.props,
@@ -6698,7 +6586,7 @@ function (_React$Component) {
         searchTerm = _props.searchTerm,
         lastValue = _props.value;
 
-    if (!this.state.accessors.matches(nextValue, lastValue)) {
+    if (!this.accessors.matches(nextValue, lastValue)) {
       (0, _widgetHelpers.notify)(onChange, [nextValue, {
         originalEvent: originalEvent,
         lastValue: lastValue,
@@ -6709,35 +6597,31 @@ function (_React$Component) {
     }
   };
 
-  _proto.renderList = function renderList() {
+  _proto.renderList = function renderList(messages) {
     var _props2 = this.props,
         open = _props2.open,
         filter = _props2.filter,
         data = _props2.data,
-        searchTerm = _props2.searchTerm,
-        optionComponent = _props2.optionComponent,
-        itemComponent = _props2.itemComponent,
-        groupComponent = _props2.groupComponent,
-        listProps = _props2.listProps;
+        searchTerm = _props2.searchTerm;
     var _state = this.state,
-        list = _state.list,
-        accessors = _state.accessors,
-        focusedItem = _state.focusedItem,
         selectedItem = _state.selectedItem,
-        messages = _state.messages,
-        filteredData = _state.data;
+        focusedItem = _state.focusedItem;
+    var _accessors = this.accessors,
+        value = _accessors.value,
+        text = _accessors.text;
     var List = this.props.listComponent;
+    var props = this.list.defaultProps();
     return _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 349
+        lineNumber: 342
       },
       __self: this
     }, filter && _react.default.createElement(_WidgetPicker.default, {
       className: "rw-filter-input rw-input",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 351
+        lineNumber: 344
       },
       __self: this
     }, _react.default.createElement("input", {
@@ -6748,7 +6632,7 @@ function (_React$Component) {
       ref: this.attachFilterRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 352
+        lineNumber: 347
       },
       __self: this
     }), _react.default.createElement(_Select.default, {
@@ -6757,21 +6641,14 @@ function (_React$Component) {
       "aria-hidden": "true",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 359
+        lineNumber: 354
       },
       __self: this
-    })), _react.default.createElement(List, _extends({}, listProps, {
+    })), _react.default.createElement(List, _extends({}, props, {
       id: this.listId,
       activeId: this.activeId,
-      data: filteredData,
-      dataState: list.dataState,
-      isDisabled: list.isDisabled,
-      searchTerm: searchTerm,
-      textAccessor: accessors.text,
-      valueAccessor: accessors.value,
-      itemComponent: itemComponent,
-      groupComponent: groupComponent,
-      optionComponent: optionComponent,
+      valueAccessor: value,
+      textAccessor: text,
       selectedItem: selectedItem,
       focusedItem: open ? focusedItem : null,
       onSelect: this.handleSelect,
@@ -6785,7 +6662,7 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 362
+        lineNumber: 357
       },
       __self: this
     })), this.allowCreate() && _react.default.createElement(_AddToListOption.default, {
@@ -6795,7 +6672,7 @@ function (_React$Component) {
       focused: !focusedItem || focusedItem === CREATE_OPTION,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 388
+        lineNumber: 376
       },
       __self: this
     }, messages.createOption(this.props)));
@@ -6815,17 +6692,13 @@ function (_React$Component) {
         placeholder = _props3.placeholder,
         value = _props3.value,
         open = _props3.open,
-        isRtl = _props3.isRtl,
         filter = _props3.filter,
         inputProps = _props3.inputProps,
         valueComponent = _props3.valueComponent;
-    var _state2 = this.state,
-        focused = _state2.focused,
-        accessors = _state2.accessors,
-        messages = _state2.messages;
-    var disabled = this.props.disabled === true;
-    var readOnly = this.props.readOnly === true;
-    var valueItem = accessors.findOrSelf(data, value);
+    var focused = this.state.focused;
+    var disabled = this.props.disabled === true,
+        readOnly = this.props.readOnly === true,
+        valueItem = this.accessors.findOrSelf(data, value);
     var shouldRenderPopup = open || (0, _widgetHelpers.isFirstFocusedRender)(this);
 
     var elementProps = _extends(Props.pickElementProps(this), {
@@ -6844,9 +6717,9 @@ function (_React$Component) {
       'aria-readonly': readOnly
     });
 
+    var messages = this.messages;
     return _react.default.createElement(_Widget.default, _extends({}, elementProps, {
       open: open,
-      isRtl: isRtl,
       dropUp: dropUp,
       focused: focused,
       disabled: disabled,
@@ -6859,7 +6732,7 @@ function (_React$Component) {
       ref: this.attachInputRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 444
+        lineNumber: 433
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
@@ -6867,7 +6740,7 @@ function (_React$Component) {
       className: "rw-widget-input",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 459
+        lineNumber: 447
       },
       __self: this
     }, _react.default.createElement(_DropdownListInput.default, _extends({}, inputProps, {
@@ -6877,7 +6750,7 @@ function (_React$Component) {
       valueComponent: valueComponent,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 460
+        lineNumber: 448
       },
       __self: this
     })), _react.default.createElement(_Select.default, {
@@ -6889,7 +6762,7 @@ function (_React$Component) {
       label: messages.openDropdown(this.props),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 467
+        lineNumber: 455
       },
       __self: this
     })), shouldRenderPopup && _react.default.createElement(_Popup.default, {
@@ -6904,7 +6777,7 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 477
+        lineNumber: 465
       },
       __self: this
     }, this.renderList(messages)));
@@ -6917,9 +6790,9 @@ function (_React$Component) {
     if (!character) return;
     this._currentWord = word;
     this.timeouts.set('search', function () {
-      var list = _this3.state.list;
-      var key = _this3.props.open ? 'focusedItem' : 'selectedItem';
-      var item = list.next(_this3.state[key], word);
+      var list = _this3.list,
+          key = _this3.props.open ? 'focusedItem' : 'selectedItem',
+          item = list.next(_this3.state[key], word);
 
       if (item === _this3.state[key]) {
         item = list.next(null, word);
@@ -6974,9 +6847,8 @@ function (_React$Component) {
         searchTerm = _props6.searchTerm,
         caseSensitive = _props6.caseSensitive,
         filter = _props6.filter;
-    var _state3 = this.state,
-        data = _state3.data,
-        accessors = _state3.accessors;
+    var data = this.state.data;
+    var text = this.accessors.text;
 
     var lower = function lower(text) {
       return caseSensitive ? text : text.toLowerCase();
@@ -6984,24 +6856,24 @@ function (_React$Component) {
 
 
     return filter && data.some(function (v) {
-      return lower(accessors.text(v)) === lower(searchTerm);
+      return lower(text(v)) === lower(searchTerm);
     });
   };
 
   return DropdownList;
-}(_react.default.Component), _class3.propTypes = _extends({}, Filter.propTypes, {
+}(_react.default.Component), _class2.propTypes = _extends({}, Filter.propTypes, {
   value: _propTypes.default.any,
 
   /**
-   * @type {function (
-   *  dataItems: ?any,
-   *  metadata: {
-   *    lastValue: ?any,
-   *    searchTerm: ?string
-   *    originalEvent: SyntheticEvent,
-   *  }
-   * ): void}
-   */
+  * @type {function (
+  *  dataItems: ?any,
+  *  metadata: {
+  *    lastValue: ?any,
+  *    searchTerm: ?string
+  *    originalEvent: SyntheticEvent,
+  *  }
+  * ): void}
+  */
   onChange: _propTypes.default.func,
   open: _propTypes.default.bool,
   onToggle: _propTypes.default.func,
@@ -7017,7 +6889,6 @@ function (_React$Component) {
   valueComponent: CustomPropTypes.elementType,
   itemComponent: CustomPropTypes.elementType,
   listComponent: CustomPropTypes.elementType,
-  optionComponent: CustomPropTypes.elementType,
   groupComponent: CustomPropTypes.elementType,
   groupBy: CustomPropTypes.accessor,
 
@@ -7049,13 +6920,13 @@ function (_React$Component) {
     filterPlaceholder: _propTypes.default.string,
     createOption: CustomPropTypes.message
   })
-}), _class3.defaultProps = {
+}), _class2.defaultProps = {
   data: [],
   delay: 500,
   searchTerm: '',
   allowCreate: false,
   listComponent: _List.default
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleSelect", [_interaction.widgetEditable], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleSelect", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -7078,7 +6949,7 @@ function (_React$Component) {
       _this4.focus(_this4);
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleCreate", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleCreate", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
@@ -7097,7 +6968,7 @@ function (_React$Component) {
       _this5.focus(_this5);
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "handleClick", [_interaction.widgetEditable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "handleClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this6 = this;
@@ -7110,7 +6981,7 @@ function (_React$Component) {
       (0, _widgetHelpers.notify)(_this6.props.onClick, e);
     };
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this7 = this;
@@ -7119,6 +6990,7 @@ function (_React$Component) {
       var key = e.key,
           altKey = e.altKey,
           ctrlKey = e.ctrlKey;
+      var list = _this7.list;
       var _this7$props = _this7.props,
           open = _this7$props.open,
           onKeyDown = _this7$props.onKeyDown,
@@ -7126,8 +6998,7 @@ function (_React$Component) {
           searchTerm = _this7$props.searchTerm;
       var _this7$state = _this7.state,
           focusedItem = _this7$state.focusedItem,
-          selectedItem = _this7$state.selectedItem,
-          list = _this7$state.list;
+          selectedItem = _this7$state.selectedItem;
       var createIsFocused = focusedItem === CREATE_OPTION;
 
       var canCreate = _this7.allowCreate();
@@ -7188,7 +7059,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyPress", [_interaction.widgetEditable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "handleKeyPress", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this8 = this;
@@ -7203,7 +7074,7 @@ function (_React$Component) {
       });
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(DropdownList, {
   open: 'onToggle',
@@ -7215,7 +7086,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7225,11 +7096,13 @@ exports.__esModule = true;
 exports.default = makeAutoFocusable;
 exports.PropTypes = void 0;
 
-var _propTypes = __webpack_require__(0);
+var _propTypes = __webpack_require__(1);
+
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _spyOnComponent = _interopRequireDefault(__webpack_require__(27));
+var _spyOnComponent = _interopRequireDefault(__webpack_require__(26));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7248,7 +7121,7 @@ function makeAutoFocusable(instance) {
 }
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7260,9 +7133,9 @@ exports.default = createFocusManager;
 
 var _reactDom = __webpack_require__(6);
 
-var _timeoutManager = _interopRequireDefault(__webpack_require__(42));
+var _timeoutManager = _interopRequireDefault(__webpack_require__(41));
 
-var _mountManager = _interopRequireDefault(__webpack_require__(34));
+var _mountManager = _interopRequireDefault(__webpack_require__(33));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7271,16 +7144,14 @@ function callFocusEventHandler(inst, focused, e) {
   handler && handler(e);
 }
 
-function createFocusManager(instance, _temp) {
-  var _ref = _temp === void 0 ? {} : _temp,
-      willHandle = _ref.willHandle,
+function createFocusManager(instance, _ref) {
+  var willHandle = _ref.willHandle,
       didHandle = _ref.didHandle,
       onChange = _ref.onChange,
       _ref$isDisabled = _ref.isDisabled,
       isDisabled = _ref$isDisabled === void 0 ? function () {
     return !!instance.props.disabled;
   } : _ref$isDisabled;
-
   var lastFocused;
   var timeouts = (0, _timeoutManager.default)(instance);
   var isMounted = (0, _mountManager.default)(instance);
@@ -7313,7 +7184,7 @@ function createFocusManager(instance, _temp) {
 }
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7358,7 +7229,7 @@ function mixIntoClass(spec) {
 }
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7370,7 +7241,7 @@ exports.isProp = isProp;
 exports.defaultKey = defaultKey;
 exports.isReactComponent = isReactComponent;
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(24));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7423,7 +7294,7 @@ function isReactComponent(component) {
 }
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7434,11 +7305,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = filterEvents;
 
-var _contains = __webpack_require__(47);
+var _contains = __webpack_require__(46);
 
 var _contains2 = _interopRequireDefault(_contains);
 
-var _querySelectorAll = __webpack_require__(48);
+var _querySelectorAll = __webpack_require__(47);
 
 var _querySelectorAll2 = _interopRequireDefault(_querySelectorAll);
 
@@ -7458,7 +7329,7 @@ function filterEvents(selector, handler) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7468,15 +7339,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
-var _on = __webpack_require__(45);
+var _on = __webpack_require__(44);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _off = __webpack_require__(46);
+var _off = __webpack_require__(45);
 
 var _off2 = _interopRequireDefault(_off);
 
@@ -7497,7 +7368,7 @@ exports.default = listen;
 module.exports = exports['default'];
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7517,7 +7388,7 @@ function camelize(string) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7528,7 +7399,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = hyphenateStyleName;
 
-var _hyphenate = __webpack_require__(73);
+var _hyphenate = __webpack_require__(72);
 
 var _hyphenate2 = _interopRequireDefault(_hyphenate);
 
@@ -7546,7 +7417,7 @@ function hyphenateStyleName(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7565,7 +7436,7 @@ function hyphenate(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7576,7 +7447,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _getComputedStyle;
 
-var _camelizeStyle = __webpack_require__(49);
+var _camelizeStyle = __webpack_require__(48);
 
 var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
 
@@ -7626,7 +7497,7 @@ function _getComputedStyle(node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7642,7 +7513,7 @@ function removeStyle(node, key) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7660,7 +7531,7 @@ function isTransform(property) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7670,7 +7541,7 @@ exports.__esModule = true;
 exports.classNamesShape = exports.timeoutsShape = undefined;
 exports.transitionTimeout = transitionTimeout;
 
-var _propTypes = __webpack_require__(0);
+var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -7708,15 +7579,13 @@ var classNamesShape = exports.classNamesShape = _propTypes2.default.oneOfType([_
   active: _propTypes2.default.string
 }), _propTypes2.default.shape({
   enter: _propTypes2.default.string,
-  enterDone: _propTypes2.default.string,
   enterActive: _propTypes2.default.string,
   exit: _propTypes2.default.string,
-  exitDone: _propTypes2.default.string,
   exitActive: _propTypes2.default.string
 })]);
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7728,11 +7597,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createChainableTypeChecker = __webpack_require__(52);
+var _createChainableTypeChecker = __webpack_require__(51);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -7757,7 +7626,7 @@ exports.default = (0, _createChainableTypeChecker2.default)(elementType);
 module.exports = exports['default'];
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7768,11 +7637,11 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/ListOptionGroup.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/ListOptionGroup.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7805,7 +7674,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7814,15 +7683,15 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _dataHelpers = __webpack_require__(23);
+var _dataHelpers = __webpack_require__(31);
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/DropdownListInput.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/DropdownListInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -7885,7 +7754,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7896,27 +7765,27 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = scrollTo;
 
-var _offset = __webpack_require__(50);
+var _offset = __webpack_require__(49);
 
 var _offset2 = _interopRequireDefault(_offset);
 
-var _height = __webpack_require__(29);
+var _height = __webpack_require__(28);
 
 var _height2 = _interopRequireDefault(_height);
 
-var _scrollParent = __webpack_require__(82);
+var _scrollParent = __webpack_require__(81);
 
 var _scrollParent2 = _interopRequireDefault(_scrollParent);
 
-var _scrollTop = __webpack_require__(83);
+var _scrollTop = __webpack_require__(82);
 
 var _scrollTop2 = _interopRequireDefault(_scrollTop);
 
-var _requestAnimationFrame = __webpack_require__(84);
+var _requestAnimationFrame = __webpack_require__(83);
 
 var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-var _isWindow = __webpack_require__(30);
+var _isWindow = __webpack_require__(29);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
@@ -7967,7 +7836,7 @@ function scrollTo(selected, scrollParent) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7978,11 +7847,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = scrollPrarent;
 
-var _style = __webpack_require__(35);
+var _style = __webpack_require__(34);
 
 var _style2 = _interopRequireDefault(_style);
 
-var _height = __webpack_require__(29);
+var _height = __webpack_require__(28);
 
 var _height2 = _interopRequireDefault(_height);
 
@@ -8010,7 +7879,7 @@ function scrollPrarent(node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8021,7 +7890,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = scrollTop;
 
-var _isWindow = __webpack_require__(30);
+var _isWindow = __webpack_require__(29);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
@@ -8037,7 +7906,7 @@ function scrollTop(node, val) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8047,7 +7916,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(11);
+var _inDOM = __webpack_require__(10);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -8096,7 +7965,7 @@ exports.default = compatRaf;
 module.exports = exports['default'];
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8105,58 +7974,55 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
-
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _WidgetPicker = _interopRequireDefault(__webpack_require__(20));
+var _WidgetPicker = _interopRequireDefault(__webpack_require__(19));
 
-var _List = _interopRequireDefault(__webpack_require__(22));
+var _List = _interopRequireDefault(__webpack_require__(21));
 
-var _Popup = _interopRequireDefault(__webpack_require__(28));
+var _Popup = _interopRequireDefault(__webpack_require__(27));
 
-var _Select = _interopRequireDefault(__webpack_require__(21));
+var _Select = _interopRequireDefault(__webpack_require__(20));
 
-var _ComboboxInput = _interopRequireDefault(__webpack_require__(86));
+var _ComboboxInput = _interopRequireDefault(__webpack_require__(85));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
-var _reduceToListState = _interopRequireDefault(__webpack_require__(18));
-
-var _getAccessors = _interopRequireDefault(__webpack_require__(32));
+var _listDataManager = _interopRequireDefault(__webpack_require__(18));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _scrollManager = _interopRequireDefault(__webpack_require__(24));
+var _accessorManager = _interopRequireDefault(__webpack_require__(22));
+
+var _scrollManager = _interopRequireDefault(__webpack_require__(23));
 
 var _ = __webpack_require__(7);
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var Filter = _interopRequireWildcard(__webpack_require__(31));
+var Filter = _interopRequireWildcard(__webpack_require__(30));
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _widgetHelpers = __webpack_require__(9);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Combobox.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Combobox.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -8235,7 +8101,7 @@ var propTypes = _extends({}, Filter.propTypes, {
 
 });
 
-var Combobox = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var Combobox = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(Combobox, _React$Component);
@@ -8246,9 +8112,7 @@ function (_React$Component) {
     _this = _React$Component.call(this, props, context) || this;
 
     _this.handleFocusWillChange = function (focused) {
-      var _this$inputRef;
-
-      if (!focused) (_this$inputRef = _this.inputRef) === null || _this$inputRef === void 0 ? void 0 : _this$inputRef.accept();
+      if (!focused && _this.inputRef) _this.inputRef.accept();
       if (focused) _this.focus();
     };
 
@@ -8284,57 +8148,55 @@ function (_React$Component) {
 
     _initializerDefineProperty(_this, "toggle", _descriptor3, _assertThisInitialized(_this));
 
+    _this.messages = (0, _messages.getMessages)(props.messages);
     _this.inputId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_input');
     _this.listId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox');
     _this.activeId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox_active_option');
+    _this.list = (0, _listDataManager.default)(_assertThisInitialized(_this));
+    _this.accessors = (0, _accessorManager.default)(_assertThisInitialized(_this));
     _this.handleScroll = (0, _scrollManager.default)(_assertThisInitialized(_this));
     _this.focusManager = (0, _focusManager.default)(_assertThisInitialized(_this), {
       willHandle: _this.handleFocusWillChange,
       didHandle: _this.handleFocusChanged
     });
-    _this.state = {
-      isSuggesting: function isSuggesting() {
-        return _this.inputRef && _this.inputRef.isSuggesting();
-      }
-    };
+    _this.state = _extends({}, _this.getStateFromProps(props), {
+      open: false
+    });
     return _this;
   }
 
   var _proto = Combobox.prototype;
 
   _proto.shouldComponentUpdate = function shouldComponentUpdate(nextProps, nextState) {
-    var isSuggesting = nextState.isSuggesting(),
+    var isSuggesting = this.inputRef && this.inputRef.isSuggesting(),
         stateChanged = !(0, _.isShallowEqual)(nextState, this.state),
         valueChanged = !(0, _.isShallowEqual)(nextProps, this.props);
     return isSuggesting || stateChanged || valueChanged;
   };
 
-  Combobox.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var value = nextProps.value,
-        data = nextProps.data,
-        messages = nextProps.messages,
-        filter = nextProps.filter,
-        minLength = nextProps.minLength,
-        caseSensitive = nextProps.caseSensitive;
-    var accessors = (0, _getAccessors.default)(nextProps);
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    this.messages = (0, _messages.getMessages)(nextProps.messages);
+    this.setState(this.getStateFromProps(nextProps));
+  };
+
+  _proto.getStateFromProps = function getStateFromProps(props) {
+    var accessors = this.accessors,
+        list = this.list;
+    var value = props.value,
+        data = props.data,
+        filter = props.filter;
     var index = accessors.indexOf(data, value);
     var dataItem = index === -1 ? value : data[index];
+    var itemText = accessors.text(dataItem);
     var searchTerm; // filter only when the value is not an item in the data list
 
-    if (index === -1 || prevState.isSuggesting()) {
-      searchTerm = accessors.text(dataItem);
+    if (index === -1 || this.inputRef && this.inputRef.isSuggesting()) {
+      searchTerm = itemText;
     }
 
-    data = data = Filter.filter(data, {
-      filter: filter,
-      searchTerm: searchTerm,
-      minLength: minLength,
-      caseSensitive: caseSensitive,
-      textField: accessors.text
-    });
-    var list = (0, _reduceToListState.default)(data, prevState.list, {
-      nextProps: nextProps
-    });
+    data = Filter.filter(data, _extends({
+      searchTerm: searchTerm
+    }, props));
     var focusedIndex = index; // index may have changed after filtering
 
     if (index !== -1) {
@@ -8349,11 +8211,9 @@ function (_React$Component) {
       });
     }
 
+    list.setData(data);
     return {
       data: data,
-      list: list,
-      accessors: accessors,
-      messages: (0, _messages.getMessages)(messages),
       selectedItem: list.nextEnabled(data[index]),
       focusedItem: list.nextEnabled(~focusedIndex ? data[focusedIndex] : data[0])
     };
@@ -8375,8 +8235,7 @@ function (_React$Component) {
         disabled = _props.disabled,
         readOnly = _props.readOnly,
         open = _props.open;
-    var accessors = this.state.accessors;
-    var valueItem = accessors.findOrSelf(data, value);
+    var valueItem = this.accessors.findOrSelf(data, value);
     var completeType = suggest ? filter ? 'both' : 'inline' : filter ? 'list' : '';
     return _react.default.createElement(_ComboboxInput.default, _extends({}, inputProps, {
       role: "combobox",
@@ -8394,7 +8253,7 @@ function (_React$Component) {
       "aria-expanded": open,
       "aria-haspopup": true,
       placeholder: placeholder,
-      value: accessors.text(valueItem),
+      value: this.accessors.text(valueItem),
       onChange: this.handleInputChange,
       onKeyDown: this.handleInputKeyDown,
       ref: this.attachInputRef,
@@ -8409,33 +8268,22 @@ function (_React$Component) {
   _proto.renderList = function renderList(messages) {
     var activeId = this.activeId,
         inputId = this.inputId,
-        listId = this.listId;
+        listId = this.listId,
+        accessors = this.accessors;
     var _props2 = this.props,
         open = _props2.open,
         data = _props2.data,
-        value = _props2.value,
-        listProps = _props2.listProps,
-        optionComponent = _props2.optionComponent,
-        itemComponent = _props2.itemComponent,
-        groupComponent = _props2.groupComponent;
+        value = _props2.value;
     var _state = this.state,
-        list = _state.list,
-        accessors = _state.accessors,
-        focusedItem = _state.focusedItem,
         selectedItem = _state.selectedItem,
-        filteredData = _state.data;
+        focusedItem = _state.focusedItem;
     var List = this.props.listComponent;
-    return _react.default.createElement(List, _extends({}, listProps, {
+    var props = this.list.defaultProps();
+    return _react.default.createElement(List, _extends({}, props, {
       id: listId,
       activeId: activeId,
-      data: filteredData,
-      dataState: list.dataState,
-      isDisabled: list.isDisabled,
-      textAccessor: accessors.text,
       valueAccessor: accessors.value,
-      itemComponent: itemComponent,
-      groupComponent: groupComponent,
-      optionComponent: optionComponent,
+      textAccessor: accessors.text,
       selectedItem: selectedItem,
       focusedItem: open ? focusedItem : null,
       searchTerm: accessors.text(value) || '',
@@ -8450,7 +8298,7 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 333
+        lineNumber: 320
       },
       __self: this
     }));
@@ -8460,22 +8308,19 @@ function (_React$Component) {
     var _this2 = this;
 
     var _props3 = this.props,
-        isRtl = _props3.isRtl,
         className = _props3.className,
         popupTransition = _props3.popupTransition,
         busy = _props3.busy,
         dropUp = _props3.dropUp,
         open = _props3.open;
-    var _state2 = this.state,
-        focused = _state2.focused,
-        messages = _state2.messages;
+    var focused = this.state.focused;
     var disabled = this.props.disabled === true,
         readOnly = this.props.readOnly === true;
     var elementProps = Props.pickElementProps(this);
     var shouldRenderPopup = open || (0, _widgetHelpers.isFirstFocusedRender)(this);
+    var messages = this.messages;
     return _react.default.createElement(_Widget.default, _extends({}, elementProps, {
       open: open,
-      isRtl: isRtl,
       dropUp: dropUp,
       focused: focused,
       disabled: disabled,
@@ -8486,13 +8331,13 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-combobox'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 373
+        lineNumber: 356
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 386
+        lineNumber: 368
       },
       __self: this
     }, this.renderInput(), _react.default.createElement(_Select.default, {
@@ -8504,7 +8349,7 @@ function (_React$Component) {
       label: messages.openCombobox(this.props),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 388
+        lineNumber: 370
       },
       __self: this
     })), shouldRenderPopup && _react.default.createElement(_Popup.default, {
@@ -8516,13 +8361,13 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 399
+        lineNumber: 381
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 405
+        lineNumber: 387
       },
       __self: this
     }, this.renderList(messages))));
@@ -8568,7 +8413,7 @@ function (_React$Component) {
   };
 
   return Combobox;
-}(_react.default.Component), _class3.propTypes = propTypes, _class3.defaultProps = {
+}(_react.default.Component), _class2.propTypes = propTypes, _class2.defaultProps = {
   data: [],
   value: '',
   open: false,
@@ -8576,14 +8421,12 @@ function (_React$Component) {
   filter: false,
   delay: 500,
   listComponent: _List.default
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleSelect", [_interaction.widgetEditable], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleSelect", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this3 = this;
 
     return function (data, originalEvent) {
-      var _this3$inputRef;
-
       _this3.close();
 
       (0, _widgetHelpers.notify)(_this3.props.onSelect, [data, {
@@ -8592,12 +8435,10 @@ function (_React$Component) {
 
       _this3.change(data, false, originalEvent);
 
-      (_this3$inputRef = _this3.inputRef) === null || _this3$inputRef === void 0 ? void 0 : _this3$inputRef.accept(true);
-
       _this3.focus();
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -8605,13 +8446,13 @@ function (_React$Component) {
     return function (e) {
       var key = e.key,
           altKey = e.altKey;
+      var list = _this4.list;
       var _this4$props = _this4.props,
           open = _this4$props.open,
           onKeyDown = _this4$props.onKeyDown;
       var _this4$state = _this4.state,
           focusedItem = _this4$state.focusedItem,
-          selectedItem = _this4$state.selectedItem,
-          list = _this4$state.list;
+          selectedItem = _this4$state.selectedItem;
       (0, _widgetHelpers.notify)(onKeyDown, [e]);
       if (e.defaultPrevented) return;
 
@@ -8651,7 +8492,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "toggle", [_interaction.widgetEditable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "toggle", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
@@ -8662,7 +8503,7 @@ function (_React$Component) {
       _this5.props.open ? _this5.close() : _this5.open();
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(Combobox, {
   open: 'onToggle',
@@ -8673,7 +8514,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8682,15 +8523,15 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = exports.caretSet = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _reactDom = __webpack_require__(6);
 
-var _Input = _interopRequireDefault(__webpack_require__(38));
+var _Input = _interopRequireDefault(__webpack_require__(37));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/ComboboxInput.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/ComboboxInput.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8703,10 +8544,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 var caretSet = function caretSet(node, start, end) {
-  if (end === void 0) {
-    end = start;
-  }
-
   try {
     node.setSelectionRange(start, end);
   } catch (e) {
@@ -8760,17 +8597,8 @@ function (_React$Component) {
     }
   };
 
-  _proto.accept = function accept(clearSelection) {
-    if (clearSelection === void 0) {
-      clearSelection = false;
-    }
-
-    this._last = null;
-
-    if (clearSelection) {
-      var node = (0, _reactDom.findDOMNode)(this);
-      caretSet(node, node.value.length);
-    }
+  _proto.accept = function accept() {
+    this._last = null; // caretSet(node, end, end)
   };
 
   _proto.focus = function focus() {
@@ -8797,7 +8625,7 @@ function (_React$Component) {
       onChange: this.handleChange,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 86
+        lineNumber: 83
       },
       __self: this
     }));
@@ -8820,7 +8648,7 @@ var _default = ComboboxInput;
 exports.default = _default;
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8829,13 +8657,13 @@ exports.default = _default;
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Header.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Header.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8932,7 +8760,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8941,9 +8769,9 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = Footer;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
@@ -8951,7 +8779,7 @@ var _localizers = __webpack_require__(5);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Footer.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Footer.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -8995,7 +8823,7 @@ Footer.propTypes = propTypes;
 module.exports = exports["default"];
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9006,11 +8834,11 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _CalendarView = _interopRequireDefault(__webpack_require__(33));
+var _CalendarView = _interopRequireDefault(__webpack_require__(32));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
@@ -9022,7 +8850,7 @@ var _ = __webpack_require__(7);
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Month.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Month.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -9195,7 +9023,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports) {
 
 var MILI    = 'milliseconds'
@@ -9422,7 +9250,7 @@ function createComparer(operator) {
 
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9431,11 +9259,11 @@ function createComparer(operator) {
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _CalendarView = _interopRequireDefault(__webpack_require__(33));
+var _CalendarView = _interopRequireDefault(__webpack_require__(32));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
@@ -9447,7 +9275,7 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Year.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Year.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -9564,7 +9392,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9573,11 +9401,11 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _CalendarView = _interopRequireDefault(__webpack_require__(33));
+var _CalendarView = _interopRequireDefault(__webpack_require__(32));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
@@ -9589,7 +9417,7 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Decade.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Decade.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -9710,7 +9538,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9719,11 +9547,11 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _CalendarView = _interopRequireDefault(__webpack_require__(33));
+var _CalendarView = _interopRequireDefault(__webpack_require__(32));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
@@ -9735,7 +9563,7 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Century.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Century.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -9857,7 +9685,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9867,15 +9695,15 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _propTypes = __webpack_require__(0);
+var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ChildMapping = __webpack_require__(95);
+var _ChildMapping = __webpack_require__(94);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9897,9 +9725,6 @@ var propTypes = {
   /**
    * `<TransitionGroup>` renders a `<div>` by default. You can change this
    * behavior by providing a `component` prop.
-   * If you use React v16+ and would like to avoid a wrapping `<div>` element
-   * you can pass in `component={null}`. This is useful if the wrapping div
-   * borks your css styles.
    */
   component: _propTypes2.default.any,
   /**
@@ -9911,19 +9736,19 @@ var propTypes = {
   children: _propTypes2.default.node,
 
   /**
-   * A convenience prop that enables or disables appear animations
+   * A convenience prop that enables or disabled appear animations
    * for all children. Note that specifying this will override any defaults set
    * on individual children Transitions.
    */
   appear: _propTypes2.default.bool,
   /**
-   * A convenience prop that enables or disables enter animations
+   * A convenience prop that enables or disabled enter animations
    * for all children. Note that specifying this will override any defaults set
    * on individual children Transitions.
    */
   enter: _propTypes2.default.bool,
   /**
-    * A convenience prop that enables or disables exit animations
+    * A convenience prop that enables or disabled exit animations
     * for all children. Note that specifying this will override any defaults set
     * on individual children Transitions.
     */
@@ -9960,9 +9785,46 @@ var defaultProps = {
  * automatically by the `<TransitionGroup>`. You can use _any_ `<Transition>`
  * component in a `<TransitionGroup>`, not just css.
  *
- * ## Example
+ * ```jsx
+ * import TransitionGroup from 'react-transition-group/TransitionGroup';
  *
- * <iframe src="https://codesandbox.io/embed/00rqyo26kn?fontsize=14" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+ * class TodoList extends React.Component {
+ *   constructor(props) {
+ *     super(props)
+ *     this.state = {items: ['hello', 'world', 'click', 'me']}
+ *   }
+ *   handleAdd() {
+ *     const newItems = this.state.items.concat([
+ *       prompt('Enter some text')
+ *     ]);
+ *     this.setState({ items: newItems });
+ *   }
+ *   handleRemove(i) {
+ *     let newItems = this.state.items.slice();
+ *     newItems.splice(i, 1);
+ *     this.setState({items: newItems});
+ *   }
+ *   render() {
+ *     return (
+ *       <div>
+ *         <button onClick={() => this.handleAdd()}>Add Item</button>
+ *         <TransitionGroup>
+ *           {this.state.items.map((item, i) => (
+ *             <FadeTransition key={item}>
+ *               <div>
+ *                 {item}{' '}
+ *                 <button onClick={() => this.handleRemove(i)}>
+ *                   remove
+ *                 </button>
+ *               </div>
+ *             </FadeTransition>
+ *           ))}
+ *         </TransitionGroup>
+ *       </div>
+ *     );
+ *   }
+ * }
+ * ```
  *
  * Note that `<TransitionGroup>`  does not define any animation behavior!
  * Exactly _how_ a list item animates is up to the individual `<Transition>`
@@ -9979,10 +9841,29 @@ var TransitionGroup = function (_React$Component) {
     // Initial children should all be entering, dependent on appear
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
 
+    _this.handleExited = function (key, node, originalHandler) {
+      var currentChildMapping = (0, _ChildMapping.getChildMapping)(_this.props.children);
+
+      if (key in currentChildMapping) return;
+
+      if (originalHandler) originalHandler(node);
+
+      _this.setState(function (state) {
+        var children = _extends({}, state.children);
+
+        delete children[key];
+        return { children: children };
+      });
+    };
+
     _this.state = {
       children: (0, _ChildMapping.getChildMapping)(props.children, function (child) {
+        var onExited = function onExited(node) {
+          _this.handleExited(child.key, node, child.props.onExited);
+        };
+
         return (0, _react.cloneElement)(child, {
-          onExited: _this.handleExited.bind(_this, child),
+          onExited: onExited,
           in: true,
           appear: _this.getProp(child, 'appear'),
           enter: _this.getProp(child, 'enter'),
@@ -10024,6 +9905,10 @@ var TransitionGroup = function (_React$Component) {
 
       if (!(0, _react.isValidElement)(child)) return;
 
+      var onExited = function onExited(node) {
+        _this2.handleExited(child.key, node, child.props.onExited);
+      };
+
       var hasPrev = key in prevChildMapping;
       var hasNext = key in nextChildMapping;
 
@@ -10034,7 +9919,7 @@ var TransitionGroup = function (_React$Component) {
       if (hasNext && (!hasPrev || isLeaving)) {
         // console.log('entering', key)
         children[key] = (0, _react.cloneElement)(child, {
-          onExited: _this2.handleExited.bind(_this2, child),
+          onExited: onExited,
           in: true,
           exit: _this2.getProp(child, 'exit', nextProps),
           enter: _this2.getProp(child, 'enter', nextProps)
@@ -10050,7 +9935,7 @@ var TransitionGroup = function (_React$Component) {
         else if (hasNext && hasPrev && (0, _react.isValidElement)(prevChild)) {
             // console.log('unchanged', key)
             children[key] = (0, _react.cloneElement)(child, {
-              onExited: _this2.handleExited.bind(_this2, child),
+              onExited: onExited,
               in: prevChild.props.in,
               exit: _this2.getProp(child, 'exit', nextProps),
               enter: _this2.getProp(child, 'enter', nextProps)
@@ -10061,42 +9946,23 @@ var TransitionGroup = function (_React$Component) {
     this.setState({ children: children });
   };
 
-  TransitionGroup.prototype.handleExited = function handleExited(child, node) {
-    var currentChildMapping = (0, _ChildMapping.getChildMapping)(this.props.children);
-
-    if (child.key in currentChildMapping) return;
-
-    if (child.props.onExited) {
-      child.props.onExited(node);
-    }
-
-    this.setState(function (state) {
-      var children = _extends({}, state.children);
-
-      delete children[child.key];
-      return { children: children };
-    });
-  };
-
   TransitionGroup.prototype.render = function render() {
     var _props = this.props,
         Component = _props.component,
         childFactory = _props.childFactory,
         props = _objectWithoutProperties(_props, ['component', 'childFactory']);
 
-    var children = values(this.state.children).map(childFactory);
+    var children = this.state.children;
+
 
     delete props.appear;
     delete props.enter;
     delete props.exit;
 
-    if (Component === null) {
-      return children;
-    }
     return _react2.default.createElement(
       Component,
       props,
-      children
+      values(children).map(childFactory)
     );
   };
 
@@ -10115,7 +9981,7 @@ exports.default = TransitionGroup;
 module.exports = exports['default'];
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10125,7 +9991,7 @@ exports.__esModule = true;
 exports.getChildMapping = getChildMapping;
 exports.mergeChildMappings = mergeChildMappings;
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 /**
  * Given `this.props.children`, return an object mapping key to child.
@@ -10210,7 +10076,7 @@ function mergeChildMappings(prev, next) {
 }
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10219,13 +10085,13 @@ function mergeChildMappings(prev, next) {
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _DateTimePicker = _interopRequireDefault(__webpack_require__(39));
+var _DateTimePicker = _interopRequireDefault(__webpack_require__(38));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/DatePicker.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/DatePicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10284,7 +10150,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10295,7 +10161,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = deprecated;
 
-var _warning = __webpack_require__(40);
+var _warning = __webpack_require__(39);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -10335,7 +10201,7 @@ deprecated._resetWarned = _resetWarned;
 module.exports = exports['default'];
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10344,15 +10210,13 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _Input = _interopRequireDefault(__webpack_require__(38));
+var _Input = _interopRequireDefault(__webpack_require__(37));
 
 var _localizers = __webpack_require__(5);
 
@@ -10360,10 +10224,7 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var _class,
-    _class2,
-    _temp2,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/DateTimePickerInput.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/DateTimePickerInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -10371,58 +10232,50 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-var DateTimePickerInput = (0, _reactLifecyclesCompat.default)(_class = (_temp2 = _class2 =
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+var DateTimePickerInput =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(DateTimePickerInput, _React$Component);
 
   function DateTimePickerInput() {
-    var _temp, _this;
+    var _this;
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.state = {}, _this.handleBlur = function (event) {
-      var _this$props = _this.props,
-          format = _this$props.format,
-          culture = _this$props.culture,
-          parse = _this$props.parse,
-          onChange = _this$props.onChange,
-          onBlur = _this$props.onBlur;
-      onBlur && onBlur(event);
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
 
-      if (_this._needsFlush) {
-        var date = parse(event.target.value);
-        _this._needsFlush = false;
-        onChange(date, formatDate(date, format, culture));
-      }
-    }, _this.handleChange = function (_ref) {
-      var value = _ref.target.value;
-      _this._needsFlush = true;
+    _initialiseProps.call(_assertThisInitialized(_this));
 
-      _this.setState({
-        textValue: value
-      });
-    }, _temp) || _assertThisInitialized(_this);
+    var _this$props = _this.props,
+        value = _this$props.value,
+        editing = _this$props.editing,
+        editFormat = _this$props.editFormat,
+        format = _this$props.format,
+        culture = _this$props.culture;
+    _this.state = {
+      textValue: formatDate(value, editing && editFormat ? editFormat : format, culture)
+    };
+    return _this;
   }
 
-  DateTimePickerInput.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps) {
+  var _proto = DateTimePickerInput.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     var value = nextProps.value,
         editing = nextProps.editing,
         editFormat = nextProps.editFormat,
         format = nextProps.format,
         culture = nextProps.culture;
-    return {
+    this.setState({
       textValue: formatDate(value, editing && editFormat ? editFormat : format, culture)
-    };
+    });
   };
-
-  var _proto = DateTimePickerInput.prototype;
 
   _proto.focus = function focus() {
     (0, _reactDom.findDOMNode)(this).focus();
@@ -10444,14 +10297,16 @@ function (_React$Component) {
       onBlur: this.handleBlur,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 71
+        lineNumber: 81
       },
       __self: this
     }));
   };
 
   return DateTimePickerInput;
-}(_react.default.Component), _class2.propTypes = {
+}(_react.default.Component);
+
+DateTimePickerInput.propTypes = {
   format: CustomPropTypes.dateFormat.isRequired,
   editing: _propTypes.default.bool,
   editFormat: CustomPropTypes.dateFormat,
@@ -10462,7 +10317,36 @@ function (_React$Component) {
   culture: _propTypes.default.string,
   disabled: CustomPropTypes.disabled,
   readOnly: CustomPropTypes.disabled
-}, _temp2)) || _class;
+};
+
+var _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.handleBlur = function (event) {
+    var _this2$props = _this2.props,
+        format = _this2$props.format,
+        culture = _this2$props.culture,
+        parse = _this2$props.parse,
+        onChange = _this2$props.onChange,
+        onBlur = _this2$props.onBlur;
+    onBlur && onBlur(event);
+
+    if (_this2._needsFlush) {
+      var date = parse(event.target.value);
+      _this2._needsFlush = false;
+      onChange(date, formatDate(date, format, culture));
+    }
+  };
+
+  this.handleChange = function (_ref) {
+    var value = _ref.target.value;
+    _this2._needsFlush = true;
+
+    _this2.setState({
+      textValue: value
+    });
+  };
+};
 
 var _default = DateTimePickerInput;
 exports.default = _default;
@@ -10480,7 +10364,7 @@ function formatDate(date, format, culture) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10489,26 +10373,25 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _reactComponentManagers = __webpack_require__(8);
 
-var _List = _interopRequireDefault(__webpack_require__(22));
+var _List = _interopRequireDefault(__webpack_require__(21));
 
 var _dates = _interopRequireDefault(__webpack_require__(13));
 
-var _reduceToListState = _interopRequireDefault(__webpack_require__(18));
+var _listDataManager = _interopRequireDefault(__webpack_require__(18));
 
 var _localizers = __webpack_require__(5);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _class,
-    _class2,
-    _temp2,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/TimeList.js";
+var Props = _interopRequireWildcard(__webpack_require__(4));
+
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/TimeList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -10516,23 +10399,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var format = function format(props) {
   return _localizers.date.getFormat('time', props.format);
-};
-
-var accessors = {
-  text: function text(item) {
-    return item.label;
-  },
-  value: function value(item) {
-    return item.date;
-  }
 };
 
 var find = function find(arr, fn) {
@@ -10543,65 +10415,24 @@ var find = function find(arr, fn) {
   return null;
 };
 
-function getBounds(_ref) {
-  var min = _ref.min,
-      max = _ref.max,
-      currentDate = _ref.currentDate,
-      value = _ref.value;
-  value = _dates.default.merge(value, value, currentDate);
-
-  var start = _dates.default.startOf(value, 'day');
-
-  var end = _dates.default.add(start, 1, 'day'); //date parts are equal
-
-
-  return {
-    min: _dates.default.eq(value, min, 'day') ? _dates.default.merge(start, min, currentDate) : start,
-    max: _dates.default.eq(value, max, 'day') ? _dates.default.merge(start, max, currentDate) : end
-  };
-}
-
-function getDates(_ref2) {
-  var step = _ref2.step,
-      culture = _ref2.culture,
-      props = _objectWithoutProperties(_ref2, ["step", "culture"]);
-
-  var times = [];
-
-  var _getBounds = getBounds(props),
-      min = _getBounds.min,
-      max = _getBounds.max;
-
-  var startDay = _dates.default.date(min);
-
-  while (_dates.default.date(min) === startDay && _dates.default.lte(min, max)) {
-    times.push({
-      date: min,
-      label: _localizers.date.format(min, format(props), culture)
-    });
-    min = _dates.default.add(min, step || 30, 'minutes');
-  }
-
-  return times;
-}
-
-var TimeList = (0, _reactLifecyclesCompat.default)(_class = (_temp2 = _class2 =
+var TimeList =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(TimeList, _React$Component);
 
   function TimeList() {
-    var _temp, _this;
+    var _this;
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.state = {}, _this.handleKeyDown = function (e) {
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+
+    _this.handleKeyDown = function (e) {
       var key = e.key;
-      var _this$state = _this.state,
-          focusedItem = _this$state.focusedItem,
-          list = _this$state.list;
+      var focusedItem = _this.state.focusedItem;
+      var list = _this.list;
 
       if (key === 'End') {
         e.preventDefault();
@@ -10630,99 +10461,171 @@ function (_React$Component) {
           focusedItem: list.prev(focusedItem)
         });
       }
-    }, _temp) || _assertThisInitialized(_this);
+    };
+
+    _this.scrollTo = function () {
+      if (_this.listRef.move) _this.listRef.move();
+    };
+
+    _this.attachListRef = function (ref) {
+      return _this.listRef = ref;
+    };
+
+    _this.accessors = {
+      text: function text(item) {
+        return item.label;
+      },
+      value: function value(item) {
+        return item.date;
+      }
+    };
+    _this.timeouts = (0, _reactComponentManagers.timeoutManager)(_assertThisInitialized(_this));
+    _this.list = (0, _listDataManager.default)(_assertThisInitialized(_this), {
+      getListDataState: _List.default.getListDataState,
+      accessors: _this.accessors
+    });
+    _this.state = _this.getStateFromProps(_this.props);
+    return _this;
   }
 
-  TimeList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var value = nextProps.value,
-        currentDate = nextProps.currentDate,
-        step = nextProps.step;
-    var data = getDates(nextProps);
+  var _proto = TimeList.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    this.setState(this.getStateFromProps(nextProps));
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.unmounted = true;
+  };
+
+  _proto.getBounds = function getBounds(props) {
+    var value = props.value || props.currentDate || _dates.default.today(),
+        useDate = props.preserveDate,
+        min = props.min,
+        max = props.max,
+        start,
+        end; //compare just the time regradless of whether they fall on the same day
+
+
+    if (!useDate) {
+      start = _dates.default.startOf(_dates.default.merge(new Date(), min, props.currentDate), 'minutes');
+      end = _dates.default.startOf(_dates.default.merge(new Date(), max, props.currentDate), 'minutes');
+      if (_dates.default.lte(end, start) && _dates.default.gt(max, min, 'day')) end = _dates.default.tomorrow();
+      return {
+        min: start,
+        max: end
+      };
+    }
+
+    start = _dates.default.today();
+    end = _dates.default.tomorrow(); //date parts are equal
+
+    return {
+      min: _dates.default.eq(value, min, 'day') ? _dates.default.merge(start, min, props.currentDate) : start,
+      max: _dates.default.eq(value, max, 'day') ? _dates.default.merge(start, max, props.currentDate) : end
+    };
+  };
+
+  _proto.getDates = function getDates(props) {
+    if (props === void 0) {
+      props = this.props;
+    }
+
+    var times = [];
+    var values = this.getBounds(props);
+    var start = values.min;
+
+    var startDay = _dates.default.date(start);
+
+    while (_dates.default.date(start) === startDay && _dates.default.lte(start, values.max)) {
+      times.push({
+        date: start,
+        label: _localizers.date.format(start, format(props), props.culture)
+      });
+      start = _dates.default.add(start, props.step || 30, 'minutes');
+    }
+
+    return times;
+  };
+
+  _proto.getStateFromProps = function getStateFromProps(props) {
+    if (props === void 0) {
+      props = this.props;
+    }
+
+    var _props = props,
+        value = _props.value,
+        currentDate = _props.currentDate,
+        step = _props.step;
+    var data = this.getDates(props);
     var currentValue = value || currentDate;
-    var list = (0, _reduceToListState.default)(data, prevState.list, {
-      nextProps: nextProps
-    });
     var selectedItem = find(data, function (t) {
       return _dates.default.eq(t.date, currentValue, 'minutes');
     });
     var closestDate = find(data, function (t) {
       return Math.abs(_dates.default.diff(t.date, currentValue, 'minutes')) < step;
     });
+    this.list.setData(data);
     return {
-      data: data,
-      list: list,
-      selectedItem: list.nextEnabled(selectedItem),
-      focusedItem: list.nextEnabled(selectedItem || closestDate || data[0])
+      dates: data,
+      selectedItem: this.list.nextEnabled(selectedItem),
+      focusedItem: this.list.nextEnabled(selectedItem || closestDate || data[0])
     };
   };
 
-  var _proto = TimeList.prototype;
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    this.unmounted = true;
-  };
-
   _proto.render = function render() {
-    var _props = this.props,
-        listProps = _props.listProps,
-        props = _objectWithoutProperties(_props, ["listProps"]);
-
+    var onSelect = this.props.onSelect;
     var _state = this.state,
-        data = _state.data,
-        list = _state.list,
-        focusedItem = _state.focusedItem,
-        selectedItem = _state.selectedItem;
-    delete props.currentDate;
-    delete props.min;
-    delete props.max;
-    delete props.step;
-    delete props.format;
-    delete props.culture;
-    delete props.preserveDate;
-    delete props.value;
+        selectedItem = _state.selectedItem,
+        focusedItem = _state.focusedItem;
+    var props = Props.omitOwn(this);
+    var listProps = this.list.defaultProps();
     return _react.default.createElement(_List.default, _extends({}, props, listProps, {
-      data: data,
-      dataState: list.dataState,
-      isDisabled: list.isDisabled,
-      textAccessor: accessors.text,
-      valueAccessor: accessors.value,
+      onSelect: onSelect,
+      textAccessor: this.accessors.text,
+      valueAccessor: this.accessors.value,
       selectedItem: selectedItem,
       focusedItem: focusedItem,
+      ref: this.attachListRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 149
+        lineNumber: 185
       },
       __self: this
     }));
   };
 
   return TimeList;
-}(_react.default.Component), _class2.defaultProps = {
+}(_react.default.Component);
+
+TimeList.defaultProps = {
   step: 30,
+  onSelect: function onSelect() {},
   currentDate: new Date(),
   min: new Date(1900, 0, 1),
   max: new Date(2099, 11, 31),
-  preserveDate: true
-}, _class2.propTypes = {
+  preserveDate: true,
+  delay: 300
+};
+TimeList.propTypes = {
   value: _propTypes.default.instanceOf(Date),
   step: _propTypes.default.number,
   min: _propTypes.default.instanceOf(Date),
   max: _propTypes.default.instanceOf(Date),
   currentDate: _propTypes.default.instanceOf(Date),
   itemComponent: CustomPropTypes.elementType,
-  listProps: _propTypes.default.object,
   format: CustomPropTypes.dateFormat,
   onSelect: _propTypes.default.func,
   preserveDate: _propTypes.default.bool,
-  culture: _propTypes.default.string
-}, _temp2)) || _class;
-
+  culture: _propTypes.default.string,
+  delay: _propTypes.default.number
+};
 var _default = TimeList;
 exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10731,13 +10634,13 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _DateTimePicker = _interopRequireDefault(__webpack_require__(39));
+var _DateTimePicker = _interopRequireDefault(__webpack_require__(38));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/TimePicker.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/TimePicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10796,7 +10699,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10807,31 +10710,29 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _WidgetPicker = _interopRequireDefault(__webpack_require__(20));
+var _WidgetPicker = _interopRequireDefault(__webpack_require__(19));
 
-var _Select = _interopRequireDefault(__webpack_require__(21));
+var _Select = _interopRequireDefault(__webpack_require__(20));
 
-var _NumberInput = _interopRequireDefault(__webpack_require__(102));
+var _NumberInput = _interopRequireDefault(__webpack_require__(101));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _widgetHelpers = __webpack_require__(9);
 
@@ -10840,13 +10741,12 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 var _localizers = __webpack_require__(5);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/NumberPicker.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/NumberPicker.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -10905,7 +10805,7 @@ function clamp(value, min, max) {
  */
 
 
-var NumberPicker = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var NumberPicker = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(NumberPicker, _React$Component);
@@ -10947,6 +10847,7 @@ function (_React$Component) {
       _this.inputRef = ref;
     };
 
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.focusManager = (0, _focusManager.default)(_assertThisInitialized(_this), {
       willHandle: function willHandle(focused) {
         if (focused) _this.focus();
@@ -10958,14 +10859,12 @@ function (_React$Component) {
     return _this;
   }
 
-  NumberPicker.getDerivedStateFromProps = function getDerivedStateFromProps(_ref) {
-    var messages = _ref.messages;
-    return {
-      messages: (0, _messages.getMessages)(messages)
-    };
-  };
-
   var _proto = NumberPicker.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
+    var messages = _ref.messages;
+    this.messages = (0, _messages.getMessages)(messages);
+  };
 
   _proto.renderInput = function renderInput(value) {
     var _props = this.props,
@@ -11004,7 +10903,7 @@ function (_React$Component) {
       nodeRef: this.attachInputRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 244
+        lineNumber: 242
       },
       __self: this
     }));
@@ -11020,9 +10919,7 @@ function (_React$Component) {
         value = _props2.value,
         min = _props2.min,
         max = _props2.max;
-    var _state = this.state,
-        focused = _state.focused,
-        messages = _state.messages;
+    var focused = this.state.focused;
     var elementProps = Props.pickElementProps(this);
     value = clamp(value, min, max);
     return _react.default.createElement(_Widget.default, _extends({}, elementProps, {
@@ -11035,27 +10932,27 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-number-picker'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 277
+        lineNumber: 275
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 287
+        lineNumber: 285
       },
       __self: this
     }, this.renderInput(value), _react.default.createElement(_Select.default, {
       bordered: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 289
+        lineNumber: 287
       },
       __self: this
     }, _react.default.createElement(_Button.default, {
       icon: "caret-up",
       onClick: this.handleFocus,
       disabled: value === max || disabled,
-      label: messages.increment({
+      label: this.messages.increment({
         value: value,
         min: min,
         max: max
@@ -11071,14 +10968,14 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 290
+        lineNumber: 288
       },
       __self: this
     }), _react.default.createElement(_Button.default, {
       icon: "caret-down",
       onClick: this.handleFocus,
       disabled: value === min || disabled,
-      label: messages.decrement({
+      label: this.messages.decrement({
         value: value,
         min: min,
         max: max
@@ -11094,7 +10991,7 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 299
+        lineNumber: 297
       },
       __self: this
     }))));
@@ -11120,7 +11017,7 @@ function (_React$Component) {
   };
 
   return NumberPicker;
-}(_react.default.Component), _class3.propTypes = {
+}(_react.default.Component), _class2.propTypes = {
   value: _propTypes.default.number,
 
   /**
@@ -11184,13 +11081,13 @@ function (_React$Component) {
     increment: _propTypes.default.string,
     decrement: _propTypes.default.string
   })
-}, _class3.defaultProps = {
+}, _class2.defaultProps = {
   value: null,
   open: false,
   min: -Infinity,
   max: Infinity,
   step: 1
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleMouseDown", [_interaction.widgetEditable], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleMouseDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this3 = this;
@@ -11211,7 +11108,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleMouseUp", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleMouseUp", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -11221,7 +11118,7 @@ function (_React$Component) {
       _this4._cancelRepeater = null;
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
@@ -11245,7 +11142,7 @@ function (_React$Component) {
       }
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(NumberPicker, {
   value: 'onChange'
@@ -11267,7 +11164,7 @@ function round(value, precision) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11276,19 +11173,17 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _inDOM = _interopRequireDefault(__webpack_require__(11));
+var _inDOM = _interopRequireDefault(__webpack_require__(10));
 
-var _activeElement = _interopRequireDefault(__webpack_require__(26));
+var _activeElement = _interopRequireDefault(__webpack_require__(25));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
-
-var _Input = _interopRequireDefault(__webpack_require__(38));
+var _Input = _interopRequireDefault(__webpack_require__(37));
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
@@ -11296,18 +11191,13 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
 var _localizers = __webpack_require__(5);
 
-var _class,
-    _class2,
-    _temp2,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/NumberInput.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/NumberInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -11339,19 +11229,21 @@ function isAtDelimiter(num, str, culture) {
   return !!(char === localeChar && str.indexOf(char) === lastIndex);
 }
 
-var NumberPickerInput = (0, _reactLifecyclesCompat.default)(_class = (_temp2 = _class2 =
+var NumberPickerInput =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(NumberPickerInput, _React$Component);
 
   function NumberPickerInput() {
-    var _temp, _this;
+    var _this;
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.state = {}, _this.handleBlur = function (event) {
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+
+    _this.handleBlur = function (event) {
       var str = _this.state.stringValue,
           number = _this.parseNumber(str); // if number is below the min
       // we need to flush low values and decimal stops, onBlur means i'm done inputing
@@ -11364,7 +11256,9 @@ function (_React$Component) {
 
         _this.props.onChange(number, event);
       }
-    }, _this.handleChange = function (event) {
+    };
+
+    _this.handleChange = function (event) {
       var _this$props = _this.props,
           value = _this$props.value,
           onChange = _this$props.onChange;
@@ -11389,35 +11283,45 @@ function (_React$Component) {
       } else if (stringValue != _this.state.stringValue) {
         _this.setStringValue(stringValue);
       }
-    }, _temp) || _assertThisInitialized(_this);
+    };
+
+    _this.state = _this.getDefaultState();
+    return _this;
   }
 
   var _proto = NumberPickerInput.prototype;
 
-  _proto.getSnapshotBeforeUpdate = function getSnapshotBeforeUpdate(_ref) {
-    var editing = _ref.editing;
-    return {
-      reselectText: !editing && this.props.editing && this.isSelectingAllText()
-    };
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    if (_inDOM.default) {
+      this.tabbedSelection = this.isSelectingAllText();
+    }
+
+    this.setState(this.getDefaultState(nextProps));
   };
 
-  NumberPickerInput.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps) {
-    var value = nextProps.value,
-        culture = nextProps.culture,
-        editing = nextProps.editing;
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (this.tabbedSelection && !prevProps.editing && this.props.editing) {
+      (0, _reactDom.findDOMNode)(this).select();
+    }
+  };
 
-    var decimal = _localizers.number.decimalChar(null, culture);
+  _proto.getDefaultState = function getDefaultState(props) {
+    if (props === void 0) {
+      props = this.props;
+    }
 
-    var format = getFormat(nextProps);
+    var _props = props,
+        value = _props.value,
+        culture = _props.culture,
+        editing = _props.editing;
+
+    var decimal = _localizers.number.decimalChar(null, culture),
+        format = getFormat(props);
+
     if (value == null || isNaN(value)) value = '';else value = editing ? ('' + value).replace('.', decimal) : _localizers.number.format(value, format, culture);
     return {
       stringValue: '' + value
     };
-  };
-
-  _proto.componentDidUpdate = function componentDidUpdate(_, __, _ref2) {
-    var reselectText = _ref2.reselectText;
-    if (reselectText) (0, _reactDom.findDOMNode)(this).select();
   }; // this intermediate state is for when one runs into
   // the decimal or are typing the number
 
@@ -11429,21 +11333,21 @@ function (_React$Component) {
   };
 
   _proto.isIntermediateValue = function isIntermediateValue(num, str) {
-    var _props = this.props,
-        culture = _props.culture,
-        min = _props.min;
+    var _props2 = this.props,
+        culture = _props2.culture,
+        min = _props2.min;
     return !!(num < min || isSign(str) || isAtDelimiter(num, str, culture) || isPaddedZeros(str, culture));
   };
 
   _proto.isSelectingAllText = function isSelectingAllText() {
-    var node = _inDOM.default && (0, _reactDom.findDOMNode)(this);
-    return _inDOM.default && (0, _activeElement.default)() === node && node.selectionStart === 0 && node.selectionEnd === node.value.length;
+    var node = (0, _reactDom.findDOMNode)(this);
+    return (0, _activeElement.default)() === node && node.selectionStart === 0 && node.selectionEnd === node.value.length;
   };
 
   _proto.parseNumber = function parseNumber(strVal) {
-    var _props2 = this.props,
-        culture = _props2.culture,
-        userParse = _props2.parse;
+    var _props3 = this.props,
+        culture = _props3.culture,
+        userParse = _props3.parse;
 
     var delimChar = _localizers.number.decimalChar(null, culture);
 
@@ -11454,12 +11358,12 @@ function (_React$Component) {
   };
 
   _proto.render = function render() {
-    var _props3 = this.props,
-        disabled = _props3.disabled,
-        readOnly = _props3.readOnly,
-        placeholder = _props3.placeholder,
-        min = _props3.min,
-        max = _props3.max;
+    var _props4 = this.props,
+        disabled = _props4.disabled,
+        readOnly = _props4.readOnly,
+        placeholder = _props4.placeholder,
+        min = _props4.min,
+        max = _props4.max;
     var value = this.state.stringValue;
     var props = Props.omitOwn(this);
     return _react.default.createElement(_Input.default, _extends({}, props, {
@@ -11475,17 +11379,20 @@ function (_React$Component) {
       value: value,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 176
+        lineNumber: 193
       },
       __self: this
     }));
   };
 
   return NumberPickerInput;
-}(_react.default.Component), _class2.defaultProps = {
+}(_react.default.Component);
+
+NumberPickerInput.defaultProps = {
   value: null,
   editing: false
-}, _class2.propTypes = {
+};
+NumberPickerInput.propTypes = {
   value: _propTypes.default.number,
   editing: _propTypes.default.bool,
   placeholder: _propTypes.default.string,
@@ -11497,14 +11404,13 @@ function (_React$Component) {
   disabled: CustomPropTypes.disabled,
   readOnly: CustomPropTypes.disabled,
   onChange: _propTypes.default.func.isRequired
-}, _temp2)) || _class;
-
+};
 var _default = NumberPickerInput;
 exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11515,64 +11421,61 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _closest = _interopRequireDefault(__webpack_require__(104));
+var _closest = _interopRequireDefault(__webpack_require__(103));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _WidgetPicker = _interopRequireDefault(__webpack_require__(20));
+var _WidgetPicker = _interopRequireDefault(__webpack_require__(19));
 
-var _Select = _interopRequireDefault(__webpack_require__(21));
+var _Select = _interopRequireDefault(__webpack_require__(20));
 
-var _Popup = _interopRequireDefault(__webpack_require__(28));
+var _Popup = _interopRequireDefault(__webpack_require__(27));
 
-var _MultiselectInput = _interopRequireDefault(__webpack_require__(105));
+var _MultiselectInput = _interopRequireDefault(__webpack_require__(104));
 
-var _MultiselectTagList = _interopRequireDefault(__webpack_require__(106));
+var _MultiselectTagList = _interopRequireDefault(__webpack_require__(105));
 
-var _List = _interopRequireDefault(__webpack_require__(22));
+var _List = _interopRequireDefault(__webpack_require__(21));
 
-var _AddToListOption = _interopRequireDefault(__webpack_require__(54));
+var _AddToListOption = _interopRequireDefault(__webpack_require__(53));
 
 var _ = __webpack_require__(7);
 
-var Filter = _interopRequireWildcard(__webpack_require__(31));
+var Filter = _interopRequireWildcard(__webpack_require__(30));
 
 var Props = _interopRequireWildcard(__webpack_require__(4));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _reduceToListState = _interopRequireWildcard(__webpack_require__(18));
-
-var _getAccessors = _interopRequireDefault(__webpack_require__(32));
+var _accessorManager = _interopRequireDefault(__webpack_require__(22));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
-var _scrollManager = _interopRequireDefault(__webpack_require__(24));
+var _listDataManager = _interopRequireDefault(__webpack_require__(18));
 
-var _interaction = __webpack_require__(10);
+var _scrollManager = _interopRequireDefault(__webpack_require__(23));
+
+var _interaction = __webpack_require__(12);
 
 var _widgetHelpers = __webpack_require__(9);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
     _descriptor3,
     _descriptor4,
     _descriptor5,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/Multiselect.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/Multiselect.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -11692,7 +11595,7 @@ var propTypes = _extends({}, Filter.propTypes, {
 
 });
 
-var Multiselect = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var Multiselect = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(Multiselect, _React$Component);
@@ -11765,6 +11668,7 @@ function (_React$Component) {
       return _this.inputRef = ref;
     };
 
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.inputId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_input');
     _this.tagsId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_taglist');
     _this.notifyId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_notify_area');
@@ -11772,27 +11676,39 @@ function (_React$Component) {
     _this.createId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_createlist_option');
     _this.activeTagId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_taglist_active_tag');
     _this.activeOptionId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox_active_option');
+    _this.list = (0, _listDataManager.default)(_assertThisInitialized(_this));
+    _this.tagList = (0, _listDataManager.default)(_assertThisInitialized(_this), {
+      getStateGetterFromProps: null
+    });
+    _this.accessors = (0, _accessorManager.default)(_assertThisInitialized(_this));
     _this.handleScroll = (0, _scrollManager.default)(_assertThisInitialized(_this));
     _this.focusManager = (0, _focusManager.default)(_assertThisInitialized(_this), {
       didHandle: _this.handleFocusDidChange
     });
-    _this.state = {
+    _this.isDisabled = (0, _interaction.disabledManager)(_assertThisInitialized(_this));
+    _this.state = _extends({
       focusedTag: null
-    };
+    }, _this.getStateFromProps(_this.props));
     return _this;
   }
 
-  Multiselect.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var data = nextProps.data,
-        searchTerm = nextProps.searchTerm,
-        messages = nextProps.messages,
-        minLength = nextProps.minLength,
-        caseSensitive = nextProps.caseSensitive,
-        filter = nextProps.filter;
-    var focusedItem = prevState.focusedItem,
-        focusedTag = prevState.focusedTag;
-    var accessors = (0, _getAccessors.default)(nextProps);
-    var values = (0, _.makeArray)(nextProps.value);
+  var _proto = Multiselect.prototype;
+
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    this.messages = (0, _messages.getMessages)(nextProps.messages);
+    this.setState(this.getStateFromProps(nextProps));
+  };
+
+  _proto.getStateFromProps = function getStateFromProps(props) {
+    var accessors = this.accessors,
+        list = this.list,
+        tagList = this.tagList;
+    var data = props.data,
+        searchTerm = props.searchTerm,
+        minLength = props.minLength,
+        caseSensitive = props.caseSensitive,
+        filter = props.filter;
+    var values = (0, _.makeArray)(props.value);
     var dataItems = values.map(function (item) {
       return accessors.findOrSelf(data, item);
     });
@@ -11801,7 +11717,7 @@ function (_React$Component) {
         return accessors.matches(i, v);
       });
     });
-    var lengthWithoutValues = data.length;
+    this._lengthWithoutValues = data.length;
     data = Filter.filter(data, {
       filter: filter,
       searchTerm: searchTerm,
@@ -11809,27 +11725,20 @@ function (_React$Component) {
       caseSensitive: caseSensitive,
       textField: accessors.text
     });
-    var list = (0, _reduceToListState.default)(data, prevState.list, {
-      nextProps: nextProps
-    });
-    var tagList = (0, _reduceToListState.default)(dataItems, prevState.tagList, {
-      nextProps: nextProps,
-      getDataState: _reduceToListState.defaultGetDataState
-    });
+    list.setData(data);
+    tagList.setData(dataItems);
+
+    var _ref = this.state || {},
+        focusedItem = _ref.focusedItem,
+        focusedTag = _ref.focusedTag;
+
     return {
       data: data,
       dataItems: dataItems,
-      list: list,
-      tagList: tagList,
-      accessors: accessors,
-      lengthWithoutValues: lengthWithoutValues,
-      messages: (0, _messages.getMessages)(messages),
       focusedTag: list.nextEnabled(~dataItems.indexOf(focusedTag) ? focusedTag : null),
       focusedItem: list.nextEnabled(~data.indexOf(focusedItem) ? focusedItem : data[0])
     };
   };
-
-  var _proto = Multiselect.prototype;
 
   _proto.renderInput = function renderInput(ownedIds) {
     var _props = this.props,
@@ -11867,43 +11776,26 @@ function (_React$Component) {
       ref: this.attachInputRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 395
+        lineNumber: 390
       },
       __self: this
     }));
   };
 
-  _proto.renderList = function renderList() {
+  _proto.renderList = function renderList(messages) {
     var inputId = this.inputId,
         activeOptionId = this.activeOptionId,
-        listId = this.listId;
-    var _props2 = this.props,
-        open = _props2.open,
-        searchTerm = _props2.searchTerm,
-        optionComponent = _props2.optionComponent,
-        itemComponent = _props2.itemComponent,
-        groupComponent = _props2.groupComponent,
-        listProps = _props2.listProps;
-    var _state2 = this.state,
-        focusedItem = _state2.focusedItem,
-        list = _state2.list,
-        lengthWithoutValues = _state2.lengthWithoutValues,
-        accessors = _state2.accessors,
-        data = _state2.data,
-        messages = _state2.messages;
+        listId = this.listId,
+        accessors = this.accessors;
+    var open = this.props.open;
+    var focusedItem = this.state.focusedItem;
     var List = this.props.listComponent;
-    return _react.default.createElement(List, _extends({}, listProps, {
+    var props = this.list.defaultProps();
+    return _react.default.createElement(List, _extends({}, props, {
       id: listId,
       activeId: activeOptionId,
-      data: data,
-      dataState: list.dataState,
-      isDisabled: list.isDisabled,
-      searchTerm: searchTerm,
-      textAccessor: accessors.text,
       valueAccessor: accessors.value,
-      itemComponent: itemComponent,
-      groupComponent: groupComponent,
-      optionComponent: optionComponent,
+      textAccessor: accessors.text,
       focusedItem: focusedItem,
       onSelect: this.handleSelect,
       onMove: this.handleScroll,
@@ -11912,24 +11804,24 @@ function (_React$Component) {
       "aria-hidden": !open,
       ref: this.attachListRef,
       messages: {
-        emptyList: lengthWithoutValues ? messages.emptyFilter : messages.emptyList
+        emptyList: this._lengthWithoutValues ? messages.emptyFilter : messages.emptyList
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 441
+        lineNumber: 422
       },
       __self: this
     }));
   };
 
-  _proto.renderNotificationArea = function renderNotificationArea() {
-    var _state3 = this.state,
-        focused = _state3.focused,
-        dataItems = _state3.dataItems,
-        accessors = _state3.accessors,
-        messages = _state3.messages;
+  _proto.renderNotificationArea = function renderNotificationArea(messages) {
+    var _this2 = this;
+
+    var _state2 = this.state,
+        focused = _state2.focused,
+        dataItems = _state2.dataItems;
     var itemLabels = dataItems.map(function (item) {
-      return accessors.text(item);
+      return _this2.accessors.text(item);
     });
     return _react.default.createElement("span", {
       id: this.notifyId,
@@ -11940,65 +11832,61 @@ function (_React$Component) {
       "aria-relevant": "additions removals text",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 476
+        lineNumber: 450
       },
       __self: this
     }, focused && (dataItems.length ? messages.selectedItems(itemLabels) : messages.noneSelected()));
   };
 
-  _proto.renderTags = function renderTags() {
-    var _props3 = this.props,
-        readOnly = _props3.readOnly,
-        disabled = _props3.disabled;
-    var _state4 = this.state,
-        focusedTag = _state4.focusedTag,
-        dataItems = _state4.dataItems,
-        accessors = _state4.accessors,
-        messages = _state4.messages;
+  _proto.renderTags = function renderTags(messages) {
+    var readOnly = this.props.readOnly;
+    var _state3 = this.state,
+        focusedTag = _state3.focusedTag,
+        dataItems = _state3.dataItems;
     var Component = this.props.tagComponent;
     return _react.default.createElement(_MultiselectTagList.default, {
       id: this.tagsId,
       activeId: this.activeTagId,
-      textAccessor: accessors.text,
-      valueAccessor: accessors.value,
+      textAccessor: this.accessors.text,
+      valueAccessor: this.accessors.value,
       label: messages.tagsLabel(),
       value: dataItems,
       readOnly: readOnly,
-      disabled: disabled,
+      disabled: this.isDisabled(),
       focusedItem: focusedTag,
       onDelete: this.handleDelete,
       valueComponent: Component,
       ref: this.attachTagsRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 499
+        lineNumber: 473
       },
       __self: this
     });
   };
 
   _proto.render = function render() {
-    var _this2 = this;
+    var _this3 = this;
 
-    var _props4 = this.props,
-        className = _props4.className,
-        busy = _props4.busy,
-        dropUp = _props4.dropUp,
-        open = _props4.open,
-        searchTerm = _props4.searchTerm,
-        popupTransition = _props4.popupTransition;
-    var _state5 = this.state,
-        focused = _state5.focused,
-        focusedItem = _state5.focusedItem,
-        dataItems = _state5.dataItems,
-        messages = _state5.messages;
+    var _props2 = this.props,
+        className = _props2.className,
+        busy = _props2.busy,
+        dropUp = _props2.dropUp,
+        open = _props2.open,
+        searchTerm = _props2.searchTerm,
+        popupTransition = _props2.popupTransition;
+    var _state4 = this.state,
+        focused = _state4.focused,
+        focusedItem = _state4.focusedItem,
+        dataItems = _state4.dataItems;
     var elementProps = Props.pickElementProps(this);
     var shouldRenderTags = !!dataItems.length,
         shouldRenderPopup = (0, _widgetHelpers.isFirstFocusedRender)(this) || open,
         allowCreate = this.allowCreate();
     var inputOwns = this.listId + " " + this.notifyId + " " + (shouldRenderTags ? this.tagsId : '') + (allowCreate ? this.createId : '');
-    var disabled = this.props.disabled === true;
+    var disabled = this.isDisabled() === true;
     var readOnly = this.props.readOnly === true;
+    var messages = this.messages;
     return _react.default.createElement(_Widget.default, _extends({}, elementProps, {
       open: open,
       dropUp: dropUp,
@@ -12011,7 +11899,7 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-multiselect'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 543
+        lineNumber: 519
       },
       __self: this
     }), this.renderNotificationArea(messages), _react.default.createElement(_WidgetPicker.default, {
@@ -12021,13 +11909,13 @@ function (_React$Component) {
       onTouchEnd: this.handleClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 556
+        lineNumber: 532
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 562
+        lineNumber: 538
       },
       __self: this
     }, shouldRenderTags && this.renderTags(messages), this.renderInput(inputOwns)), _react.default.createElement(_Select.default, {
@@ -12038,7 +11926,7 @@ function (_React$Component) {
       disabled: disabled || readOnly,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 567
+        lineNumber: 543
       },
       __self: this
     })), shouldRenderPopup && _react.default.createElement(_Popup.default, {
@@ -12046,37 +11934,37 @@ function (_React$Component) {
       open: open,
       transition: popupTransition,
       onEntering: function onEntering() {
-        return _this2.listRef.forceUpdate();
+        return _this3.listRef.forceUpdate();
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 577
+        lineNumber: 553
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 583
+        lineNumber: 559
       },
       __self: this
-    }, this.renderList(), allowCreate && _react.default.createElement(_AddToListOption.default, {
+    }, this.renderList(messages), allowCreate && _react.default.createElement(_AddToListOption.default, {
       id: this.createId,
       searchTerm: searchTerm,
       onSelect: this.handleCreate,
       focused: !focusedItem || focusedItem === CREATE_OPTION,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 587
+        lineNumber: 563
       },
       __self: this
     }, messages.createOption(this.props)))));
   };
 
   _proto.change = function change(dataItem, originalEvent, action) {
-    var _props5 = this.props,
-        onChange = _props5.onChange,
-        searchTerm = _props5.searchTerm,
-        lastValue = _props5.value;
+    var _props3 = this.props,
+        onChange = _props3.onChange,
+        searchTerm = _props3.searchTerm,
+        lastValue = _props3.value;
     var dataItems = this.state.dataItems;
 
     switch (action) {
@@ -12110,9 +11998,9 @@ function (_React$Component) {
       action = 'input';
     }
 
-    var _props6 = this.props,
-        onSearch = _props6.onSearch,
-        lastSearchTerm = _props6.searchTerm;
+    var _props4 = this.props,
+        onSearch = _props4.onSearch,
+        lastSearchTerm = _props4.searchTerm;
     if (searchTerm !== lastSearchTerm) (0, _widgetHelpers.notify)(onSearch, [searchTerm, {
       action: action,
       lastSearchTerm: lastSearchTerm,
@@ -12137,28 +12025,28 @@ function (_React$Component) {
   };
 
   _proto.allowCreate = function allowCreate() {
-    var _props7 = this.props,
-        searchTerm = _props7.searchTerm,
-        onCreate = _props7.onCreate,
-        allowCreate = _props7.allowCreate;
+    var _props5 = this.props,
+        searchTerm = _props5.searchTerm,
+        onCreate = _props5.onCreate,
+        allowCreate = _props5.allowCreate;
     return !!(onCreate && (allowCreate === true || allowCreate === 'onFilter' && searchTerm) && !this.hasExtactMatch());
   };
 
   _proto.hasExtactMatch = function hasExtactMatch() {
-    var _props8 = this.props,
-        searchTerm = _props8.searchTerm,
-        caseSensitive = _props8.caseSensitive;
-    var _state6 = this.state,
-        data = _state6.data,
-        dataItems = _state6.dataItems,
-        accessors = _state6.accessors;
+    var _props6 = this.props,
+        searchTerm = _props6.searchTerm,
+        caseSensitive = _props6.caseSensitive;
+    var _state5 = this.state,
+        data = _state5.data,
+        dataItems = _state5.dataItems;
+    var text = this.accessors.text;
 
     var lower = function lower(text) {
       return caseSensitive ? text : text.toLowerCase();
     };
 
     var eq = function eq(v) {
-      return lower(accessors.text(v)) === lower(searchTerm);
+      return lower(text(v)) === lower(searchTerm);
     }; // if there is an exact match on textFields:
     // "john" => { name: "john" }, don't show
 
@@ -12167,115 +12055,115 @@ function (_React$Component) {
   };
 
   _proto.getPlaceholder = function getPlaceholder() {
-    var _props9 = this.props,
-        value = _props9.value,
-        placeholder = _props9.placeholder;
+    var _props7 = this.props,
+        value = _props7.value,
+        placeholder = _props7.placeholder;
     return (value && value.length ? '' : placeholder) || '';
   };
 
   return Multiselect;
-}(_react.default.Component), _class3.propTypes = propTypes, _class3.defaultProps = {
+}(_react.default.Component), _class2.propTypes = propTypes, _class2.defaultProps = {
   data: [],
   allowCreate: 'onFilter',
   filter: 'startsWith',
   value: [],
   searchTerm: '',
   listComponent: _List.default
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleClick", [_interaction.widgetEditable], {
-  enumerable: true,
-  initializer: function initializer() {
-    var _this3 = this;
-
-    return function (_ref) {
-      var target = _ref.target;
-
-      _this3.focus();
-
-      if ((0, _closest.default)(target, '.rw-select')) _this3.toggle();else _this3.open();
-    };
-  }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleDoubleClick", [_interaction.widgetEditable], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
 
-    return function () {
-      if (!_this4.inputRef) return;
+    return function (_ref2) {
+      var target = _ref2.target;
 
       _this4.focus();
 
-      _this4.inputRef.select();
+      if ((0, _closest.default)(target, '.rw-select')) _this4.toggle();else _this4.open();
     };
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "handleSelect", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleDoubleClick", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this5 = this;
 
+    return function () {
+      if (!_this5.inputRef) return;
+
+      _this5.focus();
+
+      _this5.inputRef.select();
+    };
+  }
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "handleSelect", [_interaction.widgetEditable], {
+  enumerable: true,
+  initializer: function initializer() {
+    var _this6 = this;
+
     return function (dataItem, originalEvent) {
       if (dataItem === undefined || dataItem === CREATE_OPTION) {
-        _this5.handleCreate(_this5.props.searchTerm, originalEvent);
+        _this6.handleCreate(_this6.props.searchTerm, originalEvent);
 
         return;
       }
 
-      (0, _widgetHelpers.notify)(_this5.props.onSelect, [dataItem, {
+      (0, _widgetHelpers.notify)(_this6.props.onSelect, [dataItem, {
         originalEvent: originalEvent
       }]);
 
-      _this5.change(dataItem, originalEvent, INSERT);
+      _this6.change(dataItem, originalEvent, INSERT);
 
-      _this5.focus();
+      _this6.focus();
     };
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "handleCreate", [_interaction.widgetEditable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "handleCreate", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
-    var _this6 = this;
+    var _this7 = this;
 
     return function (searchTerm, event) {
       if (searchTerm === void 0) {
         searchTerm = '';
       }
 
-      (0, _widgetHelpers.notify)(_this6.props.onCreate, searchTerm);
+      (0, _widgetHelpers.notify)(_this7.props.onCreate, searchTerm);
 
-      _this6.clearSearch(event);
+      _this7.clearSearch(event);
 
-      _this6.focus();
+      _this7.focus();
     };
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
-    var _this7 = this;
+    var _this8 = this;
 
     return function (event) {
-      var _this7$props = _this7.props,
-          open = _this7$props.open,
-          searchTerm = _this7$props.searchTerm,
-          onKeyDown = _this7$props.onKeyDown;
+      var _this8$props = _this8.props,
+          open = _this8$props.open,
+          searchTerm = _this8$props.searchTerm,
+          onKeyDown = _this8$props.onKeyDown;
       var key = event.key,
           keyCode = event.keyCode,
           altKey = event.altKey,
           ctrlKey = event.ctrlKey;
-      var _this7$state = _this7.state,
-          focusedTag = _this7$state.focusedTag,
-          focusedItem = _this7$state.focusedItem,
-          list = _this7$state.list,
-          tagList = _this7$state.tagList;
+      var _this8$state = _this8.state,
+          focusedTag = _this8$state.focusedTag,
+          focusedItem = _this8$state.focusedItem;
+      var list = _this8.list,
+          tagList = _this8.tagList;
       var createIsFocused = focusedItem === CREATE_OPTION;
 
-      var canCreate = _this7.allowCreate();
+      var canCreate = _this8.allowCreate();
 
       var focusTag = function focusTag(tag) {
-        return _this7.setState({
+        return _this8.setState({
           focusedTag: tag
         });
       };
 
       var focusItem = function focusItem(item) {
-        return _this7.setState({
+        return _this8.setState({
           focusedItem: item,
           focusedTag: null
         });
@@ -12286,13 +12174,13 @@ function (_React$Component) {
 
       if (key === 'ArrowDown') {
         event.preventDefault();
-        if (!open) return _this7.open();
+        if (!open) return _this8.open();
         var next = list.next(focusedItem);
         var creating = createIsFocused || canCreate && focusedItem === next;
         focusItem(creating ? CREATE_OPTION : next);
       } else if (key === 'ArrowUp' && (open || altKey)) {
         event.preventDefault();
-        if (altKey) return _this7.close();
+        if (altKey) return _this8.close();
         focusItem(createIsFocused ? list.last() : list.prev(focusedItem));
       } else if (key === 'End') {
         event.preventDefault();
@@ -12303,30 +12191,30 @@ function (_React$Component) {
       } else if (open && keyCode === ENTER) {
         // using keyCode to ignore enter for japanese IME
         event.preventDefault();
-        if (ctrlKey && canCreate) return _this7.handleCreate(searchTerm, event);
+        if (ctrlKey && canCreate) return _this8.handleCreate(searchTerm, event);
 
-        _this7.handleSelect(focusedItem, event);
+        _this8.handleSelect(focusedItem, event);
       } else if (key === 'Escape') {
-        open ? _this7.close() : tagList && focusTag(null);
-      } else if (!searchTerm && !_this7._deletingText) {
+        open ? _this8.close() : tagList && focusTag(null);
+      } else if (!searchTerm && !_this8._deletingText) {
         if (key === 'ArrowLeft') {
           focusTag(tagList.prev(focusedTag) || tagList.last());
         } else if (key === 'ArrowRight' && focusedTag) {
           var nextTag = tagList.next(focusedTag);
           focusTag(nextTag === focusedTag ? null : nextTag);
         } else if (key === 'Delete' && !tagList.isDisabled(focusedTag)) {
-          _this7.handleDelete(focusedTag, event);
+          _this8.handleDelete(focusedTag, event);
         } else if (key === 'Backspace') {
-          _this7.handleDelete(tagList.last(), event);
+          _this8.handleDelete(tagList.last(), event);
         } else if (key === ' ' && !open) {
           event.preventDefault();
 
-          _this7.open();
+          _this8.open();
         }
       }
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(Multiselect, {
   open: 'onToggle',
@@ -12338,7 +12226,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12349,7 +12237,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = closest;
 
-var _matches = __webpack_require__(55);
+var _matches = __webpack_require__(54);
 
 var _matches2 = _interopRequireDefault(_matches);
 
@@ -12368,7 +12256,7 @@ function closest(node, selector, context) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12377,17 +12265,17 @@ module.exports = exports['default'];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _activeElement = _interopRequireDefault(__webpack_require__(26));
+var _activeElement = _interopRequireDefault(__webpack_require__(25));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/MultiselectInput.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/MultiselectInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -12459,7 +12347,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12468,21 +12356,23 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _MultiselectTag = _interopRequireDefault(__webpack_require__(107));
+var _MultiselectTag = _interopRequireDefault(__webpack_require__(106));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _dataHelpers = __webpack_require__(23);
+var _dataHelpers = __webpack_require__(31);
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/MultiselectTagList.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/MultiselectTagList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -12497,12 +12387,22 @@ function (_React$Component) {
   _inheritsLoose(MultiselectTagList, _React$Component);
 
   function MultiselectTagList() {
-    return _React$Component.apply(this, arguments) || this;
+    var _temp, _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.handleDelete = function (item, event) {
+      if (_this.props.disabled !== true) _this.props.onDelete(item, event);
+    }, _temp) || _assertThisInitialized(_this);
   }
 
   var _proto = MultiselectTagList.prototype;
 
   _proto.render = function render() {
+    var _this2 = this;
+
     var _props = this.props,
         id = _props.id,
         value = _props.value,
@@ -12511,17 +12411,17 @@ function (_React$Component) {
         textAccessor = _props.textAccessor,
         label = _props.label,
         disabled = _props.disabled,
-        onDelete = _props.onDelete,
         focusedItem = _props.focusedItem,
         ValueComponent = _props.valueComponent;
     return _react.default.createElement("ul", {
       id: id,
+      tabIndex: "-1",
       role: "listbox",
       "aria-label": label,
       className: "rw-multiselect-taglist",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 46
+        lineNumber: 50
       },
       __self: this
     }, value.map(function (item, i) {
@@ -12531,24 +12431,24 @@ function (_React$Component) {
         id: isFocused ? activeId : null,
         value: item,
         focused: isFocused,
-        onClick: onDelete,
+        onClick: _this2.handleDelete,
         disabled: isDisabled(item, disabled, valueAccessor),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 56
+          lineNumber: 61
         },
         __self: this
       }, ValueComponent ? _react.default.createElement(ValueComponent, {
         item: item,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 70
         },
         __self: this
       }) : _react.default.createElement("span", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 67
+          lineNumber: 71
         },
         __self: this
       }, textAccessor(item)));
@@ -12575,7 +12475,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12586,33 +12486,21 @@ exports.default = void 0;
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
-
-var _interaction = __webpack_require__(10);
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _Button = _interopRequireDefault(__webpack_require__(17));
 
-var _class,
-    _descriptor,
-    _class2,
-    _temp2,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/MultiselectTag.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/MultiselectTag.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object['ke' + 'ys'](descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object['define' + 'Property'](target, property, desc); desc = null; } return desc; }
-
-function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
-
-var MultiselectTag = (_class = (_temp2 = _class2 =
+var MultiselectTag =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(MultiselectTag, _React$Component);
@@ -12624,7 +12512,13 @@ function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _initializerDefineProperty(_this, "onClick", _descriptor, _assertThisInitialized(_this)), _temp) || _assertThisInitialized(_this);
+    return (_temp = _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this, _this.onClick = function (event) {
+      var _this$props = _this.props,
+          value = _this$props.value,
+          disabled = _this$props.disabled,
+          onClick = _this$props.onClick;
+      if (!disabled) onClick(value, event);
+    }, _temp) || _assertThisInitialized(_this);
   }
 
   var _proto = MultiselectTag.prototype;
@@ -12642,14 +12536,14 @@ function (_React$Component) {
       "aria-label": label || 'Remove item',
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 29
+        lineNumber: 28
       },
       __self: this
     }, _react.default.createElement("span", {
       "aria-hidden": "true",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 36
+        lineNumber: 35
       },
       __self: this
     }, "\xD7"));
@@ -12661,9 +12555,11 @@ function (_React$Component) {
         children = _props2.children,
         focused = _props2.focused,
         disabled = _props2.disabled;
+    var tabIndex = disabled ? undefined : '-1';
     return _react.default.createElement("li", {
       id: id,
       role: "option",
+      tabIndex: tabIndex,
       className: (0, _classnames.default)('rw-multiselect-tag', disabled && 'rw-state-disabled', focused && !disabled && 'rw-state-focus'),
       __source: {
         fileName: _jsxFileName,
@@ -12673,14 +12569,16 @@ function (_React$Component) {
     }, children, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 55
+        lineNumber: 56
       },
       __self: this
     }, this.renderDelete()));
   };
 
   return MultiselectTag;
-}(_react.default.Component), _class2.propTypes = {
+}(_react.default.Component);
+
+MultiselectTag.propTypes = {
   id: _propTypes.default.string,
   onClick: _propTypes.default.func.isRequired,
   focused: _propTypes.default.bool,
@@ -12688,26 +12586,13 @@ function (_React$Component) {
   readOnly: _propTypes.default.bool,
   label: _propTypes.default.string,
   value: _propTypes.default.any
-}, _temp2), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "onClick", [_interaction.widgetEditable], {
-  enumerable: true,
-  initializer: function initializer() {
-    var _this2 = this;
-
-    return function (event) {
-      var _this2$props = _this2.props,
-          value = _this2$props.value,
-          disabled = _this2$props.disabled,
-          onClick = _this2$props.onClick;
-      if (!disabled) onClick(value, event);
-    };
-  }
-})), _class);
+};
 var _default = MultiselectTag;
 exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12716,27 +12601,25 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 var _reactDom = __webpack_require__(6);
 
-var _reactLifecyclesCompat = _interopRequireDefault(__webpack_require__(8));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(2));
 
-var _reactComponentManagers = __webpack_require__(19);
+var _reactComponentManagers = __webpack_require__(8);
 
 var _uncontrollable = _interopRequireDefault(__webpack_require__(14));
 
-var _List = _interopRequireDefault(__webpack_require__(22));
+var _List = _interopRequireDefault(__webpack_require__(21));
 
 var _Widget = _interopRequireDefault(__webpack_require__(15));
 
-var _SelectListItem = _interopRequireDefault(__webpack_require__(109));
+var _SelectListItem = _interopRequireDefault(__webpack_require__(108));
 
-var _messages = __webpack_require__(12);
+var _messages = __webpack_require__(11);
 
 var _ = __webpack_require__(7);
 
@@ -12744,25 +12627,24 @@ var Props = _interopRequireWildcard(__webpack_require__(4));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(3));
 
-var _reduceToListState = _interopRequireDefault(__webpack_require__(18));
+var _listDataManager = _interopRequireDefault(__webpack_require__(18));
 
-var _getAccessors = _interopRequireDefault(__webpack_require__(32));
+var _accessorManager = _interopRequireDefault(__webpack_require__(22));
 
 var _focusManager = _interopRequireDefault(__webpack_require__(16));
 
-var _scrollManager = _interopRequireDefault(__webpack_require__(24));
+var _scrollManager = _interopRequireDefault(__webpack_require__(23));
 
-var _interaction = __webpack_require__(10);
+var _interaction = __webpack_require__(12);
 
 var _widgetHelpers = __webpack_require__(9);
 
 var _class,
-    _class2,
     _descriptor,
     _descriptor2,
-    _class3,
+    _class2,
     _temp,
-    _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/SelectList.js";
+    _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/SelectList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -12807,7 +12689,7 @@ function getFirstValue(data, values) {
  */
 
 
-var SelectList = (0, _reactLifecyclesCompat.default)(_class = (_class2 = (_temp = _class3 =
+var SelectList = (_class = (_temp = _class2 =
 /*#__PURE__*/
 function (_React$Component) {
   _inheritsLoose(SelectList, _React$Component);
@@ -12829,10 +12711,7 @@ function (_React$Component) {
       var _this$props = _this.props,
           data = _this$props.data,
           disabled = _this$props.disabled;
-      var _this$state = _this.state,
-          dataItems = _this$state.dataItems,
-          accessors = _this$state.accessors,
-          list = _this$state.list; // the rigamarole here is to avoid flicker went clicking an item and
+      var dataItems = _this.state.dataItems; // the rigamarole here is to avoid flicker went clicking an item and
       // gaining focus at the same time.
 
       if (focused !== _this.state.focused) {
@@ -12840,11 +12719,11 @@ function (_React$Component) {
           focusedItem: null
         });else if (focused && !_this._clicking) {
           var allowed = Array.isArray(disabled) ? dataItems.filter(function (v) {
-            return !accessors.find(disabled, v);
+            return !_this.accessors.find(disabled, v);
           }) : dataItems;
 
           _this.setState({
-            focusedItem: getFirstValue(data, allowed) || list.nextEnabled(data[0])
+            focusedItem: getFirstValue(data, allowed) || _this.list.nextEnabled(data[0])
           });
         }
         _this._clicking = false;
@@ -12891,75 +12770,73 @@ function (_React$Component) {
           multiple = _this$props3.multiple,
           disabled = _this$props3.disabled,
           readOnly = _this$props3.readOnly;
-      var _this$state2 = _this.state,
-          dataItems = _this$state2.dataItems,
-          accessors = _this$state2.accessors;
+      var dataItems = _this.state.dataItems;
       return _react.default.createElement(_SelectListItem.default, _extends({}, itemProps, {
         name: name || _this.itemName,
         type: multiple ? 'checkbox' : 'radio',
         readOnly: disabled === true || readOnly,
         onChange: _this.handleChange,
         onMouseDown: _this.handleMouseDown,
-        checked: !!accessors.find(dataItems, itemProps.dataItem),
+        checked: !!_this.accessors.find(dataItems, itemProps.dataItem),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 269
+          lineNumber: 271
         },
         __self: this
       }));
     };
 
     (0, _reactComponentManagers.autoFocus)(_assertThisInitialized(_this));
+    _this.messages = (0, _messages.getMessages)(_this.props.messages);
     _this.widgetId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_widget');
     _this.listId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox');
     _this.activeId = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_listbox_active_option');
     _this.itemName = (0, _widgetHelpers.instanceId)(_assertThisInitialized(_this), '_name');
+    _this.list = (0, _listDataManager.default)(_assertThisInitialized(_this));
+    _this.accessors = (0, _accessorManager.default)(_assertThisInitialized(_this));
     _this.timeouts = (0, _reactComponentManagers.timeoutManager)(_assertThisInitialized(_this));
     _this.handleScroll = (0, _scrollManager.default)(_assertThisInitialized(_this), false);
     _this.focusManager = (0, _focusManager.default)(_assertThisInitialized(_this), {
       didHandle: _this.handleFocusChanged
     });
-    _this.state = {};
+    _this.state = _this.getStateFromProps(_this.props);
     return _this;
   }
 
-  SelectList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var value = nextProps.value,
-        data = nextProps.data,
-        messages = nextProps.messages;
-    var accessors = (0, _getAccessors.default)(nextProps);
-    var list = (0, _reduceToListState.default)(data, prevState.list, {
-      nextProps: nextProps
-    });
+  var _proto = SelectList.prototype;
+
+  _proto.getStateFromProps = function getStateFromProps(props) {
+    var accessors = this.accessors,
+        list = this.list;
+    var data = props.data,
+        value = props.value;
+    list.setData(data);
     return {
-      list: list,
-      accessors: accessors,
-      messages: (0, _messages.getMessages)(messages),
       dataItems: (0, _.makeArray)(value).map(function (item) {
         return accessors.findOrSelf(data, item);
       })
     };
   };
 
-  var _proto = SelectList.prototype;
+  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    this.messages = (0, _messages.getMessages)(nextProps.messages);
+    return this.setState(this.getStateFromProps(nextProps));
+  };
 
   _proto.render = function render() {
     var _props = this.props,
         className = _props.className,
         tabIndex = _props.tabIndex,
-        busy = _props.busy,
-        data = _props.data,
-        itemComponent = _props.itemComponent,
-        groupComponent = _props.groupComponent,
-        listProps = _props.listProps;
+        busy = _props.busy;
     var elementProps = Props.pickElementProps(this);
     var _state = this.state,
         focusedItem = _state.focusedItem,
-        focused = _state.focused,
-        accessors = _state.accessors,
-        list = _state.list,
-        messages = _state.messages;
+        focused = _state.focused;
+    var _accessors = this.accessors,
+        value = _accessors.value,
+        text = _accessors.text;
     var List = this.props.listComponent;
+    var listProps = this.list.defaultProps();
     var disabled = this.props.disabled === true,
         readOnly = this.props.readOnly === true;
     focusedItem = focused && !disabled && !readOnly && focusedItem;
@@ -12978,7 +12855,7 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-select-list', 'rw-widget-input', 'rw-widget-container', busy && 'rw-loading-mask'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 304
+        lineNumber: 300
       },
       __self: this
     }), _react.default.createElement(List, _extends({}, listProps, {
@@ -12986,23 +12863,18 @@ function (_React$Component) {
       tabIndex: tabIndex || '0',
       id: this.listId,
       activeId: this.activeId,
-      data: data,
-      dataState: list.dataState,
-      isDisabled: list.isDisabled,
-      textAccessor: accessors.text,
-      valueAccessor: accessors.value,
-      itemComponent: itemComponent,
-      groupComponent: groupComponent,
-      optionComponent: this.renderListItem,
+      valueAccessor: value,
+      textAccessor: text,
       focusedItem: focusedItem,
       onMove: this.handleScroll,
+      optionComponent: this.renderListItem,
       messages: {
-        emptyList: messages.emptyList
+        emptyList: this.messages.emptyList
       },
       ref: this.attachListRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 325
+        lineNumber: 321
       },
       __self: this
     })));
@@ -13061,7 +12933,7 @@ function (_React$Component) {
   };
 
   return SelectList;
-}(_react.default.Component), _class3.propTypes = {
+}(_react.default.Component), _class2.propTypes = {
   data: _propTypes.default.array,
   value: _propTypes.default.oneOfType([_propTypes.default.any, _propTypes.default.array]),
   onChange: _propTypes.default.func,
@@ -13085,8 +12957,6 @@ function (_React$Component) {
   onKeyPress: _propTypes.default.func,
   itemComponent: CustomPropTypes.elementType,
   listComponent: CustomPropTypes.elementType,
-  groupComponent: CustomPropTypes.elementType,
-  groupBy: CustomPropTypes.accessor,
   valueField: CustomPropTypes.accessor,
   textField: CustomPropTypes.accessor,
   busy: _propTypes.default.bool,
@@ -13106,23 +12976,23 @@ function (_React$Component) {
   messages: _propTypes.default.shape({
     emptyList: CustomPropTypes.message
   })
-}, _class3.defaultProps = {
+}, _class2.defaultProps = {
   delay: 250,
   value: [],
   data: [],
   listComponent: _List.default
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleKeyDown", [_interaction.widgetEditable], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "handleKeyDown", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this3 = this;
 
     return function (event) {
+      var list = _this3.list,
+          accessors = _this3.accessors;
       var multiple = _this3.props.multiple;
       var _this3$state = _this3.state,
           dataItems = _this3$state.dataItems,
-          focusedItem = _this3$state.focusedItem,
-          list = _this3$state.list,
-          accessors = _this3$state.accessors;
+          focusedItem = _this3$state.focusedItem;
       var keyCode = event.keyCode,
           key = event.key,
           ctrlKey = event.ctrlKey;
@@ -13184,7 +13054,7 @@ function (_React$Component) {
       }
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleKeyPress", [_interaction.widgetEditable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "handleKeyPress", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
     var _this4 = this;
@@ -13196,7 +13066,7 @@ function (_React$Component) {
       _this4.search(String.fromCharCode(event.which), event);
     };
   }
-})), _class2)) || _class;
+})), _class);
 
 var _default = (0, _uncontrollable.default)(SelectList, {
   value: 'onChange'
@@ -13206,7 +13076,7 @@ exports.default = _default;
 module.exports = exports["default"];
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13215,13 +13085,13 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(1));
+var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(0));
+var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _ListOption = _interopRequireDefault(__webpack_require__(37));
+var _ListOption = _interopRequireDefault(__webpack_require__(36));
 
-var _jsxFileName = "/Users/sators/Documents/Repos/react-widgets/packages/react-widgets/src/SelectListItem.js";
+var _jsxFileName = "/Users/jason/src/react-widgets/packages/react-widgets/src/SelectListItem.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
