@@ -179,5 +179,5 @@
 }
 
 .rw-widget-input.rw-state-focus {
-  box-shadow: '#{$input-focus-box-shadow}, #{$input-box-shadow}';
+  box-shadow: #{$input-focus-box-shadow}, #{$input-box-shadow};
 }

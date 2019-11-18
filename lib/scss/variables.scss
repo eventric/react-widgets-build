@@ -155,7 +155,7 @@ $multiselect-tag-border:          $btn-border !default;
 $multiselect-tag-bg:              $gray-lighter !default;
 $multiselect-tag-height-pt:       1 - ($multiselect-gutter-pt * 2) !default;
 $multiselect-tag-gutter-fallback: $input-height * $multiselect-gutter-pt !default;
-$multiselect-tag-gutter:          "calc(#{$multiselect-tag-gutter-fallback} - #{$input-border-width})" !default;
+$multiselect-tag-gutter:          calc(#{$multiselect-tag-gutter-fallback} - #{$input-border-width}) !default;
 $multiselect-tag-height:          $input-height * $multiselect-tag-height-pt !default;
 $multiselect-tag-border-radius:   $border-radius-sm !default;
 
