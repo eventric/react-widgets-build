@@ -8104,7 +8104,7 @@ function (_React$Component) {
       currentDate: currentDate,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 354
+        lineNumber: 353
       },
       __self: this
     }));
@@ -8126,7 +8126,7 @@ function (_React$Component) {
       bordered: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 393
+        lineNumber: 392
       },
       __self: this
     }, date && _react.default.createElement(_Button.default, {
@@ -8136,7 +8136,7 @@ function (_React$Component) {
       onClick: this.handleCalendarClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 395
+        lineNumber: 394
       },
       __self: this
     }), time && _react.default.createElement(_Button.default, {
@@ -8146,7 +8146,7 @@ function (_React$Component) {
       onClick: this.handleTimeClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 403
+        lineNumber: 402
       },
       __self: this
     }));
@@ -8164,6 +8164,7 @@ function (_React$Component) {
         popupTransition = _props3.popupTransition,
         dropUp = _props3.dropUp,
         onCurrentDateChange = _props3.onCurrentDateChange,
+        currentDate = _props3.currentDate,
         timeZone = _props3.timeZone;
     var calendarProps = Props.pick(this.props, _Calendar.default.ControlledComponent); // manually include the last controlled default Props
 
@@ -8190,7 +8191,7 @@ function (_React$Component) {
       onNavigate: function onNavigate() {
         return _this2.focus();
       },
-      currentDate: value,
+      currentDate: currentDate,
       onCurrentDateChange: onCurrentDateChange,
       "aria-hidden": !open,
       "aria-live": "polite",
@@ -8350,8 +8351,7 @@ function (_React$Component) {
   date: true,
   time: true,
   open: false,
-  timeZone: 'UTC',
-  currentDate: new Date()
+  timeZone: 'UTC'
 }), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleChange", [_interaction.widgetEditable], {
   enumerable: true,
   initializer: function initializer() {
@@ -10394,13 +10394,17 @@ function (_React$Component) {
   };
 
   _proto.maybeSetCurrentDate = function maybeSetCurrentDate(date) {
-    var _props4 = this.props,
-        min = _props4.min,
-        max = _props4.max;
+    // const { min, max } = this.props
     var _state3 = this.state,
         view = _state3.view,
-        currentDate = _state3.currentDate;
-    var inRangeDate = inRangeValue(date ? new Date(date) : currentDate, min, max);
+        currentDate = _state3.currentDate; // Remove contraint to fix calendar footer click?
+    // let inRangeDate = inRangeValue(
+    //   date ? new Date(date) : currentDate,
+    //   min,
+    //   max
+    // )
+
+    var inRangeDate = date ? new Date(date) : currentDate;
     if (date === currentDate || _dates.default.eq(inRangeDate, dateOrNull(currentDate), VIEW_UNIT[view])) return;
     (0, _widgetHelpers.notify)(this.props.onCurrentDateChange, inRangeDate);
   };
@@ -10416,12 +10420,12 @@ function (_React$Component) {
   };
 
   _proto.getHeaderLabel = function getHeaderLabel() {
-    var _props5 = this.props,
-        culture = _props5.culture,
-        decadeFormat = _props5.decadeFormat,
-        yearFormat = _props5.yearFormat,
-        headerFormat = _props5.headerFormat,
-        centuryFormat = _props5.centuryFormat;
+    var _props4 = this.props,
+        culture = _props4.culture,
+        decadeFormat = _props4.decadeFormat,
+        yearFormat = _props4.yearFormat,
+        headerFormat = _props4.headerFormat,
+        centuryFormat = _props4.centuryFormat;
     var _state5 = this.state,
         currentDate = _state5.currentDate,
         view = _state5.view;
