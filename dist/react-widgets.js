@@ -8164,8 +8164,7 @@ function (_React$Component) {
         popupTransition = _props3.popupTransition,
         dropUp = _props3.dropUp,
         onCurrentDateChange = _props3.onCurrentDateChange,
-        currentDate = _props3.currentDate,
-        timeZone = _props3.timeZone;
+        currentDate = _props3.currentDate;
     var calendarProps = Props.pick(this.props, _Calendar.default.ControlledComponent); // manually include the last controlled default Props
 
     calendarProps.defaultView = this.props.defaultView;
@@ -8176,7 +8175,7 @@ function (_React$Component) {
       transition: popupTransition,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 430
+        lineNumber: 429
       },
       __self: this
     }, _react.default.createElement(_Calendar.default, _extends({}, calendarProps, {
@@ -8197,10 +8196,9 @@ function (_React$Component) {
       "aria-live": "polite",
       "aria-labelledby": inputId,
       ref: this.attachCalRef,
-      timeZone: timeZone,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 436
+        lineNumber: 435
       },
       __self: this
     })));
@@ -8236,13 +8234,13 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 479
+        lineNumber: 477
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 485
+        lineNumber: 483
       },
       __self: this
     }, _react.default.createElement(_TimeList.default, {
@@ -8268,7 +8266,7 @@ function (_React$Component) {
       ref: this.attachTimeRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 486
+        lineNumber: 484
       },
       __self: this
     })));
@@ -8302,13 +8300,13 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-datetime-picker'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 530
+        lineNumber: 528
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 543
+        lineNumber: 541
       },
       __self: this
     }, this.renderInput(owns.trim()), this.renderButtons()), !!(shouldRenderList && time) && this.renderTimeList(), !!(shouldRenderList && date) && this.renderCalendar());
@@ -10081,7 +10079,6 @@ var propTypes = {
    * @example ['prop', ['footer', true]]
    */
   footer: _propTypes.default.bool,
-  timeZone: _propTypes.default.string,
 
   /**
    * Provide a custom component to render the days of the month. The Component is provided the following props
@@ -10278,8 +10275,7 @@ function (_React$Component) {
         min = _props2.min,
         max = _props2.max,
         culture = _props2.culture,
-        tabIndex = _props2.tabIndex,
-        timeZone = _props2.timeZone;
+        tabIndex = _props2.tabIndex;
     var _state = this.state,
         currentDate = _state.currentDate,
         view = _state.view,
@@ -10308,7 +10304,7 @@ function (_React$Component) {
       "aria-activedescendant": this.activeId,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 448
+        lineNumber: 446
       },
       __self: this
     }), _react.default.createElement(_Header.default, {
@@ -10324,14 +10320,14 @@ function (_React$Component) {
       onMoveRight: this.handleMoveForward,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 461
+        lineNumber: 459
       },
       __self: this
     }), _react.default.createElement(Calendar.Transition, {
       direction: slideDirection,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 477
+        lineNumber: 475
       },
       __self: this
     }, _react.default.createElement(View, _extends({}, viewProps, {
@@ -10345,10 +10341,9 @@ function (_React$Component) {
       onChange: this.handleChange,
       onKeyDown: this.handleKeyDown,
       "aria-labelledby": this.labelId,
-      timeZone: timeZone,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 478
+        lineNumber: 476
       },
       __self: this
     }))), footer && _react.default.createElement(_Footer.default, {
@@ -10360,7 +10355,7 @@ function (_React$Component) {
       onClick: this.handleFooterClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 494
+        lineNumber: 491
       },
       __self: this
     }));
@@ -25856,21 +25851,20 @@ function (_React$Component) {
           max = _this$props.max,
           footerFormat = _this$props.footerFormat,
           dateFormat = _this$props.dateFormat,
-          Day = _this$props.dayComponent,
-          timeZone = _this$props.timeZone;
+          Day = _this$props.dayComponent;
       footerFormat = _localizers.date.getFormat('footer', footerFormat);
       dateFormat = _localizers.date.getFormat('dayOfMonth', dateFormat);
       return _react.default.createElement(_CalendarView.default.Row, {
         key: rowIdx,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 70
+          lineNumber: 69
         },
         __self: this
       }, row.map(function (date, colIdx) {
-        var formattedDate = _momentTimezone.default.utc(date).tz(timeZone).format(dateFormat);
+        var formattedDate = _momentTimezone.default.utc(date).format(dateFormat);
 
-        var label = _momentTimezone.default.utc(date).tz(timeZone).format(footerFormat);
+        var label = _momentTimezone.default.utc(date).format(footerFormat);
 
         return _react.default.createElement(_CalendarView.default.Cell, {
           key: colIdx,
@@ -25888,7 +25882,7 @@ function (_React$Component) {
           disabled: disabled,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 76
+            lineNumber: 75
           },
           __self: this
         }, Day ? _react.default.createElement(Day, {
@@ -25896,7 +25890,7 @@ function (_React$Component) {
           label: formattedDate,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 91
+            lineNumber: 90
           },
           __self: this
         }) : formattedDate);
@@ -25939,27 +25933,27 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-calendar-month'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 106
+        lineNumber: 105
       },
       __self: this
     }), _react.default.createElement("thead", {
       className: "rw-calendar-head",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 111
+        lineNumber: 110
       },
       __self: this
     }, _react.default.createElement("tr", {
       className: "rw-calendar-row",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 112
+        lineNumber: 111
       },
       __self: this
     }, this.renderHeaders(rows[0], dayFormat, culture))), _react.default.createElement(_CalendarView.default.Body, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 116
+        lineNumber: 115
       },
       __self: this
     }, rows.map(this.renderRow)));
