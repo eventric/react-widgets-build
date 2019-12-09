@@ -7669,7 +7669,8 @@ Input.propTypes = {
   type: _propTypes.default.string,
   tabIndex: _propTypes.default.string,
   component: _propTypes.default.any,
-  nodeRef: _propTypes.default.func
+  nodeRef: _propTypes.default.func,
+  isDatePicker: _propTypes.default.bool
 };
 
 function Input(_ref) {
@@ -7685,6 +7686,7 @@ function Input(_ref) {
       Component = _ref$component === void 0 ? 'input' : _ref$component,
       props = _objectWithoutProperties(_ref, ["className", "disabled", "readOnly", "value", "tabIndex", "nodeRef", "type", "component"]);
 
+  delete props.isDatePicker;
   return _react.default.createElement(Component, _extends({}, props, {
     type: type,
     ref: nodeRef,
@@ -7698,7 +7700,7 @@ function Input(_ref) {
     className: (0, _classnames.default)(className, 'rw-input'),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 27
+      lineNumber: 29
     },
     __self: this
   }));
@@ -8067,7 +8069,8 @@ function (_React$Component) {
         timeZone = _props.timeZone,
         currentDate = _props.currentDate,
         ariaLabelledby = _props['aria-labelledby'],
-        ariaDescribedby = _props['aria-describedby'];
+        ariaDescribedby = _props['aria-describedby'],
+        time = _props.time;
     var focused = this.state.focused;
     var activeId = null;
 
@@ -8102,9 +8105,10 @@ function (_React$Component) {
       "aria-owns": owns,
       timeZone: timeZone,
       currentDate: currentDate,
+      isDatePicker: !time,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 353
+        lineNumber: 354
       },
       __self: this
     }));
@@ -8126,7 +8130,7 @@ function (_React$Component) {
       bordered: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 392
+        lineNumber: 394
       },
       __self: this
     }, date && _react.default.createElement(_Button.default, {
@@ -8136,7 +8140,7 @@ function (_React$Component) {
       onClick: this.handleCalendarClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 394
+        lineNumber: 396
       },
       __self: this
     }), time && _react.default.createElement(_Button.default, {
@@ -8146,7 +8150,7 @@ function (_React$Component) {
       onClick: this.handleTimeClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 402
+        lineNumber: 404
       },
       __self: this
     }));
@@ -8165,6 +8169,8 @@ function (_React$Component) {
         dropUp = _props3.dropUp,
         onCurrentDateChange = _props3.onCurrentDateChange,
         currentDate = _props3.currentDate;
+    var deviceTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var adjustedValue = value ? _momentTimezone.default.utc(value).startOf('day').tz(deviceTimeZone, true).toDate() : new Date();
     var calendarProps = Props.pick(this.props, _Calendar.default.ControlledComponent); // manually include the last controlled default Props
 
     calendarProps.defaultView = this.props.defaultView;
@@ -8175,14 +8181,14 @@ function (_React$Component) {
       transition: popupTransition,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 429
+        lineNumber: 433
       },
       __self: this
     }, _react.default.createElement(_Calendar.default, _extends({}, calendarProps, {
       id: dateId,
       activeId: activeCalendarId,
       tabIndex: "-1",
-      value: value,
+      value: adjustedValue,
       autoFocus: false,
       onChange: this.handleDateSelect // #75: need to aggressively reclaim focus from the calendar otherwise
       // disabled header/footer buttons will drop focus completely from the widget
@@ -8198,7 +8204,7 @@ function (_React$Component) {
       ref: this.attachCalRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 435
+        lineNumber: 439
       },
       __self: this
     })));
@@ -8234,13 +8240,13 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 477
+        lineNumber: 481
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 483
+        lineNumber: 487
       },
       __self: this
     }, _react.default.createElement(_TimeList.default, {
@@ -8266,7 +8272,7 @@ function (_React$Component) {
       ref: this.attachTimeRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 484
+        lineNumber: 488
       },
       __self: this
     })));
@@ -8300,13 +8306,13 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-datetime-picker'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 528
+        lineNumber: 532
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 541
+        lineNumber: 545
       },
       __self: this
     }, this.renderInput(owns.trim()), this.renderButtons()), !!(shouldRenderList && time) && this.renderTimeList(), !!(shouldRenderList && date) && this.renderCalendar());
@@ -8415,7 +8421,7 @@ function (_React$Component) {
     return function (date) {
       var format = getFormat(_this7.props);
       var dateTime = date;
-      var dateStr = formatDate(date, format, _this7.props.culture, _this7.props.timeZone);
+      var dateStr = formatDate(date, format, _this7.props.culture, _this7.props.timeZone, !_this7.props.time);
 
       _this7.close();
 
@@ -8434,7 +8440,7 @@ function (_React$Component) {
     return function (datum) {
       var format = getFormat(_this8.props);
       var dateTime = datum.date;
-      var dateStr = formatDate(datum.date, format, _this8.props.culture, _this8.props.timeZone);
+      var dateStr = formatDate(datum.date, format, _this8.props.culture, _this8.props.timeZone, !_this8.props.time);
 
       _this8.close();
 
@@ -8483,13 +8489,13 @@ function getFormat(props) {
   return props.format ? props.format : isDate && isTime || !isDate && !isTime ? _localizers.date.getFormat('default') : _localizers.date.getFormat(isDate ? 'date' : 'time');
 }
 
-function formatDate(date, format, culture, timeZone) {
+function formatDate(date, format, culture, timeZone, isDatePicker) {
   var val = '';
 
-  if (isValid(date)) {
-    // if (date instanceof Date && !isNaN(date.getTime()))
-    // val = dateLocalizer.format(date, format, culture)
+  if (!isDatePicker && isValid(date)) {
     val = (0, _momentTimezone.default)(date).tz(timeZone).format(format);
+  } else if (isDatePicker && isValid(date)) {
+    val = (0, _momentTimezone.default)(date).format(format);
   }
 
   return val;
@@ -25854,26 +25860,30 @@ function (_React$Component) {
           Day = _this$props.dayComponent;
       footerFormat = _localizers.date.getFormat('footer', footerFormat);
       dateFormat = _localizers.date.getFormat('dayOfMonth', dateFormat);
+      var deviceTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+      var localizedMinDate = _momentTimezone.default.utc(min).tz(deviceTimeZone, true).toDate();
+
+      var localizedMaxDate = _momentTimezone.default.utc(max).tz(deviceTimeZone, true).toDate();
+
       return _react.default.createElement(_CalendarView.default.Row, {
         key: rowIdx,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 69
+          lineNumber: 72
         },
         __self: this
       }, row.map(function (date, colIdx) {
-        var formattedDate = _momentTimezone.default.utc(date).format(dateFormat);
-
-        var label = _momentTimezone.default.utc(date).format(footerFormat);
-
+        var formattedDate = (0, _momentTimezone.default)(date).format(dateFormat);
+        var label = (0, _momentTimezone.default)(date).format(footerFormat);
         return _react.default.createElement(_CalendarView.default.Cell, {
           key: colIdx,
           activeId: activeId,
           label: label,
           date: date,
           now: today,
-          min: min,
-          max: max,
+          min: localizedMinDate,
+          max: localizedMaxDate,
           unit: "day",
           viewUnit: "month",
           onChange: onChange,
@@ -25882,7 +25892,7 @@ function (_React$Component) {
           disabled: disabled,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 75
+            lineNumber: 78
           },
           __self: this
         }, Day ? _react.default.createElement(Day, {
@@ -25890,7 +25900,7 @@ function (_React$Component) {
           label: formattedDate,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 90
+            lineNumber: 93
           },
           __self: this
         }) : formattedDate);
@@ -25933,27 +25943,27 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-calendar-month'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 105
+        lineNumber: 108
       },
       __self: this
     }), _react.default.createElement("thead", {
       className: "rw-calendar-head",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 110
+        lineNumber: 113
       },
       __self: this
     }, _react.default.createElement("tr", {
       className: "rw-calendar-row",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 111
+        lineNumber: 114
       },
       __self: this
     }, this.renderHeaders(rows[0], dayFormat, culture))), _react.default.createElement(_CalendarView.default.Body, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 115
+        lineNumber: 118
       },
       __self: this
     }, rows.map(this.renderRow)));
@@ -28130,12 +28140,18 @@ function (_React$Component) {
           onChange = _this$props.onChange,
           onBlur = _this$props.onBlur,
           timeZone = _this$props.timeZone,
-          currentDate = _this$props.currentDate;
+          currentDate = _this$props.currentDate,
+          isDatePicker = _this$props.isDatePicker;
       onBlur && onBlur(event);
 
       if (_this._needsFlush) {
         var date = parse(event.target.value);
-        date = (0, _momentTimezone.default)(date).tz(timeZone, true);
+
+        if (!isDatePicker) {
+          date = (0, _momentTimezone.default)(date).tz(timeZone, true);
+        } else {
+          date = (0, _momentTimezone.default)(date);
+        }
 
         var momentCurrentDate = _momentTimezone.default.utc(currentDate).tz(timeZone);
 
@@ -28147,7 +28163,7 @@ function (_React$Component) {
 
         date = date.toDate();
         _this._needsFlush = false;
-        onChange(date, formatDate(date, format, culture, timeZone));
+        onChange(date, formatDate(date, format, culture, timeZone, isDatePicker));
       }
     }, _this.handleChange = function (_ref) {
       var value = _ref.target.value;
@@ -28165,10 +28181,11 @@ function (_React$Component) {
         editFormat = nextProps.editFormat,
         format = nextProps.format,
         culture = nextProps.culture,
-        timeZone = nextProps.timeZone;
+        timeZone = nextProps.timeZone,
+        isDatePicker = nextProps.isDatePicker;
     var textValue = nextState.textValue;
     return {
-      textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, editing, textValue)
+      textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, editing, textValue, isDatePicker)
     };
   };
 
@@ -28181,11 +28198,12 @@ function (_React$Component) {
         editFormat = _props.editFormat,
         format = _props.format,
         culture = _props.culture,
-        timeZone = _props.timeZone;
+        timeZone = _props.timeZone,
+        isDatePicker = _props.isDatePicker;
 
     if (value && value !== prevProps.value) {
       this.setState({
-        textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone)
+        textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, false, null, isDatePicker)
       });
     }
   };
@@ -28210,7 +28228,7 @@ function (_React$Component) {
       onBlur: this.handleBlur,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 103
+        lineNumber: 110
       },
       __self: this
     }));
@@ -28229,7 +28247,8 @@ function (_React$Component) {
   disabled: CustomPropTypes.disabled,
   readOnly: CustomPropTypes.disabled,
   timeZone: _propTypes.default.string,
-  currentDate: _propTypes.default.instanceOf(Date)
+  currentDate: _propTypes.default.instanceOf(Date),
+  isDatePicker: _propTypes.default.bool
 }, _temp2)) || _class;
 
 var _default = DateTimePickerInput;
@@ -28239,15 +28258,17 @@ function isValid(d) {
   return !isNaN(d.getTime());
 }
 
-function formatDate(date, format, culture, timeZone, isEditing, textValue) {
+function formatDate(date, format, culture, timeZone, isEditing, textValue, isDatePicker) {
   var val = '';
 
-  if (isEditing) {
+  if (isEditing && textValue) {
     return textValue;
   }
 
-  if (date instanceof Date && isValid(date)) {
+  if (!isDatePicker && date instanceof Date && isValid(date)) {
     val = (0, _momentTimezone.default)(date).tz(timeZone).format(format);
+  } else if (isDatePicker && date instanceof Date && isValid(date)) {
+    val = _momentTimezone.default.utc(date).startOf('day').format(format);
   }
 
   return val;
