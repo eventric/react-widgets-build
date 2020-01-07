@@ -8112,7 +8112,7 @@ function (_React$Component) {
       isTimePicker: time,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 355
+        lineNumber: 357
       },
       __self: this
     }));
@@ -8134,7 +8134,7 @@ function (_React$Component) {
       bordered: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 396
+        lineNumber: 398
       },
       __self: this
     }, date && _react.default.createElement(_Button.default, {
@@ -8144,7 +8144,7 @@ function (_React$Component) {
       onClick: this.handleCalendarClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 398
+        lineNumber: 400
       },
       __self: this
     }), time && _react.default.createElement(_Button.default, {
@@ -8154,7 +8154,7 @@ function (_React$Component) {
       onClick: this.handleTimeClick,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 406
+        lineNumber: 408
       },
       __self: this
     }));
@@ -8187,7 +8187,7 @@ function (_React$Component) {
       transition: popupTransition,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 437
+        lineNumber: 439
       },
       __self: this
     }, _react.default.createElement(_Calendar.default, _extends({}, calendarProps, {
@@ -8210,7 +8210,7 @@ function (_React$Component) {
       ref: this.attachCalRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 443
+        lineNumber: 445
       },
       __self: this
     })));
@@ -8246,13 +8246,13 @@ function (_React$Component) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 485
+        lineNumber: 487
       },
       __self: this
     }, _react.default.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 491
+        lineNumber: 493
       },
       __self: this
     }, _react.default.createElement(_TimeList.default, {
@@ -8278,7 +8278,7 @@ function (_React$Component) {
       ref: this.attachTimeRef,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 492
+        lineNumber: 494
       },
       __self: this
     })));
@@ -8312,13 +8312,13 @@ function (_React$Component) {
       className: (0, _classnames.default)(className, 'rw-datetime-picker'),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 536
+        lineNumber: 538
       },
       __self: this
     }), _react.default.createElement(_WidgetPicker.default, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 549
+        lineNumber: 551
       },
       __self: this
     }, this.renderInput(owns.trim()), this.renderButtons()), !!(shouldRenderList && time) && this.renderTimeList(), !!(shouldRenderList && date) && this.renderCalendar());
@@ -8424,10 +8424,15 @@ function (_React$Component) {
   initializer: function initializer() {
     var _this7 = this;
 
-    return function (date) {
+    return function (selectedDate) {
+      var _this7$props = _this7.props,
+          timeZone = _this7$props.timeZone,
+          time = _this7$props.time,
+          date = _this7$props.date;
       var format = getFormat(_this7.props);
-      var dateTime = date;
-      var dateStr = formatDate(date, format, _this7.props.culture, _this7.props.timeZone, !_this7.props.time);
+      var momentDate = selectedDate && (0, _momentTimezone.default)(selectedDate);
+      var dateTime = time && date ? (0, _momentTimezone.default)().tz(timeZone, true).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toDate() : selectedDate;
+      var dateStr = formatDate(dateTime, format, _this7.props.culture, _this7.props.timeZone, !_this7.props.time);
 
       _this7.close();
 
