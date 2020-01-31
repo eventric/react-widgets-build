@@ -5382,7 +5382,7 @@ exports.getMessages = getMessages;
 
 var _react = _interopRequireDefault(__webpack_require__(2));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/messages.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/messages.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5686,7 +5686,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(3));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Widget.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Widget.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5804,7 +5804,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(3));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Button.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Button.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6074,7 +6074,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(3));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/WidgetPicker.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/WidgetPicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6150,7 +6150,7 @@ var _classnames = _interopRequireDefault(__webpack_require__(3));
 
 var _Button = _interopRequireDefault(__webpack_require__(18));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Select.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Select.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6241,7 +6241,7 @@ var _ListOptionGroup = _interopRequireDefault(__webpack_require__(208));
 
 var _messages = __webpack_require__(13);
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/List.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/List.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -6767,7 +6767,7 @@ var _SlideDownTransition = _interopRequireDefault(__webpack_require__(45));
 
 var _PropTypes = __webpack_require__(4);
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Popup.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Popup.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -7139,7 +7139,7 @@ var _classnames = _interopRequireDefault(__webpack_require__(3));
 
 var _dates = _interopRequireDefault(__webpack_require__(14));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/CalendarView.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/CalendarView.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7554,7 +7554,7 @@ var _classnames = _interopRequireDefault(__webpack_require__(3));
 
 var Props = _interopRequireWildcard(__webpack_require__(5));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/ListOption.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/ListOption.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -7654,7 +7654,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _classnames = _interopRequireDefault(__webpack_require__(3));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Input.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Input.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7787,7 +7787,7 @@ var _class,
     _descriptor7,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/DateTimePicker.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/DateTimePicker.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -8676,7 +8676,7 @@ var _react = _interopRequireDefault(__webpack_require__(2));
 var _Transition = _interopRequireWildcard(__webpack_require__(53));
 
 var _transitionClasses,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/SlideDownTransition.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/SlideDownTransition.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -9712,7 +9712,7 @@ var _classnames = _interopRequireDefault(__webpack_require__(3));
 
 var _widgetHelpers = __webpack_require__(10);
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Listbox.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Listbox.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9798,7 +9798,7 @@ var _Listbox = _interopRequireDefault(__webpack_require__(55));
 
 var _ListOption = _interopRequireDefault(__webpack_require__(39));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/AddToListOption.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/AddToListOption.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9963,7 +9963,7 @@ var _class,
     _descriptor6,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Calendar.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Calendar.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -22843,7 +22843,7 @@ var Props = _interopRequireWildcard(__webpack_require__(5));
 
 var _transitionStyle,
     _transitionClasses,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/SlideTransitionGroup.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/SlideTransitionGroup.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -23359,7 +23359,7 @@ var _class,
     _descriptor5,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/DropdownList.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/DropdownList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -24576,7 +24576,7 @@ var _react = _interopRequireDefault(__webpack_require__(2));
 
 var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/ListOptionGroup.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/ListOptionGroup.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24626,7 +24626,7 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
 var _dataHelpers = __webpack_require__(24);
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/DropdownListInput.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/DropdownListInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -24960,7 +24960,7 @@ var _class,
     _descriptor3,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Combobox.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Combobox.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -25494,7 +25494,7 @@ var _reactDom = __webpack_require__(6);
 
 var _Input = _interopRequireDefault(__webpack_require__(40));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/ComboboxInput.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/ComboboxInput.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25639,7 +25639,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _Button = _interopRequireDefault(__webpack_require__(18));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Header.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Header.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25755,7 +25755,7 @@ var _localizers = __webpack_require__(7);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Footer.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Footer.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -25828,7 +25828,7 @@ var _ = __webpack_require__(8);
 
 var Props = _interopRequireWildcard(__webpack_require__(5));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Month.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Month.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27203,7 +27203,7 @@ var Props = _interopRequireWildcard(__webpack_require__(5));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Year.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Year.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27345,7 +27345,7 @@ var Props = _interopRequireWildcard(__webpack_require__(5));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Decade.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Decade.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27491,7 +27491,7 @@ var Props = _interopRequireWildcard(__webpack_require__(5));
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Century.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Century.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27981,7 +27981,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _DateTimePicker = _interopRequireDefault(__webpack_require__(41));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/DatePicker.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/DatePicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28119,7 +28119,7 @@ var Props = _interopRequireWildcard(__webpack_require__(5));
 var _class,
     _class2,
     _temp2,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/DateTimePickerInput.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/DateTimePickerInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28195,11 +28195,10 @@ function (_React$Component) {
         culture = nextProps.culture,
         timeZone = nextProps.timeZone,
         isDatePicker = nextProps.isDatePicker,
-        isTimePicker = nextProps.isTimePicker,
-        currentDate = nextProps.currentDate;
+        isTimePicker = nextProps.isTimePicker;
     var textValue = nextState.textValue;
     return {
-      textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, editing, textValue, isDatePicker, isTimePicker, currentDate)
+      textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, editing, textValue, isDatePicker, isTimePicker)
     };
   };
 
@@ -28214,12 +28213,11 @@ function (_React$Component) {
         culture = _props.culture,
         timeZone = _props.timeZone,
         isDatePicker = _props.isDatePicker,
-        isTimePicker = _props.isTimePicker,
-        currentDate = _props.currentDate;
+        isTimePicker = _props.isTimePicker;
 
     if (value && value !== prevProps.value) {
       this.setState({
-        textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, false, null, isDatePicker, isTimePicker, currentDate)
+        textValue: formatDate(value, editing && editFormat ? editFormat : format, culture, timeZone, false, null, isDatePicker, isTimePicker)
       });
     }
   };
@@ -28244,7 +28242,7 @@ function (_React$Component) {
       onBlur: this.handleBlur,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 115
+        lineNumber: 113
       },
       __self: this
     }));
@@ -28275,7 +28273,7 @@ function isValid(d) {
   return !isNaN(d.getTime());
 }
 
-function formatDate(date, format, culture, timeZone, isEditing, textValue, isDatePicker, isTimePicker, currentDate) {
+function formatDate(date, format, culture, timeZone, isEditing, textValue, isDatePicker, isTimePicker) {
   var val = '';
 
   if (isEditing) {
@@ -28287,7 +28285,7 @@ function formatDate(date, format, culture, timeZone, isEditing, textValue, isDat
   } else if (isDatePicker && !isTimePicker && date instanceof Date && isValid(date)) {
     val = _momentTimezone.default.utc(date).startOf('day').format(format);
   } else if (isTimePicker && isDatePicker && date instanceof Date && isValid(date)) {
-    var day = (0, _momentTimezone.default)(currentDate).format('ll');
+    var day = (0, _momentTimezone.default)(date).format('ll');
     var time = (0, _momentTimezone.default)(date).tz(timeZone).format('LT');
     val = day + " " + time;
   }
@@ -28326,7 +28324,7 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 var _class,
     _class2,
     _temp2,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/TimeList.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/TimeList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28547,7 +28545,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _DateTimePicker = _interopRequireDefault(__webpack_require__(41));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/TimePicker.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/TimePicker.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28656,7 +28654,7 @@ var _class,
     _descriptor3,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/NumberPicker.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/NumberPicker.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -29109,7 +29107,7 @@ var _localizers = __webpack_require__(7);
 var _class,
     _class2,
     _temp2,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/NumberInput.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/NumberInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -29382,7 +29380,7 @@ var _class,
     _descriptor5,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/Multiselect.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/Multiselect.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -30197,7 +30195,7 @@ var _reactDom = __webpack_require__(6);
 
 var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/MultiselectInput.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/MultiselectInput.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -30288,7 +30286,7 @@ var CustomPropTypes = _interopRequireWildcard(__webpack_require__(4));
 
 var _dataHelpers = __webpack_require__(24);
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/MultiselectTagList.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/MultiselectTagList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -30408,7 +30406,7 @@ var _class,
     _descriptor,
     _class2,
     _temp2,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/MultiselectTag.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/MultiselectTag.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30572,7 +30570,7 @@ var _class,
     _descriptor2,
     _class3,
     _temp,
-    _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/SelectList.js";
+    _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/SelectList.js";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -31031,7 +31029,7 @@ var _propTypes = _interopRequireDefault(__webpack_require__(1));
 
 var _ListOption = _interopRequireDefault(__webpack_require__(39));
 
-var _jsxFileName = "/Users/julietterapala/Documents/code/open-source/react-widgets/packages/react-widgets/src/SelectListItem.js";
+var _jsxFileName = "/Users/alexa/Documents/Eventric/react-widgets/packages/react-widgets/src/SelectListItem.js";
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
