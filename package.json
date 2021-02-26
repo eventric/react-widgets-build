@@ -130,5 +130,5 @@
     "test-only": "jest",
     "test:styles": "npm run styles && node-sass lib/scss/react-widgets.scss -o test/output"
   },
-  "version": "4.2.6-juliette"
+  "version": "4.2.6"
 }
